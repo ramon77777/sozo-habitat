@@ -1,7 +1,12 @@
 <?php
 
+use App\Models\Property;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    $featuredProperties = Property::latest()
+        ->take(3)
+        ->get();
+
+    return view('pages.home', compact('featuredProperties'));
 });
