@@ -22,7 +22,7 @@
                 </p>
             </div>
 
-            <a href="#"
+            <a href="{{ route('properties.index') }}"
                class="inline-flex items-center justify-center rounded-full border border-[#0A2E5D] px-6 py-3 font-bold text-[#0A2E5D] hover:bg-[#0A2E5D] hover:text-white transition">
                 Voir tous les biens
             </a>
