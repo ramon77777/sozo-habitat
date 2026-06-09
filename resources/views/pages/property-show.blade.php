@@ -50,23 +50,47 @@
                         </span>
                     </div>
 
-                    <div class="bg-white p-5 rounded-2xl text-center shadow">
-                        <p class="font-bold text-2xl">
-                            {{ $property->bedrooms ?? '-' }}
-                        </p>
-                        <span class="text-slate-500">
-                            Chambres
-                        </span>
-                    </div>
+                    @if($property->type === 'terrain')
 
-                    <div class="bg-white p-5 rounded-2xl text-center shadow">
-                        <p class="font-bold text-2xl">
-                            {{ $property->bathrooms ?? '-' }}
-                        </p>
-                        <span class="text-slate-500">
-                            Salles d'eau
-                        </span>
-                    </div>
+                        <div class="bg-white p-5 rounded-2xl text-center shadow">
+                            <p class="font-bold text-2xl">
+                                Terrain
+                            </p>
+                            <span class="text-slate-500">
+                                Type
+                            </span>
+                        </div>
+
+                        <div class="bg-white p-5 rounded-2xl text-center shadow">
+                            <p class="font-bold text-2xl">
+                                {{ ucfirst($property->transaction) }}
+                            </p>
+                            <span class="text-slate-500">
+                                Transaction
+                            </span>
+                        </div>
+
+                    @else
+
+                        <div class="bg-white p-5 rounded-2xl text-center shadow">
+                            <p class="font-bold text-2xl">
+                                {{ $property->bedrooms ?? '-' }}
+                            </p>
+                            <span class="text-slate-500">
+                                Chambres
+                            </span>
+                        </div>
+
+                        <div class="bg-white p-5 rounded-2xl text-center shadow">
+                            <p class="font-bold text-2xl">
+                                {{ $property->bathrooms ?? '-' }}
+                            </p>
+                            <span class="text-slate-500">
+                                Salles d'eau
+                            </span>
+                        </div>
+
+                    @endif
 
                 </div>
 
