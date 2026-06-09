@@ -33,7 +33,7 @@
                 <article class="group bg-white rounded-[2rem] overflow-hidden shadow-xl hover:shadow-2xl transition duration-300">
                     <div class="h-72 bg-slate-200 relative overflow-hidden">
                         <img
-                            src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c"
+                            src="{{ asset('images/properties/'.$property->main_image) }}"
                             alt="{{ $property->title }}"
                             class="w-full h-full object-cover group-hover:scale-110 transition duration-700"
                         >

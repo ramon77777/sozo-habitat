@@ -10,9 +10,9 @@
 
             <div>
                 <img
-                    src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c"
+                    src="{{ asset('images/properties/'.$property->main_image) }}"
                     alt="{{ $property->title }}"
-                    class="w-full h-[550px] object-cover rounded-3xl shadow-xl"
+                    class="w-full h-full object-cover"
                 >
             </div>
 
