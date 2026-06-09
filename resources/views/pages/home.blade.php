@@ -82,14 +82,15 @@
                         </div>
 
                         <div class="mt-7 flex items-center justify-between">
-                            <a href="#"
-                               class="font-black text-[#0A2E5D] hover:text-[#C89B3C] transition">
-                                Voir détails →
+                            <a href="{{ route('properties.show', $property) }}"
+                                class="font-black text-[#0A2E5D] hover:text-[#C89B3C] transition">
+                                    Voir détails →
                             </a>
 
-                            <span class="h-10 w-10 rounded-full bg-[#0A2E5D] text-white flex items-center justify-center group-hover:bg-[#C89B3C] transition">
+                            <a href="{{ route('properties.show', $property) }}"
+                                class="h-10 w-10 rounded-full bg-[#0A2E5D] text-white flex items-center justify-center group-hover:bg-[#C89B3C] transition">
                                 →
-                            </span>
+                            </a>
                         </div>
                     </div>
                 </article>
