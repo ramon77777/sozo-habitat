@@ -157,21 +157,37 @@
                     </p>
                 </div>
 
-                <div class="flex gap-4 mt-10">
+                <div class="flex flex-wrap gap-4 mt-10">
+
                     <a
-                        href="https://wa.me/2250700000000"
+                        href="tel:+2250787463032"
+                        class="bg-[#0A2E5D] hover:bg-[#071F3F] text-white px-6 py-4 rounded-xl font-semibold transition"
+                    >
+                        📞 07 87 46 30 32
+                    </a>
+
+                    <a
+                        href="tel:+2250787587996"
+                        class="bg-[#0A2E5D] hover:bg-[#071F3F] text-white px-6 py-4 rounded-xl font-semibold transition"
+                    >
+                        📞 07 87 58 79 96
+                    </a>
+
+                    <a
+                        href="https://wa.me/2250787463032"
                         target="_blank"
-                        class="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-xl font-semibold transition"
+                        class="bg-green-600 hover:bg-green-700 text-white px-6 py-4 rounded-xl font-semibold transition"
                     >
                         WhatsApp
                     </a>
 
                     <a
-                        href="{{ route('properties.index') }}"
-                        class="border border-[#0A2E5D] text-[#0A2E5D] px-8 py-4 rounded-xl font-semibold"
+                        href="/"
+                        class="border border-[#0A2E5D] text-[#0A2E5D] px-6 py-4 rounded-xl font-semibold"
                     >
                         Retour
                     </a>
+
                 </div>
             </div>
 
@@ -187,18 +203,20 @@
 
                 <div class="grid md:grid-cols-2 gap-8">
                     @foreach($property->videos as $video)
-                        <video
-                            controls
-                            preload="metadata"
-                            class="w-full rounded-3xl shadow-lg"
-                        >
-                            <source
-                                src="{{ asset('videos/properties/' . $video->video_path) }}"
-                                type="video/mp4"
+                        <div class="aspect-video w-full overflow-hidden rounded-3xl bg-black shadow-lg">
+                            <video
+                                controls
+                                preload="metadata"
+                                class="h-full w-full object-contain"
                             >
+                                <source
+                                    src="{{ asset('videos/properties/' . $video->video_path) }}"
+                                    type="video/mp4"
+                                >
 
-                            Votre navigateur ne supporte pas la vidéo.
-                        </video>
+                                Votre navigateur ne supporte pas la vidéo.
+                            </video>
+                        </div>
                     @endforeach
                 </div>
 
@@ -238,6 +256,95 @@
 
             </div>
         @endif
+
+        {{-- Demande de visite --}}
+        <div class="mt-16 bg-white rounded-3xl shadow-xl p-8">
+
+            <div class="mb-8">
+                <h3 class="text-3xl font-black text-[#0A2E5D]">
+                    Demander une visite
+                </h3>
+
+                <p class="text-slate-500 mt-2">
+                    Laissez vos coordonnées, nous vous contacterons rapidement pour ce bien.
+                </p>
+            </div>
+
+            @if(session('success'))
+                <div class="mb-6 rounded-2xl bg-green-50 border border-green-200 p-5 text-green-700 font-semibold">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            @if ($errors->any())
+                <div class="mb-6 rounded-2xl bg-red-50 border border-red-200 p-5 text-red-700">
+                    <p class="font-bold mb-3">Veuillez corriger les erreurs :</p>
+
+                    <ul class="list-disc pl-5 space-y-1">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            <form method="POST" action="{{ route('properties.inquiries.store', $property) }}">
+                @csrf
+
+                <div class="grid md:grid-cols-2 gap-6">
+
+                    <div>
+                        <label class="block mb-2 font-semibold">Nom complet</label>
+                        <input
+                            type="text"
+                            name="name"
+                            value="{{ old('name') }}"
+                            class="w-full rounded-2xl border border-slate-200 px-5 py-4"
+                            required
+                        >
+                    </div>
+
+                    <div>
+                        <label class="block mb-2 font-semibold">Téléphone</label>
+                        <input
+                            type="text"
+                            name="phone"
+                            value="{{ old('phone') }}"
+                            class="w-full rounded-2xl border border-slate-200 px-5 py-4"
+                            required
+                        >
+                    </div>
+
+                    <div class="md:col-span-2">
+                        <label class="block mb-2 font-semibold">Email optionnel</label>
+                        <input
+                            type="email"
+                            name="email"
+                            value="{{ old('email') }}"
+                            class="w-full rounded-2xl border border-slate-200 px-5 py-4"
+                        >
+                    </div>
+
+                    <div class="md:col-span-2">
+                        <label class="block mb-2 font-semibold">Message</label>
+                        <textarea
+                            name="message"
+                            rows="5"
+                            class="w-full rounded-2xl border border-slate-200 px-5 py-4"
+                        >{{ old('message', 'Bonjour, je suis intéressé(e) par ce bien : ' . $property->title) }}</textarea>
+                    </div>
+
+                </div>
+
+                <button
+                    type="submit"
+                    class="mt-8 rounded-xl bg-[#C89B3C] px-8 py-4 font-bold text-white hover:bg-[#A87F2E] transition"
+                >
+                    Envoyer ma demande
+                </button>
+            </form>
+
+        </div>
 
     </div>
 

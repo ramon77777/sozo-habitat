@@ -24,14 +24,12 @@
         </div>
 
         @if(session('success'))
-
             <div class="mb-6 rounded-2xl bg-green-50 border border-green-200 p-5 text-green-700">
                 {{ session('success') }}
             </div>
-
         @endif
 
-        <div class="grid md:grid-cols-4 gap-6">
+        <div class="grid md:grid-cols-3 lg:grid-cols-6 gap-6">
 
             <div class="bg-white rounded-3xl p-6 shadow">
                 <p class="text-slate-500">Total biens</p>
@@ -61,18 +59,39 @@
                 </h2>
             </div>
 
+            <div class="bg-white rounded-3xl p-6 shadow">
+                <p class="text-slate-500">Demandes</p>
+                <h2 class="text-4xl font-black text-[#0A2E5D] mt-3">
+                    {{ $totalInquiries }}
+                </h2>
+            </div>
+
+            <div class="bg-white rounded-3xl p-6 shadow">
+                <p class="text-slate-500">Nouvelles</p>
+                <h2 class="text-4xl font-black text-green-600 mt-3">
+                    {{ $newInquiries }}
+                </h2>
+            </div>
+
         </div>
 
         <div class="mt-10 bg-white rounded-3xl shadow overflow-hidden">
-            <div class="p-6 border-b border-slate-100 flex justify-between items-center">
+            <div class="p-6 border-b border-slate-100 flex flex-col md:flex-row md:justify-between md:items-center gap-4">
                 <h2 class="text-2xl font-black text-[#0A2E5D]">
                     Derniers biens ajoutés
                 </h2>
 
-                <a href="{{ route('admin.properties.create') }}"
-                   class="rounded-full bg-[#C89B3C] px-5 py-3 font-bold text-white hover:bg-[#A87F2E] transition">
-                    Ajouter un bien
-                </a>
+                <div class="flex flex-wrap gap-3">
+                    <a href="{{ route('admin.property-inquiries.index') }}"
+                       class="rounded-full bg-[#0A2E5D] px-5 py-3 font-bold text-white hover:bg-[#071F3F] transition">
+                        Voir les demandes
+                    </a>
+
+                    <a href="{{ route('admin.properties.create') }}"
+                       class="rounded-full bg-[#C89B3C] px-5 py-3 font-bold text-white hover:bg-[#A87F2E] transition">
+                        Ajouter un bien
+                    </a>
+                </div>
             </div>
 
             <div class="overflow-x-auto">
@@ -110,10 +129,9 @@
                                 <td class="p-5 font-bold text-[#C89B3C]">
                                     {{ number_format($property->price, 0, ',', ' ') }} FCFA
                                 </td>
+
                                 <td class="p-5">
-
                                     <div class="flex gap-4 items-center">
-
                                         <a
                                             href="{{ route('admin.properties.edit', $property) }}"
                                             class="text-[#0A2E5D] font-bold hover:text-[#C89B3C]"
@@ -135,11 +153,8 @@
                                             >
                                                 Supprimer
                                             </button>
-
                                         </form>
-
                                     </div>
-
                                 </td>
                             </tr>
                         @endforeach

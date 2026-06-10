@@ -41,5 +41,10 @@ class Property extends Model
     {
         return $this->hasMany(PropertyVideo::class);
     }
+
+    public function inquiries()
+    {
+        return $this->hasMany(PropertyInquiry::class);
+    }
 }
 

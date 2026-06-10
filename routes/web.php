@@ -5,6 +5,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\PropertyController;
 
+use App\Models\PropertyInquiry;
+
+use App\Http\Controllers\Admin\PropertyInquiryController;
+
 Route::get('/', function () {
     $featuredProperties = Property::latest()
         ->take(6)
@@ -18,6 +22,8 @@ Route::get('/admin', function () {
     $saleProperties = Property::where('transaction', 'vente')->count();
     $rentProperties = Property::where('transaction', 'location')->count();
     $landProperties = Property::where('type', 'terrain')->count();
+    $totalInquiries = PropertyInquiry::count();
+    $newInquiries = PropertyInquiry::where('is_processed', false)->count();
 
     $latestProperties = Property::latest()
         ->take(5)
@@ -28,7 +34,9 @@ Route::get('/admin', function () {
         'saleProperties',
         'rentProperties',
         'landProperties',
-        'latestProperties'
+        'latestProperties',
+        'totalInquiries',
+        'newInquiries',
     ));
 })->name('admin.dashboard');
 
@@ -77,3 +85,31 @@ Route::get('/biens/{property}', function (Property $property) {
     return view('pages.property-show', compact('property'));
 
 })->name('properties.show');
+
+Route::post('/biens/{property}/demande-visite', function (Request $request, Property $property) {
+    $validated = $request->validate([
+        'name' => ['required', 'string', 'max:255'],
+        'phone' => ['required', 'string', 'max:30'],
+        'email' => ['nullable', 'email', 'max:255'],
+        'message' => ['nullable', 'string', 'max:2000'],
+    ]);
+
+    $property->inquiries()->create($validated);
+
+    return back()->with('success', 'Votre demande a bien été envoyée. Nous vous contacterons rapidement.');
+})->name('properties.inquiries.store');
+
+Route::get(
+    '/admin/property-inquiries',
+    [PropertyInquiryController::class, 'index']
+)->name('admin.property-inquiries.index');
+
+Route::patch(
+    '/admin/property-inquiries/{inquiry}/toggle',
+    [PropertyInquiryController::class, 'toggle']
+)->name('admin.property-inquiries.toggle');
+
+Route::get(
+    '/admin/property-inquiries/{propertyInquiry}',
+    [PropertyInquiryController::class, 'show']
+)->name('admin.property-inquiries.show');
