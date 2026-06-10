@@ -17,6 +17,19 @@
 
         <div class="bg-white rounded-3xl shadow-xl p-10">
 
+            @if ($errors->any())
+                <div class="mb-6 rounded-2xl bg-red-50 border border-red-200 p-5 text-red-700">
+                    <p class="font-bold mb-3">Veuillez corriger les erreurs suivantes :</p>
+
+                    <ul class="list-disc pl-5 space-y-1">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            {{-- FORMULAIRE PRINCIPAL --}}
             <form method="POST" action="{{ route('admin.properties.update', $property) }}" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
@@ -48,7 +61,6 @@
                         <input type="text" name="address" value="{{ old('address', $property->address) }}" class="w-full border border-slate-200 rounded-xl p-4">
                     </div>
 
-                
                     <div>
                         <label class="block mb-2 font-semibold">Latitude</label>
                         <input id="latitude" type="text" name="latitude" value="{{ old('latitude', $property->latitude) }}" class="w-full border border-slate-200 rounded-xl p-4">
@@ -162,42 +174,22 @@
                         @endif
                     </div>
 
-                    <div class="mt-4">
-                        <label class="block mb-2 font-semibold">
-                            Galerie photos
-                        </label>
-
-                        <input
-                            type="file"
-                            name="gallery_images[]"
-                            multiple
-                            accept="image/*"
-                            class="w-full border border-slate-200 rounded-xl p-4"
-                        >
-
+                    <div>
+                        <label class="block mb-2 font-semibold">Galerie photos</label>
+                        <input type="file" name="gallery_images[]" multiple accept="image/*" class="w-full border border-slate-200 rounded-xl p-4">
                         <p class="mt-2 text-sm text-slate-500">
                             Vous pouvez sélectionner plusieurs images.
                         </p>
                     </div>
 
-                </div>
+                    <div>
+                        <label class="block mb-2 font-semibold">Vidéos du bien</label>
+                        <input type="file" name="property_videos[]" multiple accept="video/mp4,video/webm,video/quicktime" class="w-full border border-slate-200 rounded-xl p-4">
+                        <p class="mt-2 text-sm text-slate-500">
+                            Formats acceptés : MP4, WEBM, MOV.
+                        </p>
+                    </div>
 
-                <div class="mt-4">
-                    <label class="block mb-2 font-semibold">
-                        Vidéos du bien
-                    </label>
-
-                    <input
-                        type="file"
-                        name="property_videos[]"
-                        multiple
-                        accept="video/mp4,video/webm,video/quicktime"
-                        class="w-full border border-slate-200 rounded-xl p-4"
-                    >
-
-                    <p class="mt-2 text-sm text-slate-500">
-                        Formats acceptés : MP4, WEBM, MOV.
-                    </p>
                 </div>
 
                 <div class="mt-6">
@@ -215,15 +207,81 @@
                 </button>
             </form>
 
-            @if ($errors->any())
-                <div class="mb-6 rounded-2xl bg-red-50 border border-red-200 p-5 text-red-700">
-                    <p class="font-bold mb-3">Veuillez corriger les erreurs suivantes :</p>
+            {{-- MÉDIAS EXISTANTS : EN DEHORS DU FORMULAIRE PRINCIPAL --}}
+            @if($property->images->count())
+                <div class="mt-12 border-t border-slate-100 pt-10">
+                    <h3 class="text-2xl font-black text-[#0A2E5D] mb-4">
+                        Images de la galerie
+                    </h3>
 
-                    <ul class="list-disc pl-5 space-y-1">
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
+                    <div class="grid md:grid-cols-4 gap-4">
+                        @foreach($property->images as $image)
+                            <div class="rounded-2xl border border-slate-200 p-3">
+                                <img
+                                    src="{{ asset('images/properties/gallery/' . $image->image_path) }}"
+                                    class="h-32 w-full object-cover rounded-xl"
+                                    alt=""
+                                >
+
+                                <form
+                                    method="POST"
+                                    action="{{ route('admin.property-images.destroy', $image) }}"
+                                    onsubmit="return confirm('Supprimer cette image ?')"
+                                    class="mt-3"
+                                >
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <button
+                                        type="submit"
+                                        class="w-full rounded-xl bg-red-600 px-4 py-2 font-bold text-white hover:bg-red-700"
+                                    >
+                                        Supprimer
+                                    </button>
+                                </form>
+                            </div>
                         @endforeach
-                    </ul>
+                    </div>
+                </div>
+            @endif
+
+            @if($property->videos->count())
+                <div class="mt-12 border-t border-slate-100 pt-10">
+                    <h3 class="text-2xl font-black text-[#0A2E5D] mb-4">
+                        Vidéos du bien
+                    </h3>
+
+                    <div class="grid md:grid-cols-2 gap-4">
+                        @foreach($property->videos as $video)
+                            <div class="rounded-2xl border border-slate-200 p-3">
+                                <div class="aspect-video w-full overflow-hidden rounded-xl bg-black">
+                                    <video controls class="h-full w-full object-contain">
+                                        <source
+                                            src="{{ asset('videos/properties/' . $video->video_path) }}"
+                                            type="video/mp4"
+                                        >
+                                    </video>
+                                </div>
+
+                                <form
+                                    method="POST"
+                                    action="{{ route('admin.property-videos.destroy', $video) }}"
+                                    onsubmit="return confirm('Supprimer cette vidéo ?')"
+                                    class="mt-3"
+                                >
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <button
+                                        type="submit"
+                                        class="w-full rounded-xl bg-red-600 px-4 py-2 font-bold text-white hover:bg-red-700"
+                                    >
+                                        Supprimer
+                                    </button>
+                                </form>
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
             @endif
 
@@ -266,7 +324,6 @@ document.addEventListener('DOMContentLoaded', function () {
             function (position) {
                 latitudeInput.value = position.coords.latitude;
                 longitudeInput.value = position.coords.longitude;
-
                 getLocationBtn.textContent = '📍 Position récupérée';
             },
             function () {
