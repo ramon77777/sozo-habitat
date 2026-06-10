@@ -179,7 +179,7 @@
 
         {{-- Vidéos --}}
         @if($property->videos->count())
-            <div class="w-full rounded-3xl shadow-lg">
+            <div class="mt-24 bg-white rounded-3xl shadow-xl p-8">
 
                 <h3 class="text-3xl font-black text-[#0A2E5D] mb-6">
                     Vidéo du bien
