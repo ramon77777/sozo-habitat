@@ -52,24 +52,6 @@ class PropertyController extends Controller
         }
 
 
-        if ($request->hasFile('property_videos')) {
-            $order = 1;
-
-            foreach ($request->file('property_videos') as $video) {
-                $filename = time() . '_' . uniqid() . '.' . $video->getClientOriginalExtension();
-
-                $video->move(
-                    public_path('videos/properties'),
-                    $filename
-                );
-
-                $property->videos()->create([
-                    'video_path' => $filename,
-                    'sort_order' => $order++,
-                ]);
-            }
-        }
-
         $validated['featured'] = $request->boolean('featured');
         $validated['has_acd'] = $request->boolean('has_acd');
         $validated['is_lot_approved'] = $request->boolean('is_lot_approved');
@@ -104,6 +86,26 @@ class PropertyController extends Controller
                 $property->images()->create([
                     'image_path' => $filename,
                     'is_main'    => false,
+                    'sort_order' => $order++,
+                ]);
+            }
+        }
+
+        if ($request->hasFile('property_videos')) {
+
+            $order = 1;
+
+            foreach ($request->file('property_videos') as $video) {
+
+                $filename = time() . '_' . uniqid() . '.' . $video->getClientOriginalExtension();
+
+                $video->move(
+                    public_path('videos/properties'),
+                    $filename
+                );
+
+                $property->videos()->create([
+                    'video_path' => $filename,
                     'sort_order' => $order++,
                 ]);
             }

@@ -35,4 +35,6 @@ class PropertyInquiryController extends Controller
             compact('propertyInquiry')
         );
     }
+
+    
 }

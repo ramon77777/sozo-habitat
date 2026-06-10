@@ -9,6 +9,9 @@ use App\Models\PropertyInquiry;
 
 use App\Http\Controllers\Admin\PropertyInquiryController;
 
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NewPropertyInquiryMail;
+
 Route::get('/', function () {
     $featuredProperties = Property::latest()
         ->take(6)
@@ -17,26 +20,55 @@ Route::get('/', function () {
     return view('pages.home', compact('featuredProperties'));
 });
 
-Route::get('/admin', function () {
+Route::get('/admin', function (Request $request) {
     $totalProperties = Property::count();
     $saleProperties = Property::where('transaction', 'vente')->count();
     $rentProperties = Property::where('transaction', 'location')->count();
     $landProperties = Property::where('type', 'terrain')->count();
+
     $totalInquiries = PropertyInquiry::count();
     $newInquiries = PropertyInquiry::where('is_processed', false)->count();
 
-    $latestProperties = Property::latest()
-        ->take(5)
-        ->get();
+    $propertiesQuery = Property::query();
+
+    if ($request->filter === 'vente') {
+        $propertiesQuery->where('transaction', 'vente');
+    }
+
+    if ($request->filter === 'location') {
+        $propertiesQuery->where('transaction', 'location');
+    }
+
+    if ($request->filter === 'terrain') {
+        $propertiesQuery->where('type', 'terrain');
+    }
+
+    if ($request->filter === 'featured') {
+        $propertiesQuery->where('featured', true);
+    }
+
+    if ($request->search) {
+        $propertiesQuery->where(function ($query) use ($request) {
+            $query->where('title', 'like', '%' . $request->search . '%')
+                ->orWhere('city', 'like', '%' . $request->search . '%')
+                ->orWhere('district', 'like', '%' . $request->search . '%')
+                ->orWhere('type', 'like', '%' . $request->search . '%');
+        });
+    }
+
+    $properties = $propertiesQuery
+        ->latest()
+        ->paginate(10)
+        ->withQueryString();
 
     return view('admin.dashboard', compact(
         'totalProperties',
         'saleProperties',
         'rentProperties',
         'landProperties',
-        'latestProperties',
         'totalInquiries',
         'newInquiries',
+        'properties'
     ));
 })->name('admin.dashboard');
 
@@ -94,7 +126,10 @@ Route::post('/biens/{property}/demande-visite', function (Request $request, Prop
         'message' => ['nullable', 'string', 'max:2000'],
     ]);
 
-    $property->inquiries()->create($validated);
+    $inquiry = $property->inquiries()->create($validated);
+
+    Mail::to('sororamon01@gmail.com')
+        ->send(new NewPropertyInquiryMail($inquiry));
 
     return back()->with('success', 'Votre demande a bien été envoyée. Nous vous contacterons rapidement.');
 })->name('properties.inquiries.store');
@@ -113,3 +148,4 @@ Route::get(
     '/admin/property-inquiries/{propertyInquiry}',
     [PropertyInquiryController::class, 'show']
 )->name('admin.property-inquiries.show');
+
