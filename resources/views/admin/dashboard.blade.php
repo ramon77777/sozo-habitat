@@ -1,0 +1,155 @@
+@extends('layouts.app')
+
+@section('content')
+
+<section class="min-h-screen bg-[#F8F9FB] px-6 py-10">
+
+    <div class="max-w-7xl mx-auto">
+
+        <div class="flex items-center justify-between mb-10">
+            <div>
+                <p class="text-[#C89B3C] font-bold uppercase tracking-[0.3em]">
+                    Administration
+                </p>
+
+                <h1 class="text-4xl font-black text-[#0A2E5D] mt-3">
+                    Tableau de bord
+                </h1>
+            </div>
+
+            <a href="/"
+               class="rounded-full border border-[#0A2E5D] px-6 py-3 font-bold text-[#0A2E5D] hover:bg-[#0A2E5D] hover:text-white transition">
+                Voir le site
+            </a>
+        </div>
+
+        @if(session('success'))
+
+            <div class="mb-6 rounded-2xl bg-green-50 border border-green-200 p-5 text-green-700">
+                {{ session('success') }}
+            </div>
+
+        @endif
+
+        <div class="grid md:grid-cols-4 gap-6">
+
+            <div class="bg-white rounded-3xl p-6 shadow">
+                <p class="text-slate-500">Total biens</p>
+                <h2 class="text-4xl font-black text-[#0A2E5D] mt-3">
+                    {{ $totalProperties }}
+                </h2>
+            </div>
+
+            <div class="bg-white rounded-3xl p-6 shadow">
+                <p class="text-slate-500">Ventes</p>
+                <h2 class="text-4xl font-black text-[#0A2E5D] mt-3">
+                    {{ $saleProperties }}
+                </h2>
+            </div>
+
+            <div class="bg-white rounded-3xl p-6 shadow">
+                <p class="text-slate-500">Locations</p>
+                <h2 class="text-4xl font-black text-[#0A2E5D] mt-3">
+                    {{ $rentProperties }}
+                </h2>
+            </div>
+
+            <div class="bg-white rounded-3xl p-6 shadow">
+                <p class="text-slate-500">Terrains</p>
+                <h2 class="text-4xl font-black text-[#0A2E5D] mt-3">
+                    {{ $landProperties }}
+                </h2>
+            </div>
+
+        </div>
+
+        <div class="mt-10 bg-white rounded-3xl shadow overflow-hidden">
+            <div class="p-6 border-b border-slate-100 flex justify-between items-center">
+                <h2 class="text-2xl font-black text-[#0A2E5D]">
+                    Derniers biens ajoutés
+                </h2>
+
+                <a href="{{ route('admin.properties.create') }}"
+                   class="rounded-full bg-[#C89B3C] px-5 py-3 font-bold text-white hover:bg-[#A87F2E] transition">
+                    Ajouter un bien
+                </a>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead class="bg-slate-50 text-[#0A2E5D]">
+                        <tr>
+                            <th class="p-5">Titre</th>
+                            <th class="p-5">Ville</th>
+                            <th class="p-5">Type</th>
+                            <th class="p-5">Transaction</th>
+                            <th class="p-5">Prix</th>
+                            <th class="p-5">Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach($latestProperties as $property)
+                            <tr class="border-t border-slate-100">
+                                <td class="p-5 font-bold text-[#0A2E5D]">
+                                    {{ $property->title }}
+                                </td>
+
+                                <td class="p-5 text-slate-600">
+                                    {{ $property->city }}
+                                </td>
+
+                                <td class="p-5 text-slate-600">
+                                    {{ ucfirst($property->type) }}
+                                </td>
+
+                                <td class="p-5 text-slate-600">
+                                    {{ ucfirst($property->transaction) }}
+                                </td>
+
+                                <td class="p-5 font-bold text-[#C89B3C]">
+                                    {{ number_format($property->price, 0, ',', ' ') }} FCFA
+                                </td>
+                                <td class="p-5">
+
+                                    <div class="flex gap-4 items-center">
+
+                                        <a
+                                            href="{{ route('admin.properties.edit', $property) }}"
+                                            class="text-[#0A2E5D] font-bold hover:text-[#C89B3C]"
+                                        >
+                                            Modifier
+                                        </a>
+
+                                        <form
+                                            action="{{ route('admin.properties.destroy', $property) }}"
+                                            method="POST"
+                                            onsubmit="return confirm('Supprimer ce bien ?')"
+                                        >
+                                            @csrf
+                                            @method('DELETE')
+
+                                            <button
+                                                type="submit"
+                                                class="font-bold text-red-600 hover:text-red-800"
+                                            >
+                                                Supprimer
+                                            </button>
+
+                                        </form>
+
+                                    </div>
+
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+@endsection
