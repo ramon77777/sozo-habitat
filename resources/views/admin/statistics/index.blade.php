@@ -16,7 +16,8 @@
             </h1>
         </div>
 
-        <div class="grid md:grid-cols-3 gap-6 mb-10">
+        {{-- Résumé global --}}
+        <div class="grid md:grid-cols-3 lg:grid-cols-6 gap-6 mb-10">
 
             <div class="bg-white rounded-3xl p-6 shadow">
                 <p class="text-slate-500">Total biens</p>
@@ -39,8 +40,30 @@
                 </h2>
             </div>
 
+            <div class="bg-white rounded-3xl p-6 shadow">
+                <p class="text-slate-500">Demandes traitées</p>
+                <h2 class="text-4xl font-black text-[#0A2E5D] mt-3">
+                    {{ $processedInquiries }}
+                </h2>
+            </div>
+
+            <div class="bg-white rounded-3xl p-6 shadow">
+                <p class="text-slate-500">En attente</p>
+                <h2 class="text-4xl font-black text-red-600 mt-3">
+                    {{ $pendingInquiries }}
+                </h2>
+            </div>
+
+            <div class="bg-white rounded-3xl p-6 shadow">
+                <p class="text-slate-500">Taux traitement</p>
+                <h2 class="text-4xl font-black text-[#C89B3C] mt-3">
+                    {{ $processingRate }}%
+                </h2>
+            </div>
+
         </div>
 
+        {{-- Graphiques principaux --}}
         <div class="grid lg:grid-cols-2 gap-8">
 
             <div class="bg-white rounded-3xl shadow p-6">
@@ -64,7 +87,9 @@
                     Ventes / Locations
                 </h2>
 
-                <canvas id="transactionChart" height="140"></canvas>
+                <div class="max-w-xs mx-auto">
+                    <canvas id="transactionChart" height="220"></canvas>
+                </div>
             </div>
 
             <div class="bg-white rounded-3xl shadow p-6">
@@ -75,44 +100,96 @@
                 <canvas id="typeChart" height="140"></canvas>
             </div>
 
-        </div>
-
-        <div class="mt-10 bg-white rounded-3xl shadow-xl overflow-hidden">
-
-            <div class="p-6 border-b border-slate-100">
-                <h2 class="text-2xl font-black text-[#0A2E5D]">
-                    Top villes
+            <div class="bg-white rounded-3xl shadow p-6 lg:col-span-2">
+                <h2 class="text-2xl font-black text-[#0A2E5D] mb-6">
+                    Répartition documentaire
                 </h2>
+
+                <canvas id="documentChart" height="90"></canvas>
             </div>
 
-            <table class="w-full text-left">
-                <thead class="bg-slate-50 text-[#0A2E5D]">
-                    <tr>
-                        <th class="p-5">Ville</th>
-                        <th class="p-5">Nombre de biens</th>
-                    </tr>
-                </thead>
+        </div>
 
-                <tbody>
-                    @forelse($topCities as $city)
-                        <tr class="border-t border-slate-100">
-                            <td class="p-5 font-bold text-[#0A2E5D]">
-                                {{ $city->city }}
-                            </td>
+        {{-- Tableaux avancés --}}
+        <div class="grid lg:grid-cols-2 gap-8 mt-10">
 
-                            <td class="p-5 text-slate-600">
-                                {{ $city->total }}
-                            </td>
-                        </tr>
-                    @empty
+            <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
+
+                <div class="p-6 border-b border-slate-100">
+                    <h2 class="text-2xl font-black text-[#0A2E5D]">
+                        Top biens les plus demandés
+                    </h2>
+                </div>
+
+                <table class="w-full text-left">
+                    <thead class="bg-slate-50 text-[#0A2E5D]">
                         <tr>
-                            <td colspan="2" class="p-8 text-center text-slate-500">
-                                Aucune donnée disponible.
-                            </td>
+                            <th class="p-5">Bien</th>
+                            <th class="p-5">Demandes</th>
                         </tr>
-                    @endforelse
-                </tbody>
-            </table>
+                    </thead>
+
+                    <tbody>
+                        @forelse($topRequestedProperties as $property)
+                            <tr class="border-t border-slate-100">
+                                <td class="p-5 font-bold text-[#0A2E5D]">
+                                    {{ $property->title }}
+                                </td>
+
+                                <td class="p-5 text-slate-600">
+                                    {{ $property->inquiries_count }}
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="2" class="p-8 text-center text-slate-500">
+                                    Aucune donnée disponible.
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+
+            </div>
+
+            <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
+
+                <div class="p-6 border-b border-slate-100">
+                    <h2 class="text-2xl font-black text-[#0A2E5D]">
+                        Top villes
+                    </h2>
+                </div>
+
+                <table class="w-full text-left">
+                    <thead class="bg-slate-50 text-[#0A2E5D]">
+                        <tr>
+                            <th class="p-5">Ville</th>
+                            <th class="p-5">Nombre de biens</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @forelse($topCities as $city)
+                            <tr class="border-t border-slate-100">
+                                <td class="p-5 font-bold text-[#0A2E5D]">
+                                    {{ $city->city }}
+                                </td>
+
+                                <td class="p-5 text-slate-600">
+                                    {{ $city->total }}
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="2" class="p-8 text-center text-slate-500">
+                                    Aucune donnée disponible.
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+
+            </div>
 
         </div>
 
@@ -128,6 +205,7 @@ const monthlyInquiries = @json($monthlyInquiries);
 const monthlyProperties = @json($monthlyProperties);
 const transactionStats = @json($transactionStats);
 const typeStats = @json($typeStats);
+const documentStats = @json($documentStats);
 
 new Chart(document.getElementById('monthlyInquiriesChart'), {
     type: 'line',
@@ -159,6 +237,9 @@ new Chart(document.getElementById('transactionChart'), {
         datasets: [{
             data: Object.values(transactionStats)
         }]
+    },
+    options: {
+        maintainAspectRatio: true
     }
 });
 
@@ -169,6 +250,17 @@ new Chart(document.getElementById('typeChart'), {
         datasets: [{
             label: 'Nombre de biens',
             data: Object.values(typeStats)
+        }]
+    }
+});
+
+new Chart(document.getElementById('documentChart'), {
+    type: 'bar',
+    data: {
+        labels: Object.keys(documentStats),
+        datasets: [{
+            label: 'Nombre de biens',
+            data: Object.values(documentStats)
         }]
     }
 });

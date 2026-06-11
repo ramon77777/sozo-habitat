@@ -15,6 +15,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\StatisticsController;
+use App\Models\Prospect;
+use App\Http\Controllers\Admin\ProspectController;
+
 
 Route::get('/', function () {
     $featuredProperties = Property::where('featured', true)
@@ -53,6 +57,15 @@ Route::post('/biens/{property}/demande-visite', function (Request $request, Prop
     ]);
 
     $inquiry = $property->inquiries()->create($validated);
+
+    Prospect::create([
+        'property_id' => $property->id,
+        'name' => $validated['name'],
+        'phone' => $validated['phone'],
+        'email' => $validated['email'] ?? null,
+        'status' => 'nouveau',
+        'notes' => $validated['message'] ?? null,
+    ]);
 
     Mail::to('sororamon01@gmail.com')
         ->send(new NewPropertyInquiryMail($inquiry));
@@ -236,6 +249,15 @@ Route::middleware(['auth'])->group(function () {
 
     Route::patch('/admin/property-inquiries/{inquiry}/toggle', [PropertyInquiryController::class, 'toggle'])
         ->name('admin.property-inquiries.toggle');
+    
+    Route::get('/admin/prospects', [ProspectController::class, 'index'])
+    ->name('admin.prospects.index');
+
+    Route::patch('/admin/prospects/{prospect}/status', [ProspectController::class, 'updateStatus'])
+        ->name('admin.prospects.update-status');
+
+    Route::patch('/admin/prospects/{prospect}/assign', [ProspectController::class, 'assign'])
+        ->name('admin.prospects.assign');
 
     Route::delete('/admin/property-images/{image}', function (PropertyImage $image) {
         $path = public_path('images/properties/gallery/' . $image->image_path);
@@ -271,62 +293,10 @@ Route::middleware(['auth'])->group(function () {
         })->name('admin.featured-properties.index');
     });
 
-    Route::get('/admin/statistics', function () {
-        $chartLabels = [];
-        $monthlyInquiries = [];
-        $monthlyProperties = [];
-
-        for ($i = 11; $i >= 0; $i--) {
-            $date = now()->subMonths($i);
-
-            $chartLabels[] = ucfirst($date->translatedFormat('M Y'));
-
-            $monthlyInquiries[] = PropertyInquiry::whereYear('created_at', $date->year)
-                ->whereMonth('created_at', $date->month)
-                ->count();
-
-            $monthlyProperties[] = Property::whereYear('created_at', $date->year)
-                ->whereMonth('created_at', $date->month)
-                ->count();
-        }
-
-        $totalProperties = Property::count();
-        $featuredProperties = Property::where('featured', true)->count();
-        $totalInquiries = PropertyInquiry::count();
-
-        $transactionStats = [
-            'Ventes' => Property::where('transaction', 'vente')->count(),
-            'Locations' => Property::where('transaction', 'location')->count(),
-        ];
-
-        $typeStats = [
-            'Villa' => Property::where('type', 'villa')->count(),
-            'Duplex' => Property::where('type', 'duplex')->count(),
-            'Appartement' => Property::where('type', 'appartement')->count(),
-            'Maison basse' => Property::where('type', 'maison_basse')->count(),
-            'Terrain' => Property::where('type', 'terrain')->count(),
-        ];
-
-        $topCities = Property::select('city')
-            ->selectRaw('COUNT(*) as total')
-            ->whereNotNull('city')
-            ->groupBy('city')
-            ->orderByDesc('total')
-            ->take(5)
-            ->get();
-
-        return view('admin.statistics.index', compact(
-            'chartLabels',
-            'monthlyInquiries',
-            'monthlyProperties',
-            'totalProperties',
-            'featuredProperties',
-            'totalInquiries',
-            'transactionStats',
-            'typeStats',
-            'topCities'
-        ));
-    })->name('admin.statistics.index');
+    Route::get(
+        '/admin/statistics',
+        [StatisticsController::class, 'index']
+    )->name('admin.statistics.index');
 
     Route::get('/admin/site-settings', [SiteSettingController::class, 'edit'])
         ->name('admin.site-settings.edit');
