@@ -15,11 +15,25 @@
 
 <body class="font-sans antialiased bg-[#F8F9FB] text-slate-900">
 
-    @isset($slot)
-        {{ $slot }}
+    @if(request()->is('admin*'))
+        <div class="flex min-h-screen">
+            <x-admin-sidebar />
+
+            <main class="flex-1 overflow-x-hidden">
+                @isset($slot)
+                    {{ $slot }}
+                @else
+                    @yield('content')
+                @endisset
+            </main>
+        </div>
     @else
-        @yield('content')
-    @endisset
+        @isset($slot)
+            {{ $slot }}
+        @else
+            @yield('content')
+        @endisset
+    @endif
 
 </body>
 </html>
