@@ -63,6 +63,16 @@
         </a>
 
         <a
+            href="{{ route('admin.prospects.index') }}"
+            class="block rounded-2xl px-4 py-3 transition
+            {{ request()->routeIs('admin.prospects.*')
+                ? 'bg-white text-[#0A2E5D] font-black'
+                : 'hover:bg-white/10' }}"
+        >
+            👤 Clients
+        </a>
+
+        <a
             href="{{ route('admin.users.index') }}"
             class="block rounded-2xl px-4 py-3 transition
             {{ request()->routeIs('admin.users.*')

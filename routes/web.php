@@ -73,7 +73,7 @@ Route::post('/biens/{property}/demande-visite', function (Request $request, Prop
     return back()->with('success', 'Votre demande a bien été envoyée. Nous vous contacterons rapidement.');
 })->name('properties.inquiries.store');
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth','admin'])->group(function () {
 
    Route::get('/admin', function (Request $request) {
         $totalProperties = Property::count();

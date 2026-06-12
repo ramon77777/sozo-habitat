@@ -1,5 +1,14 @@
 @extends('layouts.app')
 
+@section('title')
+SOZO Habitat | Immobilier en Côte d’Ivoire : Villas, Maisons et Terrains
+@endsection
+
+
+@section('description')
+Découvrez des biens immobiliers en Côte d’Ivoire avec SOZO Habitat : villas, maisons, appartements et terrains à vendre ou à louer avec un accompagnement professionnel.
+@endsection
+
 @section('content')
 
 <x-hero />

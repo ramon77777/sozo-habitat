@@ -175,25 +175,32 @@
                     </h2>
 
                     <div class="flex flex-wrap gap-3">
+
                         <a href="{{ route('admin.property-inquiries.index') }}"
-                           class="rounded-full bg-[#0A2E5D] px-5 py-3 font-bold text-white hover:bg-[#071F3F] transition">
+                        class="rounded-full bg-[#0A2E5D] px-5 py-3 font-bold text-white hover:bg-[#071F3F] transition">
                             Voir les demandes
                         </a>
 
+                        <a href="{{ route('admin.prospects.index') }}"
+                        class="rounded-full bg-green-600 px-5 py-3 font-bold text-white hover:bg-green-700 transition">
+                            Clients
+                        </a>
+
                         <a href="{{ route('admin.users.index') }}"
-                           class="rounded-full bg-[#0A2E5D] px-5 py-3 font-bold text-white hover:bg-[#071F3F] transition">
+                        class="rounded-full bg-[#0A2E5D] px-5 py-3 font-bold text-white hover:bg-[#071F3F] transition">
                             Utilisateurs
                         </a>
 
                         <a href="{{ route('admin.properties.create') }}"
-                           class="rounded-full bg-[#C89B3C] px-5 py-3 font-bold text-white hover:bg-[#A87F2E] transition">
+                        class="rounded-full bg-[#C89B3C] px-5 py-3 font-bold text-white hover:bg-[#A87F2E] transition">
                             Ajouter un bien
                         </a>
 
                         <a href="{{ route('admin.site-settings.edit') }}"
-                           class="rounded-full bg-slate-800 px-5 py-3 font-bold text-white hover:bg-slate-900 transition">
+                        class="rounded-full bg-slate-800 px-5 py-3 font-bold text-white hover:bg-slate-900 transition">
                             Paramètres du site
                         </a>
+
                     </div>
                 </div>
 
