@@ -2,8 +2,16 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
+    @yield('seo')
+
+    @if (!View::hasSection('seo'))
+        <x-seo />
+    @endif
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('images/logo.png') }}">
 
     <title>
         @yield('title', 'SOZO Habitat | Immobilier en Côte d’Ivoire : Villas, Maisons et Terrains')

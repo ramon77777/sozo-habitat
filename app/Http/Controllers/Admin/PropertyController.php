@@ -67,6 +67,12 @@ class PropertyController extends Controller
             $validated['is_lot_approved'] = false;
             $validated['document_type'] = null;
         }
+        
+        if (auth()->user()->role === 'agent') {
+
+            $validated['user_id'] = auth()->id();
+
+        }
 
         $property = Property::create($validated);
 
@@ -119,11 +125,32 @@ class PropertyController extends Controller
 
     public function edit(Property $property)
     {
+
+        if (
+            auth()->user()->role === 'agent'
+            &&
+            $property->user_id !== auth()->id()
+        ) {
+            abort(403);
+        }
+
+
         return view('admin.properties.edit', compact('property'));
+
     }
 
     public function update(Request $request, Property $property)
     {
+        if (
+            auth()->user()->role === 'agent'
+            &&
+            $property->user_id !== auth()->id()
+        ) {
+
+            abort(403);
+
+        }
+
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'price' => ['required', 'numeric', 'min:0'],
@@ -204,19 +231,40 @@ class PropertyController extends Controller
 
     public function destroy(Property $property)
     {
+
+        if (
+            auth()->user()->role === 'agent'
+            &&
+            $property->user_id !== auth()->id()
+        ) {
+            abort(403);
+        }
+
+
+
         if (
             $property->main_image &&
             file_exists(public_path('images/properties/' . $property->main_image))
         ) {
+
             unlink(
                 public_path('images/properties/' . $property->main_image)
             );
+
         }
+
+
 
         $property->delete();
 
+
+
         return redirect()
             ->route('admin.dashboard')
-            ->with('success', 'Bien supprimé avec succès.');
+            ->with(
+                'success',
+                'Bien supprimé avec succès.'
+            );
+
     }
 }

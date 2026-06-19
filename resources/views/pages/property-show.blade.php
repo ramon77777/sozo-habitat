@@ -1,5 +1,97 @@
 @extends('layouts.app')
 
+@section('seo')
+
+<x-seo
+
+    :title="$property->title 
+        . ' - ' 
+        . ucfirst($property->type) 
+        . ' ' 
+        . ucfirst($property->transaction)
+        . ' à '
+        . $property->city
+        . ' | Sozo Habitat Côte d\'Ivoire'"
+    
+    :description="'Découvrez ' 
+        . $property->title 
+        . ', un(e) '
+        . $property->type
+        . ' disponible en '
+        . $property->transaction
+        . ' à '
+        . $property->city
+        . '. Sozo Habitat vous accompagne dans vos projets immobiliers partout en Côte d\'Ivoire.'"
+
+    :image="$property->images->first()
+        ? asset('images/properties/gallery/' . $property->images->first()->image_path)
+        : asset('images/logo.png')"
+
+/>
+
+
+@php
+
+$propertySchema = [
+
+    "@context" => "https://schema.org",
+
+    "@type" => "RealEstateListing",
+
+    "name" => $property->title,
+
+    "description" => $property->description,
+
+    "image" => $property->images->first()
+        ? asset('images/properties/gallery/' . $property->images->first()->image_path)
+        : asset('images/logo.png'),
+
+
+    "offers" => [
+
+        "@type" => "Offer",
+
+        "price" => $property->price,
+
+        "priceCurrency" => "XOF",
+
+        "availability" => "https://schema.org/InStock"
+
+    ],
+
+
+    "address" => [
+
+        "@type" => "PostalAddress",
+
+        "addressLocality" => $property->city,
+
+        "addressCountry" => "CI"
+
+    ],
+
+
+    "url" => url()->current()
+
+];
+
+@endphp
+
+
+<script type="application/ld+json">
+
+{!! json_encode(
+    $propertySchema,
+    JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES
+) !!}
+
+</script>
+
+
+@endsection
+
+
+
 @section('content')
 
 <section class="bg-[#F8F9FB] min-h-screen py-20">
@@ -27,7 +119,8 @@
                         id="mainImage"
                         src="{{ $photos->first() }}"
                         class="w-full h-[520px] rounded-3xl shadow-lg object-cover cursor-zoom-in"
-                        alt="{{ $property->title }}"
+                        alt="{{ $property->title }} - {{ $property->city }} - Sozo Habitat Côte d'Ivoire"
+                        loading="eager"
                         onclick="openGallery(currentIndex)"
                     >
 
@@ -62,7 +155,8 @@
                                 data-index="{{ $index }}"
                                 class="thumbnail cursor-pointer rounded-xl h-24 w-full object-cover border-2 border-transparent hover:border-[#C89B3C] hover:scale-105 transition"
                                 onclick="setImage({{ $index }})"
-                                alt="{{ $property->title }}"
+                                alt="{{ $property->title }} - Photo {{ $index + 1 }} - {{ $property->city }}"
+                                loading="lazy"
                             >
                         @endforeach
                     </div>
@@ -375,7 +469,7 @@
         id="modalImage"
         src="{{ $photos->first() }}"
         class="max-h-[85vh] max-w-[90vw] rounded-2xl object-contain"
-        alt="{{ $property->title }}"
+        alt="{{ $property->title }} - Galerie Sozo Habitat Côte d'Ivoire"
     >
 
     <button

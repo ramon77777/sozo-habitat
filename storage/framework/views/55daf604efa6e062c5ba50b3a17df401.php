@@ -1,0 +1,102 @@
+<aside class="w-72 bg-[#0A2E5D] text-white min-h-screen p-6">
+
+    <div class="text-center mb-10">
+
+        <div class="text-3xl font-black text-[#C89B3C]">
+            SOZO
+        </div>
+
+        <div class="text-sm text-white/70 mt-2">
+            Espace Agent
+        </div>
+
+    </div>
+
+
+    <nav class="space-y-3">
+
+
+        <a href="<?php echo e(route('agent.dashboard')); ?>"
+           class="block px-5 py-3 rounded-2xl transition
+           <?php echo e(request()->routeIs('agent.dashboard')
+                ? 'bg-white text-[#0A2E5D] font-black'
+                : 'hover:bg-white/10'); ?>">
+
+            📊 Dashboard
+
+        </a>
+
+
+
+        <a href="<?php echo e(route('agent.properties.index')); ?>"
+            class="block px-5 py-3 rounded-2xl hover:bg-white/10">
+
+            🏠 Mes biens
+
+        </a>
+
+
+
+        <a href="<?php echo e(route('agent.prospects.index')); ?>"
+           class="block px-5 py-3 rounded-2xl hover:bg-white/10 transition">
+
+            👤 Mes clients
+
+        </a>
+
+
+
+        <a href="<?php echo e(route('agent.appointments.index')); ?>"
+            class="block px-5 py-3 rounded-2xl transition
+            <?php echo e(request()->routeIs('agent.appointments.*')
+                ? 'bg-white text-[#0A2E5D] font-black'
+                : 'hover:bg-white/10'); ?>">
+
+                📅 Rendez-vous
+
+        </a>
+
+
+        <a href="<?php echo e(route('profile.edit')); ?>"
+           class="block px-5 py-3 rounded-2xl hover:bg-white/10 transition">
+
+            ⚙️ Mon profil
+
+        </a>
+
+
+
+    </nav>
+
+
+
+    <div class="mt-10 pt-6 border-t border-white/10">
+
+        <form method="POST" action="<?php echo e(route('logout')); ?>">
+            <?php echo csrf_field(); ?>
+
+            <button
+                type="submit"
+                class="w-full rounded-2xl bg-red-600 py-3 font-bold hover:bg-red-700 transition"
+            >
+                <span class="flex items-center justify-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="2"
+                        stroke="currentColor"
+                        class="w-5 h-5">
+                        <path stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6A2.25 2.25 0 005.25 5.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m-3-3h9m0 0l-3-3m3 3l-3 3" />
+                    </svg>
+
+                    Déconnexion
+                </span>
+            </button>
+        </form>
+
+    </div>
+
+
+</aside><?php /**PATH D:\laragon\www\sozo-habitat\resources\views/components/agent-sidebar.blade.php ENDPATH**/ ?>

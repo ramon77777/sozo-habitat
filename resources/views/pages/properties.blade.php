@@ -1,5 +1,19 @@
 @extends('layouts.app')
 
+@section('seo')
+
+<x-seo
+
+    title="Biens immobiliers à vendre et à louer en Côte d'Ivoire | Sozo Habitat"
+
+    description="Découvrez les maisons, villas, duplex, appartements et terrains disponibles à la vente ou à la location partout en Côte d'Ivoire avec Sozo Habitat."
+
+    image="{{ asset('images/logo.png') }}"
+
+/>
+
+@endsection
+
 @section('content')
 
 <section class="bg-[#F8F9FB] min-h-screen py-16 px-6">
@@ -55,7 +69,8 @@
                     <div class="h-72 relative overflow-hidden">
                         <img
                             src="{{ asset('images/properties/'.$property->main_image) }}"
-                            alt="{{ $property->title }}"
+                            alt="{{ $property->city }} - Sozo Habitat Côte d'Ivoire"
+                            loading="lazy"
                             class="w-full h-full object-cover group-hover:scale-110 transition duration-700"
                         >
 
@@ -99,5 +114,19 @@
 
     </div>
 </section>
+
+<div class="mb-10 text-center max-w-4xl mx-auto">
+
+    <h1 class="text-4xl font-black text-[#0A2E5D]">
+        Biens immobiliers en Côte d'Ivoire
+    </h1>
+
+    <p class="mt-4 text-slate-600 leading-relaxed">
+        Sozo Habitat vous propose des biens immobiliers dans plusieurs villes de Côte d'Ivoire :
+        Abidjan, Bouaké, Yamoussoukro, San Pedro, Korhogo et autres localités.
+        Retrouvez des villas, maisons, duplex, appartements et terrains adaptés à vos projets.
+    </p>
+
+</div>
 
 @endsection
