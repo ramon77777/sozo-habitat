@@ -63,7 +63,7 @@
             ? 'bg-white text-[#0A2E5D] font-bold'
             : 'hover:bg-white/10 text-white' }}">
 
-            📅 Rendez-vous
+            📅 Rendez-Vous
 
         </a>
 
