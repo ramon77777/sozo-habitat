@@ -13,14 +13,14 @@
     </div>
 
 
-    <nav class="space-y-3">
+    <nav class="space-y-2">
 
 
         <a href="{{ route('agent.dashboard') }}"
-           class="block px-5 py-3 rounded-2xl transition
-           {{ request()->routeIs('agent.dashboard')
-                ? 'bg-white text-[#0A2E5D] font-black'
-                : 'hover:bg-white/10' }}">
+            class="block px-5 py-3 rounded-2xl transition
+            {{ request()->routeIs('agent.dashboard') 
+            ? 'bg-white text-[#0A2E5D] font-bold'
+            : 'hover:bg-white/10 text-white' }}">
 
             📊 Dashboard
 
@@ -28,8 +28,12 @@
 
 
 
+
         <a href="{{ route('agent.properties.index') }}"
-            class="block px-5 py-3 rounded-2xl hover:bg-white/10">
+            class="block px-5 py-3 rounded-2xl transition
+            {{ request()->routeIs('agent.properties.*') 
+            ? 'bg-white text-[#0A2E5D] font-bold'
+            : 'hover:bg-white/10 text-white' }}">
 
             🏠 Mes biens
 
@@ -37,8 +41,13 @@
 
 
 
+
+
         <a href="{{ route('agent.prospects.index') }}"
-           class="block px-5 py-3 rounded-2xl hover:bg-white/10 transition">
+            class="block px-5 py-3 rounded-2xl transition
+            {{ request()->routeIs('agent.prospects.*') 
+            ? 'bg-white text-[#0A2E5D] font-bold'
+            : 'hover:bg-white/10 text-white' }}">
 
             👤 Mes clients
 
@@ -46,19 +55,27 @@
 
 
 
+
+
         <a href="{{ route('agent.appointments.index') }}"
             class="block px-5 py-3 rounded-2xl transition
-            {{ request()->routeIs('agent.appointments.*')
-                ? 'bg-white text-[#0A2E5D] font-black'
-                : 'hover:bg-white/10' }}">
+            {{ request()->routeIs('agent.appointments.*') 
+            ? 'bg-white text-[#0A2E5D] font-bold'
+            : 'hover:bg-white/10 text-white' }}">
 
-                📅 Rendez-vous
+            📅 Rendez-vous
 
         </a>
 
 
+
+
+
         <a href="{{ route('profile.edit') }}"
-           class="block px-5 py-3 rounded-2xl hover:bg-white/10 transition">
+            class="block px-5 py-3 rounded-2xl transition
+            {{ request()->routeIs('profile.*') 
+            ? 'bg-white text-[#0A2E5D] font-bold'
+            : 'hover:bg-white/10 text-white' }}">
 
             ⚙️ Mon profil
 
