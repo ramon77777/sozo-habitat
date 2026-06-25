@@ -21,7 +21,7 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Copie du code
 COPY . .
 
-# Créer un .env minimal pour que Vite/Artisan puissent tourner pendant le build
+# .env minimal pour le build (Vite + Artisan)
 RUN cp .env.example .env || true
 RUN php artisan key:generate --force || true
 
@@ -52,19 +52,21 @@ RUN sed -i 's/Listen 80/Listen 10000/' /etc/apache2/ports.conf \
 
 EXPOSE 10000
 
-# Au démarrage : écraser le .env par les vraies variables Render, migrer, lancer Apache
+# Au démarrage : écrire le .env avec les variables Render (guillemets pour gérer les espaces)
 CMD bash -c "\
-    echo APP_NAME=\$APP_NAME > .env && \
-    echo APP_ENV=\$APP_ENV >> .env && \
-    echo APP_KEY=\$APP_KEY >> .env && \
-    echo APP_DEBUG=\$APP_DEBUG >> .env && \
-    echo APP_URL=\$APP_URL >> .env && \
-    echo DB_CONNECTION=\$DB_CONNECTION >> .env && \
-    echo DB_HOST=\$DB_HOST >> .env && \
-    echo DB_PORT=\$DB_PORT >> .env && \
-    echo DB_DATABASE=\$DB_DATABASE >> .env && \
-    echo DB_USERNAME=\$DB_USERNAME >> .env && \
-    echo DB_PASSWORD=\$DB_PASSWORD >> .env && \
+    printf 'APP_NAME=\"%s\"\n' \"\$APP_NAME\" > .env && \
+    printf 'APP_ENV=\"%s\"\n' \"\$APP_ENV\" >> .env && \
+    printf 'APP_KEY=\"%s\"\n' \"\$APP_KEY\" >> .env && \
+    printf 'APP_DEBUG=\"%s\"\n' \"\$APP_DEBUG\" >> .env && \
+    printf 'APP_URL=\"%s\"\n' \"\$APP_URL\" >> .env && \
+    printf 'DB_CONNECTION=\"%s\"\n' \"\$DB_CONNECTION\" >> .env && \
+    printf 'DB_HOST=\"%s\"\n' \"\$DB_HOST\" >> .env && \
+    printf 'DB_PORT=\"%s\"\n' \"\$DB_PORT\" >> .env && \
+    printf 'DB_DATABASE=\"%s\"\n' \"\$DB_DATABASE\" >> .env && \
+    printf 'DB_USERNAME=\"%s\"\n' \"\$DB_USERNAME\" >> .env && \
+    printf 'DB_PASSWORD=\"%s\"\n' \"\$DB_PASSWORD\" >> .env && \
+    printf 'SESSION_DRIVER=\"%s\"\n' \"\$SESSION_DRIVER\" >> .env && \
+    printf 'CACHE_STORE=\"%s\"\n' \"\$CACHE_STORE\" >> .env && \
     php artisan config:clear && \
     php artisan migrate --force && \
     php artisan config:cache && \
