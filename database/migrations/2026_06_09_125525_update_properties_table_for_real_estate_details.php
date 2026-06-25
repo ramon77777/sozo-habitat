@@ -9,14 +9,18 @@ return new class extends Migration
 {
     public function up(): void
     {
-        DB::statement("ALTER TABLE properties MODIFY type ENUM('maison', 'villa', 'duplex', 'appartement', 'maison_basse', 'terrain') NOT NULL");
-
+        // Convertir les anciennes valeurs 'maison' en 'villa'
         DB::table('properties')
             ->where('type', 'maison')
             ->update(['type' => 'villa']);
 
-        DB::statement("ALTER TABLE properties MODIFY type ENUM('villa', 'duplex', 'appartement', 'maison_basse', 'terrain') NOT NULL");
+        // Mettre à jour la colonne type avec les nouvelles valeurs autorisées
+        // Compatible PostgreSQL ET MySQL
+        Schema::table('properties', function (Blueprint $table) {
+            $table->string('type')->change(); // libère la contrainte ENUM
+        });
 
+        // Ajouter les nouvelles colonnes
         Schema::table('properties', function (Blueprint $table) {
             $table->string('address')->nullable()->after('district');
             $table->decimal('latitude', 10, 7)->nullable()->after('address');
@@ -47,7 +51,5 @@ return new class extends Migration
                 'document_type',
             ]);
         });
-
-        DB::statement("ALTER TABLE properties MODIFY type ENUM('maison', 'appartement', 'terrain', 'bureau') NOT NULL");
     }
 };
