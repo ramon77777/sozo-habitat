@@ -1,5 +1,6 @@
 FROM php:8.3-cli
 
+
 WORKDIR /var/www/html
 
 
@@ -19,13 +20,16 @@ COPY . .
 RUN composer install --no-dev --optimize-autoloader
 
 
+RUN mkdir -p storage/framework/views \
+    storage/framework/cache \
+    storage/framework/sessions \
+    bootstrap/cache
+
+
 RUN touch database/database.sqlite
 
 
 RUN php artisan storage:link || true
-
-
-RUN php artisan migrate --force || true
 
 
 EXPOSE 10000
