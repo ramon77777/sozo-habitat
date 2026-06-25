@@ -21,6 +21,10 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Copie du code
 COPY . .
 
+# Créer un .env minimal pour que Vite/Artisan puissent tourner pendant le build
+RUN cp .env.example .env || true
+RUN php artisan key:generate --force || true
+
 # Installation des dépendances PHP
 RUN composer install --no-dev --optimize-autoloader
 
@@ -42,13 +46,26 @@ RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' \
     /etc/apache2/apache2.conf \
     /etc/apache2/conf-available/*.conf
 
-# Render utilise le port 10000 par défaut
-ENV APACHE_RUN_USER=www-data
-ENV APACHE_RUN_GROUP=www-data
+# Render utilise le port 10000
 RUN sed -i 's/Listen 80/Listen 10000/' /etc/apache2/ports.conf \
     && sed -i 's/<VirtualHost \*:80>/<VirtualHost *:10000>/' /etc/apache2/sites-available/000-default.conf
 
 EXPOSE 10000
 
-# Au démarrage : migrate + lancer Apache
-CMD bash -c "php artisan migrate --force && php artisan config:cache && apache2-foreground"
+# Au démarrage : écraser le .env par les vraies variables Render, migrer, lancer Apache
+CMD bash -c "\
+    echo APP_NAME=\$APP_NAME > .env && \
+    echo APP_ENV=\$APP_ENV >> .env && \
+    echo APP_KEY=\$APP_KEY >> .env && \
+    echo APP_DEBUG=\$APP_DEBUG >> .env && \
+    echo APP_URL=\$APP_URL >> .env && \
+    echo DB_CONNECTION=\$DB_CONNECTION >> .env && \
+    echo DB_HOST=\$DB_HOST >> .env && \
+    echo DB_PORT=\$DB_PORT >> .env && \
+    echo DB_DATABASE=\$DB_DATABASE >> .env && \
+    echo DB_USERNAME=\$DB_USERNAME >> .env && \
+    echo DB_PASSWORD=\$DB_PASSWORD >> .env && \
+    php artisan config:clear && \
+    php artisan migrate --force && \
+    php artisan config:cache && \
+    apache2-foreground"
