@@ -1,15 +1,21 @@
-FROM php:8.3-apache
+FROM php:8.3-cli
 
 WORKDIR /var/www/html
 
-RUN docker-php-ext-install pdo pdo_mysql
+RUN apt-get update && apt-get install -y \
+    git \
+    unzip \
+    libzip-dev \
+    && docker-php-ext-install pdo_mysql zip
+
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 COPY . .
 
-RUN a2enmod rewrite
+RUN composer install --no-dev --optimize-autoloader
 
-RUN chown -R www-data:www-data storage bootstrap/cache
+RUN php artisan storage:link || true
 
-EXPOSE 80
+EXPOSE 10000
 
-CMD ["apache2-foreground"]
+CMD php artisan serve --host=0.0.0.0 --port=10000
