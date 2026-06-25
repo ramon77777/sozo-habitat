@@ -67,7 +67,10 @@ CMD bash -c "\
     printf 'DB_PASSWORD=\"%s\"\n' \"\$DB_PASSWORD\" >> .env && \
     printf 'SESSION_DRIVER=\"%s\"\n' \"\$SESSION_DRIVER\" >> .env && \
     printf 'CACHE_STORE=\"%s\"\n' \"\$CACHE_STORE\" >> .env && \
+    printf 'ADMIN_EMAIL=\"%s\"\n' \"\$ADMIN_EMAIL\" >> .env && \
+    printf 'ADMIN_PASSWORD=\"%s\"\n' \"\$ADMIN_PASSWORD\" >> .env && \
     php artisan config:clear && \
     php artisan migrate --force && \
+    php artisan db:seed --class=AdminSeeder --force && \
     php artisan config:cache && \
     apache2-foreground"
