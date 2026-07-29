@@ -1,0 +1,86 @@
+# syntax=docker/dockerfile:1.7
+
+FROM composer:2 AS vendor
+
+WORKDIR /app
+
+COPY composer.json composer.lock ./
+
+RUN composer install \
+    --no-dev \
+    --prefer-dist \
+    --no-interaction \
+    --no-progress \
+    --no-scripts
+
+
+FROM node:24-bookworm-slim AS frontend
+
+WORKDIR /app
+
+COPY package.json package-lock.json ./
+
+RUN npm ci
+
+COPY . .
+
+COPY --from=vendor /app/vendor ./vendor
+
+RUN npm run build
+
+
+FROM php:8.3-apache-bookworm AS runtime
+
+ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
+
+WORKDIR /var/www/html
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        libzip-dev \
+    && docker-php-ext-install -j"$(nproc)" \
+        pdo_mysql \
+        zip \
+    && a2enmod rewrite headers \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY . .
+
+COPY --from=vendor /app/vendor ./vendor
+COPY --from=frontend /app/public/build ./public/build
+
+RUN mkdir -p \
+        storage/framework/cache/data \
+        storage/framework/sessions \
+        storage/framework/views \
+        storage/framework/testing \
+        storage/logs \
+        bootstrap/cache \
+    && chown -R www-data:www-data storage bootstrap/cache \
+    && chmod -R ug+rwX storage bootstrap/cache \
+    && sed -ri \
+        -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' \
+        /etc/apache2/sites-available/*.conf \
+        /etc/apache2/apache2.conf \
+        /etc/apache2/conf-available/*.conf \
+    && printf '%s\n' \
+        '<Directory /var/www/html/public>' \
+        '    AllowOverride All' \
+        '    Options FollowSymLinks' \
+        '    Require all granted' \
+        '</Directory>' \
+        > /etc/apache2/conf-available/laravel.conf \
+    && printf '%s\n' 'ServerName localhost' \
+        > /etc/apache2/conf-available/server-name.conf \
+    && a2enconf laravel server-name \
+    && php artisan package:discover --ansi
+
+COPY docker/vercel-entrypoint.sh /usr/local/bin/vercel-entrypoint
+
+RUN chmod +x /usr/local/bin/vercel-entrypoint
+
+EXPOSE 80
+
+ENTRYPOINT ["/usr/local/bin/vercel-entrypoint"]
+
+CMD ["apache2-foreground"]
