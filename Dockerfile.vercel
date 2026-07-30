@@ -76,8 +76,10 @@ RUN mkdir -p \
     && php artisan package:discover --ansi
 
 COPY docker/vercel-entrypoint.sh /usr/local/bin/vercel-entrypoint
+COPY docker/certs/aiven-ca.pem /etc/ssl/certs/aiven-ca.pem
 
-RUN chmod +x /usr/local/bin/vercel-entrypoint
+RUN chmod +x /usr/local/bin/vercel-entrypoint \
+    && chmod 0644 /etc/ssl/certs/aiven-ca.pem
 
 EXPOSE 80
 
