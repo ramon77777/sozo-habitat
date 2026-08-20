@@ -13,6 +13,7 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use RuntimeException;
 use Throwable;
+use Aws\S3\S3Client;
 
 class PropertyMediaService
 {
@@ -47,7 +48,7 @@ class PropertyMediaService
         if (! in_array($contentType, $allowedMimeTypes, true)) {
             $this->failValidation(
                 'content_type',
-                'Le type de fichier sÃ©lectionnÃ© nâ€™est pas autorisÃ©.'
+                'Le type de fichier sélectionné n’est pas autorisé.'
             );
         }
 
@@ -56,7 +57,7 @@ class PropertyMediaService
 
             $this->failValidation(
                 'size',
-                "Le fichier dÃ©passe la limite de {$maximumMegabytes} Mo."
+                "Le fichier dépasse la limite de {$maximumMegabytes} Mo."
             );
         }
 
@@ -69,25 +70,57 @@ class PropertyMediaService
             $extension
         );
 
-        $disk = $this->disk();
+        $r2 = config('filesystems.disks.r2');
 
-        if (! $disk->providesTemporaryUploadUrls()) {
-            throw new RuntimeException(
-                'Le disque mÃ©dia ne permet pas de gÃ©nÃ©rer des URL dâ€™envoi temporaires.'
-            );
+        $requiredConfiguration = [
+            'key',
+            'secret',
+            'region',
+            'bucket',
+            'endpoint',
+        ];
+
+        foreach ($requiredConfiguration as $configurationKey) {
+            if (blank($r2[$configurationKey] ?? null)) {
+                throw new RuntimeException(
+                    "La configuration R2 [{$configurationKey}] est manquante."
+                );
+            }
         }
 
-        $temporaryUpload = $disk->temporaryUploadUrl(
-            $key,
-            now()->addMinutes(15),
-            ['ContentType' => $contentType]
+        $client = new S3Client([
+            'version' => 'latest',
+            'region' => $r2['region'],
+            'endpoint' => $r2['endpoint'],
+            'credentials' => [
+                'key' => $r2['key'],
+                'secret' => $r2['secret'],
+            ],
+            'use_path_style_endpoint' => (bool) (
+                $r2['use_path_style_endpoint'] ?? false
+            ),
+        ]);
+
+        $command = $client->getCommand('PutObject', [
+            'Bucket' => $r2['bucket'],
+            'Key' => $key,
+            'ContentType' => $contentType,
+        ]);
+
+        $expiresAt = now()->addMinutes(15);
+
+        $request = $client->createPresignedRequest(
+            $command,
+            '+15 minutes'
         );
 
         return [
             'key' => $key,
-            'url' => $temporaryUpload['url'],
-            'headers' => $temporaryUpload['headers'] ?? [],
-            'expires_at' => now()->addMinutes(15)->toIso8601String(),
+            'url' => (string) $request->getUri(),
+            'headers' => [
+                'Content-Type' => $contentType,
+            ],
+            'expires_at' => $expiresAt->toIso8601String(),
             'filename' => $filename,
         ];
     }
@@ -123,7 +156,7 @@ class PropertyMediaService
         if (($property->videos()->count() + count($videoKeys)) > self::MAX_VIDEOS) {
             $this->failValidation(
                 'property_video_keys',
-                'Un bien ne peut pas contenir plus de 2 vidÃ©os.'
+                'Un bien ne peut pas contenir plus de 2 vidéos.'
             );
         }
 
@@ -240,14 +273,14 @@ class PropertyMediaService
         ) {
             $this->failValidation(
                 'media',
-                'La rÃ©fÃ©rence du mÃ©dia nâ€™est pas valide pour cet utilisateur.'
+                'La référence du média n’est pas valide pour cet utilisateur.'
             );
         }
 
         if ($this->pathIsAlreadyUsed($key)) {
             $this->failValidation(
                 'media',
-                'Ce mÃ©dia est dÃ©jÃ  associÃ© Ã  un bien.'
+                'Ce média est déjà associé à un bien.'
             );
         }
 
@@ -257,7 +290,7 @@ class PropertyMediaService
             if (! $disk->exists($key)) {
                 $this->failValidation(
                     'media',
-                    'Le mÃ©dia envoyÃ© est introuvable dans le stockage.'
+                    'Le média envoyé est introuvable dans le stockage.'
                 );
             }
 
@@ -266,7 +299,7 @@ class PropertyMediaService
             if ($size < 1 || $size > $maximumSize) {
                 $this->failValidation(
                     'media',
-                    'La taille rÃ©elle du mÃ©dia nâ€™est pas autorisÃ©e.'
+                    'La taille réelle du média n’est pas autorisée.'
                 );
             }
 
@@ -275,7 +308,7 @@ class PropertyMediaService
             if (! in_array($mimeType, $allowedMimeTypes, true)) {
                 $this->failValidation(
                     'media',
-                    'Le type rÃ©el du mÃ©dia nâ€™est pas autorisÃ©.'
+                    'Le type réel du média n’est pas autorisé.'
                 );
             }
         } catch (ValidationException $exception) {
@@ -285,7 +318,7 @@ class PropertyMediaService
 
             $this->failValidation(
                 'media',
-                'Impossible de vÃ©rifier le mÃ©dia dans Cloudflare R2.'
+                'Impossible de vérifier le média dans Cloudflare R2.'
             );
         }
     }
@@ -351,7 +384,7 @@ class PropertyMediaService
             ],
             default => $this->failValidation(
                 'category',
-                'La catÃ©gorie de mÃ©dia est invalide.'
+                'La catégorie de média est invalide.'
             ),
         };
     }
@@ -369,7 +402,7 @@ class PropertyMediaService
         $validator->validate();
 
         throw new RuntimeException(
-            'La validation aurait dÃ» lever une exception.'
+            'La validation aurait dû lever une exception.'
         );
     }
 
