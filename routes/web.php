@@ -21,6 +21,8 @@ use App\Http\Controllers\Admin\ProspectController;
 use App\Http\Controllers\SitemapController;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Agent\PropertyController as AgentPropertyController;
+use App\Http\Controllers\PropertyMediaController;
+use App\Http\Controllers\PropertyMediaUploadController;
 
 
 Route::get('/', function () {
@@ -78,6 +80,13 @@ Route::post('/biens/{property}/demande-visite', function (Request $request, Prop
 
 Route::get('/sitemap.xml', [SitemapController::class, 'index'])
     ->name('sitemap');
+
+Route::post(
+    '/media/uploads/presign',
+    PropertyMediaUploadController::class
+)
+    ->middleware('throttle:40,1')
+    ->name('media.uploads.presign');
 
 /*
 |--------------------------------------------------------------------------
@@ -335,6 +344,17 @@ Route::middleware(['auth','role:admin'])->group(function () {
     Route::delete('/admin/properties/{property}', [PropertyController::class, 'destroy'])
         ->name('admin.properties.destroy');
 
+    Route::delete(
+        '/admin/property-images/{propertyImage}',
+        [PropertyMediaController::class, 'destroyImage']
+    )->name('admin.property-images.destroy');
+
+
+    Route::delete(
+        '/admin/property-videos/{propertyVideo}',
+        [PropertyMediaController::class, 'destroyVideo']
+    )->name('admin.property-videos.destroy');
+
 
 
     Route::patch(
@@ -566,6 +586,17 @@ Route::middleware(['auth','role:agent'])->group(function(){
             'properties',
             AgentPropertyController::class
         );
+
+        Route::delete(
+            'property-images/{propertyImage}',
+            [PropertyMediaController::class, 'destroyImage']
+        )->name('property-images.destroy');
+
+
+        Route::delete(
+            'property-videos/{propertyVideo}',
+            [PropertyMediaController::class, 'destroyVideo']
+        )->name('property-videos.destroy');
 
 
     });

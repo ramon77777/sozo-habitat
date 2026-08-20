@@ -61,14 +61,45 @@ Modifier le bien
 
 
 
-<form method="POST"
-
+<form
+method="POST"
 action="{{ route('agent.properties.update',$property) }}"
-
-enctype="multipart/form-data">
+enctype="multipart/form-data"
+data-media-upload-form
+data-presign-url="{{ route('media.uploads.presign') }}"
+data-existing-main-image="{{ $property->main_image ? 1 : 0 }}"
+data-existing-gallery-count="{{ $property->images->count() }}"
+data-existing-video-count="{{ $property->videos->count() }}">
 
 
 @csrf
+
+@if(old('main_image_key'))
+<input
+type="hidden"
+name="main_image_key"
+value="{{ old('main_image_key') }}"
+data-existing-upload-key="main_image"
+>
+@endif
+
+@foreach((array) old('gallery_image_keys', []) as $uploadedKey)
+<input
+type="hidden"
+name="gallery_image_keys[]"
+value="{{ $uploadedKey }}"
+data-existing-upload-key="gallery_image"
+>
+@endforeach
+
+@foreach((array) old('property_video_keys', []) as $uploadedKey)
+<input
+type="hidden"
+name="property_video_keys[]"
+value="{{ $uploadedKey }}"
+data-existing-upload-key="property_video"
+>
+@endforeach
 
 @method('PUT')
 
@@ -411,7 +442,7 @@ Nouvelle image principale
 
 type="file"
 
-name="main_image"
+data-media-category="main_image"
 
 class="w-full border rounded-xl p-4">
 
@@ -438,7 +469,7 @@ type="file"
 
 multiple
 
-name="gallery_images[]"
+data-media-category="gallery_image"
 
 class="w-full border rounded-xl p-4">
 
@@ -471,7 +502,7 @@ type="file"
 
 multiple
 
-name="property_videos[]"
+data-media-category="property_video"
 
 class="w-full border rounded-xl p-4">
 
@@ -544,13 +575,96 @@ Annuler
 
 </form>
 
+@if($property->main_image || $property->images->count() || $property->videos->count())
+<div class="mt-12 border-t border-slate-100 pt-10">
 
+    @if($property->main_image)
+        <h3 class="mb-4 text-2xl font-black text-[#0A2E5D]">
+            Image principale actuelle
+        </h3>
+
+        <img
+            src="{{ $property->main_image_url }}"
+            alt="{{ $property->title }}"
+            class="mb-8 h-56 w-full rounded-2xl object-cover"
+        >
+    @endif
+
+    @if($property->images->count())
+        <h3 class="mb-4 text-2xl font-black text-[#0A2E5D]">
+            Images de la galerie
+        </h3>
+
+        <div class="grid gap-4 md:grid-cols-4">
+            @foreach($property->images as $image)
+                <div class="rounded-2xl border border-slate-200 p-3">
+                    <img
+                        src="{{ $image->url }}"
+                        class="h-32 w-full rounded-xl object-cover"
+                        alt=""
+                    >
+
+                    <form
+                        method="POST"
+                        action="{{ route('agent.property-images.destroy', $image) }}"
+                        onsubmit="return confirm('Supprimer cette image ?')"
+                        class="mt-3"
+                    >
+                        @csrf
+                        @method('DELETE')
+
+                        <button
+                            type="submit"
+                            class="w-full rounded-xl bg-red-600 px-4 py-2 font-bold text-white"
+                        >
+                            Supprimer
+                        </button>
+                    </form>
+                </div>
+            @endforeach
+        </div>
+    @endif
+
+    @if($property->videos->count())
+        <h3 class="mb-4 mt-10 text-2xl font-black text-[#0A2E5D]">
+            Vidéos du bien
+        </h3>
+
+        <div class="grid gap-4 md:grid-cols-2">
+            @foreach($property->videos as $video)
+                <div class="rounded-2xl border border-slate-200 p-3">
+                    <div class="aspect-video overflow-hidden rounded-xl bg-black">
+                        <video controls class="h-full w-full object-contain">
+                            <source src="{{ $video->url }}">
+                        </video>
+                    </div>
+
+                    <form
+                        method="POST"
+                        action="{{ route('agent.property-videos.destroy', $video) }}"
+                        onsubmit="return confirm('Supprimer cette vidéo ?')"
+                        class="mt-3"
+                    >
+                        @csrf
+                        @method('DELETE')
+
+                        <button
+                            type="submit"
+                            class="w-full rounded-xl bg-red-600 px-4 py-2 font-bold text-white"
+                        >
+                            Supprimer
+                        </button>
+                    </form>
+                </div>
+            @endforeach
+        </div>
+    @endif
+</div>
+@endif
 
 </div>
 
-
 </div>
-
 
 </section>
 

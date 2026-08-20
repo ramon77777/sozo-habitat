@@ -24,7 +24,7 @@
         . '. Sozo Habitat vous accompagne dans vos projets immobiliers partout en Côte d\'Ivoire.'"
 
     :image="$property->images->first()
-        ? asset('images/properties/gallery/' . $property->images->first()->image_path)
+        ? $property->images->first()->url
         : asset('images/logo.png')"
 
 />
@@ -43,7 +43,7 @@ $propertySchema = [
     "description" => $property->description,
 
     "image" => $property->images->first()
-        ? asset('images/properties/gallery/' . $property->images->first()->image_path)
+        ? $property->images->first()->url
         : asset('images/logo.png'),
 
 
@@ -102,11 +102,11 @@ $propertySchema = [
             $photos = collect();
 
             if ($property->main_image) {
-                $photos->push(asset('images/properties/' . $property->main_image));
+                $photos->push($property->main_image_url);
             }
 
             foreach ($property->images as $image) {
-                $photos->push(asset('images/properties/gallery/' . $image->image_path));
+                $photos->push($image->url);
             }
         @endphp
 
@@ -304,7 +304,7 @@ $propertySchema = [
                                 class="h-full w-full object-contain"
                             >
                                 <source
-                                    src="{{ asset('videos/properties/' . $video->video_path) }}"
+                                    src="{{ $video->url }}"
                                     type="video/mp4"
                                 >
 

@@ -30,8 +30,44 @@
             @endif
 
             {{-- FORMULAIRE PRINCIPAL --}}
-            <form method="POST" action="{{ route('admin.properties.update', $property) }}" enctype="multipart/form-data">
+            <form
+                method="POST"
+                action="{{ route('admin.properties.update', $property) }}"
+                enctype="multipart/form-data"
+                data-media-upload-form
+                data-presign-url="{{ route('media.uploads.presign') }}"
+                data-existing-main-image="{{ $property->main_image ? 1 : 0 }}"
+                data-existing-gallery-count="{{ $property->images->count() }}"
+                data-existing-video-count="{{ $property->videos->count() }}"
+            >
                 @csrf
+
+                @if(old('main_image_key'))
+                <input
+                type="hidden"
+                name="main_image_key"
+                value="{{ old('main_image_key') }}"
+                data-existing-upload-key="main_image"
+                >
+                @endif
+
+                @foreach((array) old('gallery_image_keys', []) as $uploadedKey)
+                <input
+                type="hidden"
+                name="gallery_image_keys[]"
+                value="{{ $uploadedKey }}"
+                data-existing-upload-key="gallery_image"
+                >
+                @endforeach
+
+                @foreach((array) old('property_video_keys', []) as $uploadedKey)
+                <input
+                type="hidden"
+                name="property_video_keys[]"
+                value="{{ $uploadedKey }}"
+                data-existing-upload-key="property_video"
+                >
+                @endforeach
                 @method('PUT')
 
                 <div class="grid md:grid-cols-2 gap-6">
@@ -165,7 +201,7 @@
 
                     <div>
                         <label class="block mb-2 font-semibold">Image principale</label>
-                        <input type="file" name="main_image" class="w-full border border-slate-200 rounded-xl p-4">
+                        <input type="file" data-media-category="main_image" class="w-full border border-slate-200 rounded-xl p-4">
 
                         @if($property->main_image)
                             <p class="mt-2 text-sm text-slate-500">
@@ -176,7 +212,7 @@
 
                     <div>
                         <label class="block mb-2 font-semibold">Galerie photos</label>
-                        <input type="file" name="gallery_images[]" multiple accept="image/*" class="w-full border border-slate-200 rounded-xl p-4">
+                        <input type="file" data-media-category="gallery_image" multiple accept="image/*" class="w-full border border-slate-200 rounded-xl p-4">
                         <p class="mt-2 text-sm text-slate-500">
                             Vous pouvez sélectionner plusieurs images.
                         </p>
@@ -184,7 +220,7 @@
 
                     <div>
                         <label class="block mb-2 font-semibold">Vidéos du bien</label>
-                        <input type="file" name="property_videos[]" multiple accept="video/mp4,video/webm,video/quicktime" class="w-full border border-slate-200 rounded-xl p-4">
+                        <input type="file" data-media-category="property_video" multiple accept="video/mp4,video/webm,video/quicktime" class="w-full border border-slate-200 rounded-xl p-4">
                         <p class="mt-2 text-sm text-slate-500">
                             Formats acceptés : MP4, WEBM, MOV.
                         </p>
@@ -218,7 +254,7 @@
                         @foreach($property->images as $image)
                             <div class="rounded-2xl border border-slate-200 p-3">
                                 <img
-                                    src="{{ asset('images/properties/gallery/' . $image->image_path) }}"
+                                    src="{{ $image->url }}"
                                     class="h-32 w-full object-cover rounded-xl"
                                     alt=""
                                 >
@@ -257,7 +293,7 @@
                                 <div class="aspect-video w-full overflow-hidden rounded-xl bg-black">
                                     <video controls class="h-full w-full object-contain">
                                         <source
-                                            src="{{ asset('videos/properties/' . $video->video_path) }}"
+                                            src="{{ $video->url }}"
                                             type="video/mp4"
                                         >
                                     </video>

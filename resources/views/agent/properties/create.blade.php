@@ -52,12 +52,45 @@ Ajouter un bien
 
 
 
-<form method="POST"
+<form
+method="POST"
 action="{{ route('agent.properties.store') }}"
-enctype="multipart/form-data">
+enctype="multipart/form-data"
+data-media-upload-form
+data-presign-url="{{ route('media.uploads.presign') }}"
+data-existing-main-image="0"
+data-existing-gallery-count="0"
+data-existing-video-count="0">
 
 
 @csrf
+
+@if(old('main_image_key'))
+<input
+type="hidden"
+name="main_image_key"
+value="{{ old('main_image_key') }}"
+data-existing-upload-key="main_image"
+>
+@endif
+
+@foreach((array) old('gallery_image_keys', []) as $uploadedKey)
+<input
+type="hidden"
+name="gallery_image_keys[]"
+value="{{ $uploadedKey }}"
+data-existing-upload-key="gallery_image"
+>
+@endforeach
+
+@foreach((array) old('property_video_keys', []) as $uploadedKey)
+<input
+type="hidden"
+name="property_video_keys[]"
+value="{{ $uploadedKey }}"
+data-existing-upload-key="property_video"
+>
+@endforeach
 
 
 
@@ -307,7 +340,7 @@ Image principale
 
 <input
 type="file"
-name="main_image"
+data-media-category="main_image"
 class="w-full border rounded-xl p-4">
 
 
@@ -327,7 +360,7 @@ Galerie photos
 <input
 multiple
 type="file"
-name="gallery_images[]"
+data-media-category="gallery_image"
 class="w-full border rounded-xl p-4">
 
 
@@ -353,7 +386,7 @@ Vidéos
 <input
 multiple
 type="file"
-name="property_videos[]"
+data-media-category="property_video"
 class="w-full border rounded-xl p-4">
 
 

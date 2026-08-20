@@ -3,8 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\PropertyImage;
-use App\Models\PropertyVideo;
+use Illuminate\Support\Facades\Storage;
 
 class Property extends Model
 {
@@ -33,6 +32,10 @@ class Property extends Model
         'document_type',
     ];
 
+    protected $appends = [
+        'main_image_url',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -52,5 +55,21 @@ class Property extends Model
     {
         return $this->hasMany(PropertyInquiry::class);
     }
-}
 
+    public function getMainImageUrlAttribute(): ?string
+    {
+        if (! $this->main_image) {
+            return null;
+        }
+
+        if (str_starts_with($this->main_image, 'properties/')) {
+            return Storage::disk(
+                config('filesystems.media_disk', 'r2')
+            )->url($this->main_image);
+        }
+
+        return asset(
+            'images/properties/'.$this->main_image
+        );
+    }
+}

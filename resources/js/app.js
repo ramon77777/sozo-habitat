@@ -1,3 +1,4 @@
+import './property-media-upload';
 
 
 import Alpine from 'alpinejs';

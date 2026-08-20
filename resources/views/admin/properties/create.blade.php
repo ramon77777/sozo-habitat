@@ -17,8 +17,44 @@
 
         <div class="bg-white rounded-3xl shadow-xl p-10">
 
-            <form method="POST" action="{{ route('admin.properties.store') }}" enctype="multipart/form-data">
+            <form
+                method="POST"
+                action="{{ route('admin.properties.store') }}"
+                enctype="multipart/form-data"
+                data-media-upload-form
+                data-presign-url="{{ route('media.uploads.presign') }}"
+                data-existing-main-image="0"
+                data-existing-gallery-count="0"
+                data-existing-video-count="0"
+            >
                 @csrf
+
+                @if(old('main_image_key'))
+                <input
+                type="hidden"
+                name="main_image_key"
+                value="{{ old('main_image_key') }}"
+                data-existing-upload-key="main_image"
+                >
+                @endif
+
+                @foreach((array) old('gallery_image_keys', []) as $uploadedKey)
+                <input
+                type="hidden"
+                name="gallery_image_keys[]"
+                value="{{ $uploadedKey }}"
+                data-existing-upload-key="gallery_image"
+                >
+                @endforeach
+
+                @foreach((array) old('property_video_keys', []) as $uploadedKey)
+                <input
+                type="hidden"
+                name="property_video_keys[]"
+                value="{{ $uploadedKey }}"
+                data-existing-upload-key="property_video"
+                >
+                @endforeach
 
                 <div class="grid md:grid-cols-2 gap-6">
 
@@ -164,7 +200,7 @@
 
                     <div>
                         <label class="block mb-2 font-semibold">Image principale</label>
-                        <input type="file" name="main_image" accept="image/jpeg,image/png,image/webp" class="w-full border border-slate-200 rounded-xl p-4">
+                        <input type="file" data-media-category="main_image" accept="image/jpeg,image/png,image/webp" class="w-full border border-slate-200 rounded-xl p-4">
                     </div>
 
                     <div class="mt-4">
@@ -174,7 +210,7 @@
 
                         <input
                             type="file"
-                            name="gallery_images[]"
+                            data-media-category="gallery_image"
                             multiple
                             accept="image/jpeg,image/png,image/webp"
                             class="w-full border border-slate-200 rounded-xl p-4"
@@ -194,7 +230,7 @@
 
                     <input
                         type="file"
-                        name="property_videos[]"
+                        data-media-category="property_video"
                         multiple
                         accept="video/mp4,video/webm,video/quicktime"
                         class="w-full border border-slate-200 rounded-xl p-4"

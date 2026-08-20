@@ -4,545 +4,200 @@ namespace App\Http\Controllers\Agent;
 
 use App\Http\Controllers\Controller;
 use App\Models\Property;
-use App\Models\PropertyImage;
-use App\Models\PropertyVideo;
+use App\Services\PropertyMediaService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
+use Illuminate\View\View;
 
 class PropertyController extends Controller
 {
+    public function __construct(
+        private readonly PropertyMediaService $media
+    ) {
+    }
 
-
-    public function index()
+    public function index(): View
     {
-
         $properties = Property::where(
             'user_id',
             auth()->id()
         )
-        ->latest()
-        ->paginate(10);
-
+            ->latest()
+            ->paginate(10);
 
         return view(
             'agent.properties.index',
             compact('properties')
         );
-
     }
 
-
-
-
-
-    public function create()
+    public function create(): View
     {
+        return view('agent.properties.create');
+    }
 
-        return view(
-            'agent.properties.create'
+    public function store(Request $request): RedirectResponse
+    {
+        $validated = $request->validate(
+            $this->rules()
         );
 
-    }
+        $uploads = $this->extractUploads($validated);
+        $validated['user_id'] = $request->user()->id;
 
+        DB::transaction(function () use (
+            $validated,
+            $uploads,
+            $request
+        ): void {
+            $property = Property::create($validated);
 
-
-
-
-
-
-    public function store(Request $request)
-    {
-
-
-        $validated = $request->validate([
-
-
-            'title'=>'required|string|max:255',
-
-            'price'=>'required|numeric',
-
-            'city'=>'required|string',
-
-            'district'=>'nullable|string',
-
-            'address'=>'nullable|string',
-
-
-            'latitude'=>'nullable',
-
-            'longitude'=>'nullable',
-
-
-            'surface'=>'nullable|numeric',
-
-
-            'type'=>'required',
-
-            'transaction'=>'required',
-
-
-            'description'=>'nullable',
-
-
-            'main_image'=>'nullable|image',
-
-            'gallery_images.*'=>'nullable|image',
-
-            'property_videos.*'=>'nullable|mimes:mp4,mov,webm',
-
-
-        ]);
-
-
-
-
-
-        $validated['user_id'] = auth()->id();
-
-
-
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | IMAGE PRINCIPALE
-        |--------------------------------------------------------------------------
-        */
-
-
-        if($request->hasFile('main_image')){
-
-
-            $image = $request->file('main_image');
-
-
-            $filename = time().'_'.$image->getClientOriginalName();
-
-
-            $image->move(
-                public_path('images/properties'),
-                $filename
+            $this->media->attachUploads(
+                $property,
+                $request->user(),
+                $uploads['main_image'],
+                $uploads['gallery_images'],
+                $uploads['videos']
             );
-
-
-            $validated['main_image'] = $filename;
-
-        }
-
-
-
-
-
-
-
-        $property = Property::create($validated);
-
-
-
-
-
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | GALERIE
-        |--------------------------------------------------------------------------
-        */
-
-
-        if($request->hasFile('gallery_images')){
-
-
-            foreach($request->file('gallery_images') as $image){
-
-
-                $filename =
-                time().'_'.$image->getClientOriginalName();
-
-
-
-                $image->move(
-                    public_path('images/properties/gallery'),
-                    $filename
-                );
-
-
-
-                PropertyImage::create([
-
-                    'property_id'=>$property->id,
-
-                    'image_path'=>$filename
-
-                ]);
-
-
-            }
-
-
-        }
-
-
-
-
-
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | VIDEOS
-        |--------------------------------------------------------------------------
-        */
-
-
-        if($request->hasFile('property_videos')){
-
-
-            foreach($request->file('property_videos') as $video){
-
-
-                $filename =
-                time().'_'.$video->getClientOriginalName();
-
-
-
-                $video->move(
-                    public_path('videos/properties'),
-                    $filename
-                );
-
-
-
-                PropertyVideo::create([
-
-                    'property_id'=>$property->id,
-
-                    'video_path'=>$filename
-
-                ]);
-
-
-            }
-
-        }
-
-
-
-
-
+        });
 
         return redirect()
-
-        ->route('agent.properties.index')
-
-        ->with(
-            'success',
-            'Bien ajouté avec succès'
-        );
-
-
+            ->route('agent.properties.index')
+            ->with('success', 'Bien ajouté avec succès.');
     }
 
-
-
-
-
-
-
-
-
-    public function edit(Property $property)
-    {
-
-
-        abort_if(
-
-            $property->user_id !== auth()->id(),
-
-            403
-
+    public function edit(
+        Request $request,
+        Property $property
+    ): View {
+        $this->media->authorizeProperty(
+            $request->user(),
+            $property
         );
 
-
+        $property->load(['images', 'videos']);
 
         return view(
-
             'agent.properties.edit',
-
             compact('property')
-
         );
-
     }
-
-
-
-
-
-
-
-
 
     public function update(
         Request $request,
         Property $property
-    )
-    {
-
-
-        abort_if(
-
-            $property->user_id !== auth()->id(),
-
-            403
-
+    ): RedirectResponse {
+        $this->media->authorizeProperty(
+            $request->user(),
+            $property
         );
 
+        $validated = $request->validate(
+            $this->rules()
+        );
 
+        $uploads = $this->extractUploads($validated);
 
+        DB::transaction(function () use (
+            $property,
+            $validated,
+            $uploads,
+            $request
+        ): void {
+            $property->update($validated);
 
-
-
-        $validated = $request->validate([
-
-
-            'title'=>'required|string|max:255',
-
-            'price'=>'required|numeric',
-
-            'city'=>'required|string',
-
-            'district'=>'nullable',
-
-            'address'=>'nullable',
-
-
-            'latitude'=>'nullable',
-
-            'longitude'=>'nullable',
-
-
-            'surface'=>'nullable',
-
-
-            'type'=>'required',
-
-            'transaction'=>'required',
-
-
-            'description'=>'nullable',
-
-
-            'main_image'=>'nullable|image',
-
-            'gallery_images.*'=>'nullable|image',
-
-            'property_videos.*'=>'nullable|mimes:mp4,mov,webm',
-
-        ]);
-
-
-
-
-
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Nouvelle image principale
-        |--------------------------------------------------------------------------
-        */
-
-
-        if($request->hasFile('main_image')){
-
-
-            $image=$request->file('main_image');
-
-
-            $filename=time().'_'.$image->getClientOriginalName();
-
-
-
-            $image->move(
-
-                public_path('images/properties'),
-
-                $filename
-
+            $this->media->attachUploads(
+                $property,
+                $request->user(),
+                $uploads['main_image'],
+                $uploads['gallery_images'],
+                $uploads['videos']
             );
-
-
-
-            $validated['main_image']=$filename;
-
-
-        }
-
-
-
-
-
-
-
-        $property->update($validated);
-
-
-
-
-
-
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Galerie supplémentaire
-        |--------------------------------------------------------------------------
-        */
-
-
-        if($request->hasFile('gallery_images')){
-
-
-            foreach($request->file('gallery_images') as $image){
-
-
-                $filename=time().'_'.$image->getClientOriginalName();
-
-
-
-                $image->move(
-
-                    public_path('images/properties/gallery'),
-
-                    $filename
-
-                );
-
-
-
-                PropertyImage::create([
-
-                    'property_id'=>$property->id,
-
-                    'image_path'=>$filename
-
-                ]);
-
-
-            }
-
-
-        }
-
-
-
-
-
-
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Vidéos supplémentaires
-        |--------------------------------------------------------------------------
-        */
-
-
-        if($request->hasFile('property_videos')){
-
-
-            foreach($request->file('property_videos') as $video){
-
-
-                $filename=time().'_'.$video->getClientOriginalName();
-
-
-
-                $video->move(
-
-                    public_path('videos/properties'),
-
-                    $filename
-
-                );
-
-
-
-                PropertyVideo::create([
-
-                    'property_id'=>$property->id,
-
-                    'video_path'=>$filename
-
-                ]);
-
-
-            }
-
-
-        }
-
-
-
-
-
-
+        });
 
         return redirect()
-
-        ->route('agent.properties.index')
-
-        ->with(
-
-            'success',
-
-            'Bien modifié avec succès'
-
-        );
-
-
+            ->route('agent.properties.index')
+            ->with('success', 'Bien modifié avec succès.');
     }
 
-
-
-
-
-
-
-
-
-
-    public function destroy(Property $property)
-    {
-
-
-        abort_if(
-
-            $property->user_id !== auth()->id(),
-
-            403
-
+    public function destroy(
+        Request $request,
+        Property $property
+    ): RedirectResponse {
+        $this->media->authorizeProperty(
+            $request->user(),
+            $property
         );
 
-
-
+        $this->media->deleteAllForProperty($property);
         $property->delete();
 
-
-
-        return back()
-
-        ->with(
-
+        return back()->with(
             'success',
-
-            'Bien supprimé'
-
+            'Bien supprimé avec succès.'
         );
-
-
     }
 
+    private function rules(): array
+    {
+        return [
+            'title' => ['required', 'string', 'max:255'],
+            'price' => ['required', 'numeric', 'min:0'],
+            'city' => ['required', 'string', 'max:255'],
+            'district' => ['nullable', 'string', 'max:255'],
+            'address' => ['nullable', 'string', 'max:255'],
+            'latitude' => ['nullable', 'numeric'],
+            'longitude' => ['nullable', 'numeric'],
+            'surface' => ['nullable', 'numeric', 'min:0'],
+            'type' => [
+                'required',
+                Rule::in([
+                    'villa',
+                    'duplex',
+                    'appartement',
+                    'maison_basse',
+                    'terrain',
+                ]),
+            ],
+            'transaction' => [
+                'required',
+                Rule::in(['vente', 'location']),
+            ],
+            'description' => ['nullable', 'string'],
+            'main_image_key' => ['nullable', 'string', 'max:500'],
+            'gallery_image_keys' => ['nullable', 'array', 'max:4'],
+            'gallery_image_keys.*' => [
+                'required',
+                'string',
+                'max:500',
+                'distinct',
+            ],
+            'property_video_keys' => ['nullable', 'array', 'max:2'],
+            'property_video_keys.*' => [
+                'required',
+                'string',
+                'max:500',
+                'distinct',
+            ],
+        ];
+    }
 
+    private function extractUploads(array &$validated): array
+    {
+        $uploads = [
+            'main_image' => $validated['main_image_key'] ?? null,
+            'gallery_images' => $validated['gallery_image_keys'] ?? [],
+            'videos' => $validated['property_video_keys'] ?? [],
+        ];
 
+        unset(
+            $validated['main_image_key'],
+            $validated['gallery_image_keys'],
+            $validated['property_video_keys']
+        );
+
+        return $uploads;
+    }
 }
