@@ -10,8 +10,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
-use Illuminate\Http\JsonResponse;
-use Throwable;
 
 class PropertyController extends Controller
 {
@@ -25,52 +23,37 @@ class PropertyController extends Controller
         return view('admin.properties.create');
     }
 
-    public function store(Request $request): RedirectResponse|JsonResponse
+    public function store(Request $request): RedirectResponse
     {
-        try {
-            $validated = $request->validate(
-                $this->rules()
+        $validated = $request->validate(
+            $this->rules()
+        );
+
+        $uploads = $this->extractUploads($validated);
+        $propertyData = $this->preparePropertyData(
+            $validated,
+            $request
+        );
+
+        DB::transaction(function () use (
+            $propertyData,
+            $uploads,
+            $request
+        ): void {
+            $property = Property::create($propertyData);
+
+            $this->media->attachUploads(
+                $property,
+                $request->user(),
+                $uploads['main_image'],
+                $uploads['gallery_images'],
+                $uploads['videos']
             );
+        });
 
-            $uploads = $this->extractUploads($validated);
-            $propertyData = $this->preparePropertyData(
-                $validated,
-                $request
-            );
-
-            DB::transaction(function () use (
-                $propertyData,
-                $uploads,
-                $request
-            ): void {
-                $property = Property::create($propertyData);
-
-                $this->media->attachUploads(
-                    $property,
-                    $request->user(),
-                    $uploads['main_image'],
-                    $uploads['gallery_images'],
-                    $uploads['videos']
-                );
-            });
-
-            return redirect()
-                ->route('admin.dashboard')
-                ->with('success', 'Bien ajouté avec succès.');
-        } catch (Throwable $exception) {
-            abort_unless(
-                $request->user()?->role === 'admin',
-                403
-            );
-
-            return response()->json([
-                'exception' => $exception::class,
-                'message' => $exception->getMessage(),
-                'file' => basename($exception->getFile()),
-                'line' => $exception->getLine(),
-                'previous' => $exception->getPrevious()?->getMessage(),
-            ], 500);
-        }
+        return redirect()
+            ->route('admin.dashboard')
+            ->with('success', 'Bien ajouté avec succès.');
     }
 
     public function edit(Property $property): View
