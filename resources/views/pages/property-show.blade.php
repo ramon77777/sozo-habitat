@@ -695,6 +695,7 @@
     :phone2-intl="$phone2Intl"
     :whatsapp-intl="$whatsappIntl"
     :whatsapp-message="$whatsappMessage"
+    whatsapp-class="sozo-whatsapp-property"
 />
 
 {{-- Galerie plein écran --}}
