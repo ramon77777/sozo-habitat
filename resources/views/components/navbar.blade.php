@@ -28,22 +28,6 @@
             <a href="{{ route('properties.index', ['transaction' => 'vente']) }}" class="relative py-2 transition hover:text-[#DDB85F]">Acheter</a>
             <a href="{{ route('properties.index', ['transaction' => 'location']) }}" class="relative py-2 transition hover:text-[#DDB85F]">Louer</a>
             <a href="/#contact" class="relative py-2 transition hover:text-[#DDB85F]">Contact</a>
-
-            @auth
-                <a
-                    href="{{ auth()->user()->role === 'agent' ? route('agent.dashboard') : route('admin.dashboard') }}"
-                    class="sozo-shine rounded-full bg-[#C89B3C] px-5 py-2.5 font-black text-white transition hover:-translate-y-0.5 hover:bg-[#B7892E]"
-                >
-                    Mon espace
-                </a>
-            @else
-                <a
-                    href="{{ route('login') }}"
-                    class="rounded-full border border-white/30 bg-white/10 px-5 py-2.5 font-bold text-white transition hover:-translate-y-0.5 hover:border-white hover:bg-white hover:text-[#0A2E5D]"
-                >
-                    Connexion
-                </a>
-            @endauth
         </div>
 
         <details class="relative md:hidden">
@@ -59,24 +43,6 @@
                 <a href="{{ route('properties.index', ['transaction' => 'vente']) }}" class="block rounded-xl px-4 py-3 font-bold transition hover:bg-slate-50">Acheter</a>
                 <a href="{{ route('properties.index', ['transaction' => 'location']) }}" class="block rounded-xl px-4 py-3 font-bold transition hover:bg-slate-50">Louer</a>
                 <a href="/#contact" class="block rounded-xl px-4 py-3 font-bold transition hover:bg-slate-50">Contact</a>
-
-                <div class="mt-2 border-t border-slate-100 pt-2">
-                    @auth
-                        <a
-                            href="{{ auth()->user()->role === 'agent' ? route('agent.dashboard') : route('admin.dashboard') }}"
-                            class="block rounded-xl bg-[#0A2E5D] px-4 py-3 text-center font-bold text-white"
-                        >
-                            Mon espace
-                        </a>
-                    @else
-                        <a
-                            href="{{ route('login') }}"
-                            class="block rounded-xl bg-[#0A2E5D] px-4 py-3 text-center font-bold text-white"
-                        >
-                            Connexion
-                        </a>
-                    @endauth
-                </div>
             </div>
         </details>
     </div>
