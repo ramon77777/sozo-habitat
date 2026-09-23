@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 760" role="img" aria-labelledby="title">
+  <title id="title">Sozo Habitat - La référence en immobilier</title>
+  <defs>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#E5B83D"/>
+      <stop offset="1" stop-color="#C89224"/>
+    </linearGradient>
+    <linearGradient id="navy" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0A2E5D"/>
+      <stop offset="1" stop-color="#031A36"/>
+    </linearGradient>
+  </defs>
+
+  <g transform="translate(104 8) scale(.82)">
+    <path d="M130 133C77 185 58 257 79 323c22 69 75 113 151 128" fill="none" stroke="url(#gold)" stroke-width="28" stroke-linecap="round"/>
+    <path d="M386 151c48 52 65 119 47 181-20 67-72 108-148 120" fill="none" stroke="#E9EEF5" stroke-width="28" stroke-linecap="round"/>
+    <path d="M145 244 256 130l111 114" fill="none" stroke="#E9EEF5" stroke-width="34" stroke-linecap="square" stroke-linejoin="miter"/>
+    <path d="M329 145h38v83" fill="none" stroke="#E9EEF5" stroke-width="34" stroke-linejoin="round"/>
+    <g fill="#E9EEF5">
+      <rect x="223" y="218" width="30" height="30" rx="2"/>
+      <rect x="263" y="218" width="30" height="30" rx="2"/>
+      <rect x="223" y="258" width="30" height="30" rx="2"/>
+      <rect x="263" y="258" width="30" height="30" rx="2"/>
+    </g>
+    <path d="M256 283c-42 0-76 34-76 76 0 58 76 138 76 138s76-80 76-138c0-42-34-76-76-76Z" fill="url(#gold)"/>
+    <circle cx="256" cy="357" r="29" fill="#04152C"/>
+  </g>
+
+  <text x="360" y="560" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="94">
+    <tspan fill="#FFFFFF">Sozo</tspan>
+    <tspan fill="url(#gold)"> Habitat</tspan>
+  </text>
+
+  <line x1="126" y1="612" x2="300" y2="612" stroke="#D8A93B" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="360" cy="612" r="8" fill="#D8A93B"/>
+  <line x1="420" y1="612" x2="594" y2="612" stroke="#E9EEF5" stroke-width="5" stroke-linecap="round"/>
+
+  <text x="360" y="673" text-anchor="middle" fill="#E9EEF5" font-family="Arial, Helvetica, sans-serif" font-size="27" letter-spacing="9">
+    LA RÉFÉRENCE EN IMMOBILIER
+  </text>
+</svg>
