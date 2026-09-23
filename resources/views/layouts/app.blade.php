@@ -11,7 +11,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="theme-color" content="#04152C">
 
-    <link rel="icon" type="image/png" href="{{ asset('images/branding/sozo-habitat-logo.webp') }}">
+    <link rel="icon" type="image/svg+xml" href="{{ asset('images/branding/sozo-habitat-emblem.svg') }}">
+    <link rel="icon" type="image/webp" href="{{ asset('images/branding/sozo-habitat-logo.webp') }}">
     <link rel="apple-touch-icon" href="{{ asset('images/branding/sozo-habitat-logo.webp') }}">
 
     <title>
