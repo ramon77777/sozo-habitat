@@ -83,6 +83,7 @@
 @endsection
 
 @section('content')
+<!-- SOZO_PROPERTY_DETAIL_V2 -->
 
 {{-- En-tête du bien --}}
 <section class="relative isolate overflow-hidden bg-[#04152C] px-6 pb-24 pt-36 text-white lg:pb-28 lg:pt-40">
