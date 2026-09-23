@@ -4,6 +4,7 @@
     'phone2Intl' => null,
     'whatsappIntl' => null,
     'whatsappMessage' => null,
+    'whatsappClass' => '',
 ])
 
 @php
@@ -144,7 +145,7 @@
         href="{{ $whatsappHref }}"
         target="_blank"
         rel="noopener"
-        class="sozo-whatsapp flex h-12 w-12 items-center justify-center rounded-full bg-green-500 text-white transition hover:-translate-y-1 hover:bg-green-600 sm:h-14 sm:w-14"
+        class="sozo-whatsapp {{ $whatsappClass }} flex h-12 w-12 items-center justify-center rounded-full bg-green-500 text-white transition hover:-translate-y-1 hover:bg-green-600 sm:h-14 sm:w-14"
         aria-label="Contacter Sozo Habitat sur WhatsApp"
     >
         <svg viewBox="0 0 24 24" fill="currentColor" class="h-6 w-6 sm:h-7 sm:w-7" aria-hidden="true">
