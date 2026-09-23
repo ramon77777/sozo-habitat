@@ -1,32 +1,51 @@
-<div class="w-full max-w-5xl rounded-2xl bg-white/15 p-4 backdrop-blur-xl shadow-2xl">
-    <form method="GET" action="{{ route('properties.index') }}" class="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <input
-            type="text"
-            name="city"
-            placeholder="Ville"
-            value="{{ request('city') }}"
-            class="rounded-xl bg-white px-5 py-4 text-sm text-slate-900 outline-none focus:ring-2 focus:ring-[#C89B3C]"
-        >
+<div class="w-full max-w-6xl rounded-[1.75rem] border border-white/15 bg-white/10 p-3 shadow-2xl shadow-black/20 backdrop-blur-xl sm:p-4">
+    <form method="GET" action="{{ route('properties.index') }}" class="grid grid-cols-1 gap-3 md:grid-cols-4">
+        <label class="relative">
+            <span class="sr-only">Ville</span>
+            <span class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
+                <svg viewBox="0 0 24 24" fill="none" class="h-5 w-5" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 21s6-5.1 6-11a6 6 0 1 0-12 0c0 5.9 6 11 6 11Z"/>
+                    <circle cx="12" cy="10" r="2.2"/>
+                </svg>
+            </span>
+            <input
+                type="text"
+                name="city"
+                placeholder="Ville ou commune"
+                value="{{ request('city') }}"
+                class="w-full rounded-2xl border-0 bg-white py-4 pl-12 pr-4 text-sm font-semibold text-slate-900 outline-none ring-1 ring-black/5 placeholder:font-medium placeholder:text-slate-400 focus:ring-2 focus:ring-[#C89B3C]"
+            >
+        </label>
 
-        <select name="transaction" class="rounded-xl bg-white px-5 py-4 text-sm text-slate-900 outline-none focus:ring-2 focus:ring-[#C89B3C]">
-            <option value="">Transaction</option>
-            <option value="vente">Achat</option>
-            <option value="location">Location</option>
-        </select>
+        <label class="relative">
+            <span class="sr-only">Transaction</span>
+            <select name="transaction" class="w-full appearance-none rounded-2xl border-0 bg-white px-5 py-4 text-sm font-semibold text-slate-800 outline-none ring-1 ring-black/5 focus:ring-2 focus:ring-[#C89B3C]">
+                <option value="">Achat ou location</option>
+                <option value="vente">Acheter</option>
+                <option value="location">Louer</option>
+            </select>
+        </label>
 
-        <select name="type" class="rounded-xl bg-white px-5 py-4 text-sm text-slate-900 outline-none focus:ring-2 focus:ring-[#C89B3C]">
-            <option value="">Type de bien</option>
-            <option value="villa">Villa</option>
-            <option value="duplex">Duplex</option>
-            <option value="appartement">Appartement</option>
-            <option value="maison_basse">Maison basse</option>
-            <option value="terrain">Terrain</option>
-        </select>
+        <label class="relative">
+            <span class="sr-only">Type de bien</span>
+            <select name="type" class="w-full appearance-none rounded-2xl border-0 bg-white px-5 py-4 text-sm font-semibold text-slate-800 outline-none ring-1 ring-black/5 focus:ring-2 focus:ring-[#C89B3C]">
+                <option value="">Type de bien</option>
+                <option value="villa">Villa</option>
+                <option value="duplex">Duplex</option>
+                <option value="appartement">Appartement</option>
+                <option value="maison_basse">Maison basse</option>
+                <option value="terrain">Terrain</option>
+            </select>
+        </label>
 
         <button
             type="submit"
-            class="rounded-xl bg-[#C89B3C] px-6 py-4 text-sm font-bold text-white transition hover:bg-[#A87F2E]"
+            class="inline-flex items-center justify-center gap-2 rounded-2xl bg-[#C89B3C] px-6 py-4 text-sm font-black text-white shadow-lg shadow-black/10 transition hover:-translate-y-0.5 hover:bg-[#B7892E]"
         >
+            <svg viewBox="0 0 24 24" fill="none" class="h-5 w-5" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <circle cx="11" cy="11" r="6"/>
+                <path stroke-linecap="round" d="m16 16 4 4"/>
+            </svg>
             Rechercher
         </button>
     </form>
