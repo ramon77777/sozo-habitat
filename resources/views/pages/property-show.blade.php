@@ -139,7 +139,7 @@
 </section>
 
 {{-- Galerie + contact --}}
-<section class="relative z-20 -mt-14 bg-[#F7F8FA] px-6 pb-16">
+<section class="relative z-20 -mt-14 bg-[#F7F8FA] px-6 pb-12 lg:pb-14">
     <div class="mx-auto grid max-w-[1400px] gap-8 lg:grid-cols-[minmax(0,1fr)_380px]">
         <div class="min-w-0">
             <div
@@ -152,7 +152,7 @@
                             id="mainImage"
                             src="{{ $photos->first() }}"
                             alt="{{ $property->title }} - {{ $property->city }} - Sozo Habitat Côte d'Ivoire"
-                            class="h-[420px] w-full cursor-zoom-in object-cover transition duration-700 group-hover:scale-[1.015] sm:h-[520px] lg:h-[600px]"
+                            class="h-[360px] w-full cursor-zoom-in object-cover transition duration-700 group-hover:scale-[1.015] sm:h-[500px] lg:h-[560px]"
                             loading="eager"
                             onclick="openGallery(currentIndex)"
                         >
@@ -231,95 +231,156 @@
             </div>
 
             {{-- Caractéristiques --}}
-            <div class="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-3" data-reveal>
-                <div class="sozo-card rounded-[1.7rem] border border-white bg-white p-6 shadow-[0_14px_40px_rgba(15,23,42,0.06)]">
-                    <p class="text-xs font-black uppercase tracking-[0.18em] text-[#C89B3C]">Surface</p>
-                    <p class="mt-2 text-2xl font-black text-[#0A2E5D]">
-                        {{ $property->surface ?? '—' }} <span class="text-sm text-slate-400">m²</span>
-                    </p>
+            <section class="mt-6" data-reveal>
+                <div class="mb-4 flex items-end justify-between gap-4">
+                    <div>
+                        <p class="text-xs font-black uppercase tracking-[0.22em] text-[#C89B3C]">Le bien en un coup d'œil</p>
+                        <h2 class="mt-2 text-2xl font-black text-[#0A2E5D]">Caractéristiques</h2>
+                    </div>
                 </div>
 
-                @if($property->type === 'terrain')
-                    <div class="sozo-card rounded-[1.7rem] border border-white bg-white p-6 shadow-[0_14px_40px_rgba(15,23,42,0.06)]">
-                        <p class="text-xs font-black uppercase tracking-[0.18em] text-[#C89B3C]">ACD</p>
-                        <p class="mt-2 text-2xl font-black text-[#0A2E5D]">{{ $property->has_acd ? 'Disponible' : 'Non indiqué' }}</p>
+                <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                    <div class="sozo-card flex items-center gap-4 rounded-[1.5rem] border border-white bg-white p-5 shadow-[0_12px_34px_rgba(15,23,42,0.06)]">
+                        <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#0A2E5D] text-[#DDB85F]">
+                            <svg viewBox="0 0 24 24" fill="none" class="h-5 w-5" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M5 19V5h14v14H5Z M8 16l8-8"/>
+                            </svg>
+                        </span>
+                        <div>
+                            <p class="text-[11px] font-black uppercase tracking-[0.16em] text-slate-400">Surface</p>
+                            <p class="mt-1 text-xl font-black text-[#0A2E5D]">{{ $property->surface ?? '—' }} <span class="text-sm text-slate-400">m²</span></p>
+                        </div>
                     </div>
 
-                    <div class="sozo-card rounded-[1.7rem] border border-white bg-white p-6 shadow-[0_14px_40px_rgba(15,23,42,0.06)]">
-                        <p class="text-xs font-black uppercase tracking-[0.18em] text-[#C89B3C]">Lot approuvé</p>
-                        <p class="mt-2 text-2xl font-black text-[#0A2E5D]">{{ $property->is_lot_approved ? 'Oui' : 'Non indiqué' }}</p>
-                    </div>
-
-                    @if($property->document_type)
-                        <div class="sozo-card rounded-[1.7rem] border border-white bg-white p-6 shadow-[0_14px_40px_rgba(15,23,42,0.06)]">
-                            <p class="text-xs font-black uppercase tracking-[0.18em] text-[#C89B3C]">Document</p>
-                            <p class="mt-2 text-xl font-black text-[#0A2E5D]">{{ ucfirst(str_replace('_', ' ', $property->document_type)) }}</p>
+                    @if($property->type === 'terrain')
+                        <div class="sozo-card flex items-center gap-4 rounded-[1.5rem] border border-white bg-white p-5 shadow-[0_12px_34px_rgba(15,23,42,0.06)]">
+                            <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#0A2E5D] text-[#DDB85F]">
+                                <svg viewBox="0 0 24 24" fill="none" class="h-5 w-5" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 12.5 9 16l10-10"/>
+                                </svg>
+                            </span>
+                            <div>
+                                <p class="text-[11px] font-black uppercase tracking-[0.16em] text-slate-400">ACD</p>
+                                <p class="mt-1 text-xl font-black text-[#0A2E5D]">{{ $property->has_acd ? 'Disponible' : 'Non indiqué' }}</p>
+                            </div>
                         </div>
-                    @endif
-                @else
-                    <div class="sozo-card rounded-[1.7rem] border border-white bg-white p-6 shadow-[0_14px_40px_rgba(15,23,42,0.06)]">
-                        <p class="text-xs font-black uppercase tracking-[0.18em] text-[#C89B3C]">Chambres</p>
-                        <p class="mt-2 text-2xl font-black text-[#0A2E5D]">{{ $property->bedrooms ?? '—' }}</p>
-                    </div>
 
-                    <div class="sozo-card rounded-[1.7rem] border border-white bg-white p-6 shadow-[0_14px_40px_rgba(15,23,42,0.06)]">
-                        <p class="text-xs font-black uppercase tracking-[0.18em] text-[#C89B3C]">Salles d'eau</p>
-                        <p class="mt-2 text-2xl font-black text-[#0A2E5D]">{{ $property->bathrooms ?? '—' }}</p>
-                    </div>
-
-                    @if($property->living_rooms)
-                        <div class="sozo-card rounded-[1.7rem] border border-white bg-white p-6 shadow-[0_14px_40px_rgba(15,23,42,0.06)]">
-                            <p class="text-xs font-black uppercase tracking-[0.18em] text-[#C89B3C]">Salons</p>
-                            <p class="mt-2 text-2xl font-black text-[#0A2E5D]">{{ $property->living_rooms }}</p>
+                        <div class="sozo-card flex items-center gap-4 rounded-[1.5rem] border border-white bg-white p-5 shadow-[0_12px_34px_rgba(15,23,42,0.06)]">
+                            <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#0A2E5D] text-[#DDB85F]">
+                                <svg viewBox="0 0 24 24" fill="none" class="h-5 w-5" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 4h12v16H6z M9 8h6M9 12h6"/>
+                                </svg>
+                            </span>
+                            <div>
+                                <p class="text-[11px] font-black uppercase tracking-[0.16em] text-slate-400">Lot approuvé</p>
+                                <p class="mt-1 text-xl font-black text-[#0A2E5D]">{{ $property->is_lot_approved ? 'Oui' : 'Non indiqué' }}</p>
+                            </div>
                         </div>
-                    @endif
 
-                    @if($property->kitchens)
-                        <div class="sozo-card rounded-[1.7rem] border border-white bg-white p-6 shadow-[0_14px_40px_rgba(15,23,42,0.06)]">
-                            <p class="text-xs font-black uppercase tracking-[0.18em] text-[#C89B3C]">Cuisines</p>
-                            <p class="mt-2 text-2xl font-black text-[#0A2E5D]">{{ $property->kitchens }}</p>
-                        </div>
+                        @if($property->document_type)
+                            <div class="sozo-card flex items-center gap-4 rounded-[1.5rem] border border-white bg-white p-5 shadow-[0_12px_34px_rgba(15,23,42,0.06)]">
+                                <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#0A2E5D] text-[#DDB85F]">
+                                    <svg viewBox="0 0 24 24" fill="none" class="h-5 w-5" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M7 3h7l3 3v15H7V3Z M14 3v4h4"/>
+                                    </svg>
+                                </span>
+                                <div>
+                                    <p class="text-[11px] font-black uppercase tracking-[0.16em] text-slate-400">Document</p>
+                                    <p class="mt-1 text-lg font-black text-[#0A2E5D]">{{ ucfirst(str_replace('_', ' ', $property->document_type)) }}</p>
+                                </div>
+                            </div>
+                        @endif
+                    @else
+                        @foreach([
+                            ['Chambres', $property->bedrooms, 'bed'],
+                            ["Salles d'eau", $property->bathrooms, 'bath'],
+                            ['Salons', $property->living_rooms, 'sofa'],
+                            ['Cuisines', $property->kitchens, 'kitchen'],
+                            ['Garages', $property->garages, 'garage'],
+                        ] as [$label, $value, $icon])
+                            @if($value)
+                                <div class="sozo-card flex items-center gap-4 rounded-[1.5rem] border border-white bg-white p-5 shadow-[0_12px_34px_rgba(15,23,42,0.06)]">
+                                    <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#0A2E5D] text-[#DDB85F]">
+                                        @if($icon === 'bed')
+                                            <svg viewBox="0 0 24 24" fill="none" class="h-5 w-5" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M4 18v-7h16v7M4 14h16M7 11V7h5a3 3 0 0 1 3 3v1"/>
+                                            </svg>
+                                        @elseif($icon === 'bath')
+                                            <svg viewBox="0 0 24 24" fill="none" class="h-5 w-5" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M4 12h16v3a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4v-3ZM7 12V7a3 3 0 0 1 6 0"/>
+                                            </svg>
+                                        @elseif($icon === 'sofa')
+                                            <svg viewBox="0 0 24 24" fill="none" class="h-5 w-5" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M5 12V9a3 3 0 0 1 3-3h8a3 3 0 0 1 3 3v3M4 12h16v6H4v-6ZM7 18v2M17 18v2"/>
+                                            </svg>
+                                        @elseif($icon === 'kitchen')
+                                            <svg viewBox="0 0 24 24" fill="none" class="h-5 w-5" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 3v7M10 3v7M6 7h4M8 10v11M17 3v18M14 7h6"/>
+                                            </svg>
+                                        @else
+                                            <svg viewBox="0 0 24 24" fill="none" class="h-5 w-5" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M4 10 6 5h12l2 5v9H4v-9ZM7 15h.01M17 15h.01"/>
+                                            </svg>
+                                        @endif
+                                    </span>
+                                    <div>
+                                        <p class="text-[11px] font-black uppercase tracking-[0.16em] text-slate-400">{{ $label }}</p>
+                                        <p class="mt-1 text-xl font-black text-[#0A2E5D]">{{ $value }}</p>
+                                    </div>
+                                </div>
+                            @endif
+                        @endforeach
                     @endif
-
-                    @if($property->garages)
-                        <div class="sozo-card rounded-[1.7rem] border border-white bg-white p-6 shadow-[0_14px_40px_rgba(15,23,42,0.06)]">
-                            <p class="text-xs font-black uppercase tracking-[0.18em] text-[#C89B3C]">Garages</p>
-                            <p class="mt-2 text-2xl font-black text-[#0A2E5D]">{{ $property->garages }}</p>
-                        </div>
-                    @endif
-                @endif
-            </div>
+                </div>
+            </section>
 
             {{-- Description --}}
-            <article class="mt-8 rounded-[2rem] border border-white bg-white p-7 shadow-[0_16px_48px_rgba(15,23,42,0.06)] sm:p-9" data-reveal>
+            <article class="mt-6 rounded-[2rem] border border-white bg-white p-7 shadow-[0_14px_42px_rgba(15,23,42,0.06)] sm:p-8" data-reveal>
                 <div class="inline-flex items-center gap-3 text-xs font-black uppercase tracking-[0.24em] text-[#C89B3C]">
                     <span class="h-px w-8 bg-[#C89B3C]"></span>
                     À propos du bien
                 </div>
 
-                <h2 class="mt-4 text-3xl font-black text-[#0A2E5D]">Description</h2>
+                <h2 class="mt-3 text-2xl font-black text-[#0A2E5D]">Description</h2>
 
-                <p class="mt-5 whitespace-pre-line text-base leading-8 text-slate-600">
-                    {{ $property->description ?: 'Les informations détaillées de ce bien seront bientôt disponibles.' }}
-                </p>
+                @if($property->description)
+                    <p class="mt-4 whitespace-pre-line text-base leading-8 text-slate-600">{{ $property->description }}</p>
+                @else
+                    <div class="mt-4 flex items-start gap-4 rounded-2xl bg-[#F7F8FA] p-5">
+                        <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white text-[#C89B3C] shadow-sm">
+                            <svg viewBox="0 0 24 24" fill="none" class="h-5 w-5" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v5M12 17h.01"/>
+                                <circle cx="12" cy="12" r="9"/>
+                            </svg>
+                        </span>
+                        <div>
+                            <p class="font-black text-[#0A2E5D]">Informations complémentaires sur demande</p>
+                            <p class="mt-1 text-sm leading-6 text-slate-500">Notre équipe peut vous transmettre les détails supplémentaires de ce bien et répondre à vos questions.</p>
+                        </div>
+                    </div>
+                @endif
             </article>
 
             {{-- Vidéos --}}
             @if($property->videos->count())
-                <section class="mt-8 rounded-[2rem] border border-white bg-white p-7 shadow-[0_16px_48px_rgba(15,23,42,0.06)] sm:p-9" data-reveal>
-                    <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+                <section class="mt-6 overflow-hidden rounded-[2rem] border border-white bg-white shadow-[0_14px_42px_rgba(15,23,42,0.06)]" data-reveal>
+                    <div class="flex flex-col gap-3 border-b border-slate-100 p-7 sm:flex-row sm:items-end sm:justify-between sm:p-8">
                         <div>
                             <p class="text-xs font-black uppercase tracking-[0.22em] text-[#C89B3C]">Immersion</p>
-                            <h2 class="mt-2 text-3xl font-black text-[#0A2E5D]">Vidéo du bien</h2>
+                            <h2 class="mt-2 text-2xl font-black text-[#0A2E5D]">Visitez le bien en vidéo</h2>
                         </div>
-
-                        <p class="text-sm text-slate-500">Découvrez le bien en mouvement.</p>
+                        <p class="max-w-md text-sm leading-6 text-slate-500">Un aperçu complémentaire pour mieux vous projeter avant votre visite.</p>
                     </div>
 
-                    <div class="mt-6 grid gap-6 md:grid-cols-2">
+                    <div class="{{ $property->videos->count() > 1 ? 'grid gap-4 p-4 sm:grid-cols-2' : 'p-4' }}">
                         @foreach($property->videos as $video)
-                            <div class="overflow-hidden rounded-[1.6rem] bg-black shadow-lg">
-                                <video controls preload="metadata" class="aspect-video h-full w-full object-contain">
+                            <div class="overflow-hidden rounded-[1.5rem] bg-black shadow-lg">
+                                <video
+                                    controls
+                                    preload="metadata"
+                                    playsinline
+                                    class="aspect-video w-full object-contain {{ $property->videos->count() === 1 ? 'max-h-[560px]' : '' }}"
+                                >
                                     <source src="{{ $video->url }}">
                                     Votre navigateur ne supporte pas la vidéo.
                                 </video>
@@ -331,7 +392,7 @@
 
             {{-- Localisation --}}
             @if($property->latitude && $property->longitude)
-                <section class="mt-8 overflow-hidden rounded-[2rem] border border-white bg-white shadow-[0_16px_48px_rgba(15,23,42,0.06)]" data-reveal>
+                <section class="mt-6 overflow-hidden rounded-[2rem] border border-white bg-white shadow-[0_14px_42px_rgba(15,23,42,0.06)]" data-reveal>
                     <div class="flex flex-col gap-5 p-7 sm:flex-row sm:items-center sm:justify-between sm:p-9">
                         <div>
                             <p class="text-xs font-black uppercase tracking-[0.22em] text-[#C89B3C]">Localisation</p>
@@ -359,7 +420,7 @@
 
                     <iframe
                         src="https://www.google.com/maps?q={{ $property->latitude }},{{ $property->longitude }}&hl=fr&z=15&output=embed"
-                        class="h-[420px] w-full border-0"
+                        class="h-[360px] w-full border-0 sm:h-[400px]"
                         loading="lazy"
                         referrerpolicy="no-referrer-when-downgrade"
                         title="Localisation de {{ $property->title }}"
@@ -369,20 +430,29 @@
         </div>
 
         {{-- Contact sticky --}}
-        <aside class="lg:sticky lg:top-28 lg:self-start" data-reveal="right">
-            <div class="overflow-hidden rounded-[2rem] bg-[#061A35] p-7 text-white shadow-[0_28px_80px_rgba(4,21,44,0.22)]">
-                <p class="text-xs font-black uppercase tracking-[0.22em] text-[#DDB85F]">Ce bien vous intéresse ?</p>
+        <aside class="lg:sticky lg:top-24 lg:self-start" data-reveal="right">
+            <div class="overflow-hidden rounded-[2rem] bg-[#061A35] p-6 text-white shadow-[0_24px_70px_rgba(4,21,44,0.20)] sm:p-7">
+                <div class="flex items-start justify-between gap-4">
+                    <div>
+                        <p class="text-[11px] font-black uppercase tracking-[0.22em] text-[#DDB85F]">Ce bien vous intéresse ?</p>
+                        <p class="mt-2 text-2xl font-black sm:text-3xl">
+                            {{ number_format($property->price, 0, ',', ' ') }}
+                            <span class="text-xs font-bold text-white/60">FCFA</span>
+                        </p>
+                    </div>
 
-                <p class="mt-3 text-3xl font-black">
-                    {{ number_format($property->price, 0, ',', ' ') }}
-                    <span class="text-sm font-bold text-white/60">FCFA</span>
+                    <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-white/10 text-[#DDB85F]">
+                        <svg viewBox="0 0 24 24" fill="none" class="h-5 w-5" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 5h14v11H9l-4 3V5Z"/>
+                        </svg>
+                    </span>
+                </div>
+
+                <p class="mt-3 text-sm leading-6 text-slate-300">
+                    Contactez notre équipe ou planifiez directement une visite.
                 </p>
 
-                <p class="mt-4 text-sm leading-6 text-slate-300">
-                    Contactez notre équipe pour obtenir plus d'informations ou organiser une visite.
-                </p>
-
-                <div class="mt-6 grid gap-3">
+                <div class="mt-5 grid gap-2.5">
                     <a
                         href="#visite"
                         class="sozo-shine inline-flex items-center justify-center gap-2 rounded-2xl bg-[#C89B3C] px-5 py-3.5 text-sm font-black text-white transition hover:-translate-y-0.5 hover:bg-[#B7892E]"
@@ -400,72 +470,70 @@
                             WhatsApp
                         </a>
                     @endif
-
-                    @if($phone1Intl)
-                        <a
-                            href="tel:+{{ $phone1Intl }}"
-                            class="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/15 bg-white/10 px-5 py-3.5 text-sm font-black text-white transition hover:bg-white hover:text-[#0A2E5D]"
-                        >
-                            Appeler {{ $siteSettings->phone_1 }}
-                        </a>
-                    @endif
                 </div>
 
-                <div class="mt-7 border-t border-white/10 pt-6">
-                    <div class="space-y-4 text-sm">
-                        <div class="flex items-start gap-3">
-                            <span class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-white/10 text-[#DDB85F]">
-                                <svg viewBox="0 0 24 24" fill="none" class="h-4 w-4" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 11.5 12 5l8 6.5V20H4v-8.5Z"/>
-                                </svg>
-                            </span>
-                            <div>
-                                <p class="font-black">Type</p>
-                                <p class="mt-1 text-slate-300">{{ $propertyTypeLabel }}</p>
-                            </div>
-                        </div>
+                @if($phone1Intl || $phone2Intl)
+                    <div class="mt-5 grid gap-2 border-t border-white/10 pt-5 {{ $phone1Intl && $phone2Intl ? 'sm:grid-cols-2 lg:grid-cols-1' : '' }}">
+                        @if($phone1Intl)
+                            <a
+                                href="tel:+{{ $phone1Intl }}"
+                                class="flex items-center justify-between gap-3 rounded-2xl border border-white/10 bg-white/[0.07] px-4 py-3 text-sm font-bold text-white transition hover:bg-white hover:text-[#0A2E5D]"
+                            >
+                                <span>
+                                    <span class="block text-[10px] font-black uppercase tracking-[0.14em] text-[#DDB85F]">Téléphone</span>
+                                    <span class="mt-1 block">{{ $siteSettings->phone_1 }}</span>
+                                </span>
+                                <span>↗</span>
+                            </a>
+                        @endif
 
-                        <div class="flex items-start gap-3">
-                            <span class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-white/10 text-[#DDB85F]">
-                                <svg viewBox="0 0 24 24" fill="none" class="h-4 w-4" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 21s6-5.1 6-11a6 6 0 1 0-12 0c0 5.9 6 11 6 11Z"/>
-                                </svg>
-                            </span>
-                            <div>
-                                <p class="font-black">Localisation</p>
-                                <p class="mt-1 text-slate-300">{{ $property->city }}@if($property->district), {{ $property->district }}@endif</p>
-                            </div>
-                        </div>
+                        @if($phone2Intl)
+                            <a
+                                href="tel:+{{ $phone2Intl }}"
+                                class="flex items-center justify-between gap-3 rounded-2xl border border-white/10 bg-white/[0.07] px-4 py-3 text-sm font-bold text-white transition hover:bg-white hover:text-[#0A2E5D]"
+                            >
+                                <span>
+                                    <span class="block text-[10px] font-black uppercase tracking-[0.14em] text-[#DDB85F]">Deuxième contact</span>
+                                    <span class="mt-1 block">{{ $siteSettings->phone_2 }}</span>
+                                </span>
+                                <span>↗</span>
+                            </a>
+                        @endif
+                    </div>
+                @endif
 
-                        <div class="flex items-start gap-3">
-                            <span class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-white/10 text-[#DDB85F]">
-                                <svg viewBox="0 0 24 24" fill="none" class="h-4 w-4" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 5h14v11H9l-4 3V5Z"/>
-                                </svg>
-                            </span>
-                            <div>
-                                <p class="font-black">Réponse rapide</p>
-                                <p class="mt-1 text-slate-300">Téléphone, WhatsApp ou formulaire de visite.</p>
-                            </div>
+                <div class="mt-5 grid gap-3 border-t border-white/10 pt-5 text-sm">
+                    <div class="flex items-center gap-3">
+                        <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-white/10 text-[#DDB85F]">
+                            <svg viewBox="0 0 24 24" fill="none" class="h-4 w-4" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M4 11.5 12 5l8 6.5V20H4v-8.5Z"/>
+                            </svg>
+                        </span>
+                        <div>
+                            <p class="font-black">Type</p>
+                            <p class="text-slate-300">{{ $propertyTypeLabel }}</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-3">
+                        <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-white/10 text-[#DDB85F]">
+                            <svg viewBox="0 0 24 24" fill="none" class="h-4 w-4" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 21s6-5.1 6-11a6 6 0 1 0-12 0c0 5.9 6 11 6 11Z"/>
+                            </svg>
+                        </span>
+                        <div>
+                            <p class="font-black">Localisation</p>
+                            <p class="text-slate-300">{{ $property->city }}@if($property->district), {{ $property->district }}@endif</p>
                         </div>
                     </div>
                 </div>
             </div>
-
-            @if($phone2Intl)
-                <div class="mt-4 rounded-[1.6rem] border border-white bg-white p-5 shadow-[0_14px_40px_rgba(15,23,42,0.06)]">
-                    <p class="text-xs font-black uppercase tracking-[0.18em] text-[#C89B3C]">Deuxième contact</p>
-                    <a href="tel:+{{ $phone2Intl }}" class="mt-2 block text-lg font-black text-[#0A2E5D] transition hover:text-[#C89B3C]">
-                        {{ $siteSettings->phone_2 }}
-                    </a>
-                </div>
-            @endif
         </aside>
     </div>
 </section>
 
 {{-- Formulaire visite --}}
-<section id="visite" class="relative overflow-hidden bg-white px-6 py-20 lg:py-24">
+<section id="visite" class="relative overflow-hidden bg-white px-6 py-16 lg:py-20">
     <div class="absolute inset-0 sozo-grid opacity-30 [mask-image:linear-gradient(to_right,black,transparent_65%)]"></div>
 
     <div class="relative mx-auto grid max-w-[1400px] gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
@@ -582,7 +650,7 @@
 </section>
 
 {{-- CTA + footer --}}
-<section class="bg-[#F7F8FA] px-6 py-16">
+<section class="bg-[#F7F8FA] px-6 py-12 lg:py-14">
     <div
         data-reveal
         class="mx-auto grid max-w-[1400px] gap-8 overflow-hidden rounded-[2.4rem] bg-gradient-to-br from-[#0A2E5D] via-[#061A35] to-[#031329] px-7 py-10 text-white shadow-[0_28px_80px_rgba(4,21,44,0.18)] sm:px-10 lg:grid-cols-[1fr_auto] lg:items-center lg:px-14 lg:py-14"
