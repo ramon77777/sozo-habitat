@@ -353,20 +353,55 @@ body {
 
 @media (max-width: 639px) {
     .sozo-whatsapp {
-        right: 12px;
-        bottom: calc(12px + env(safe-area-inset-bottom));
-        width: 48px !important;
-        height: 48px !important;
+        right: 10px;
+        bottom: calc(10px + env(safe-area-inset-bottom));
+        width: 44px !important;
+        height: 44px !important;
         box-shadow: 0 12px 28px rgba(4, 21, 44, .22);
     }
 
     .sozo-whatsapp svg {
-        width: 22px !important;
-        height: 22px !important;
+        width: 20px !important;
+        height: 20px !important;
     }
 
     .sozo-card:hover {
         transform: none;
+    }
+}
+
+
+@media (min-width: 360px) and (max-width: 639px) {
+    .sozo-catalog-filter-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .sozo-filter-city,
+    .sozo-filter-price,
+    .sozo-filter-sort {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 320px) {
+    .sozo-filter-price {
+        grid-template-columns: minmax(0, 1fr) !important;
+    }
+
+    .sozo-whatsapp {
+        right: 7px !important;
+        bottom: calc(7px + env(safe-area-inset-bottom)) !important;
+        width: 38px !important;
+        height: 38px !important;
+    }
+
+    .sozo-whatsapp::before {
+        display: none !important;
+    }
+
+    .sozo-whatsapp svg {
+        width: 18px !important;
+        height: 18px !important;
     }
 }
 
