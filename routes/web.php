@@ -88,17 +88,6 @@ Route::post(
     ->middleware('throttle:40,1')
     ->name('media.uploads.presign');
 
-Route::get('/debug-media-config', function () {
-    return response()->json([
-        'media_disk' => config('filesystems.media_disk'),
-        'r2_bucket' => config('filesystems.disks.r2.bucket'),
-        'r2_url' => config('filesystems.disks.r2.url'),
-        'r2_endpoint_configured' => ! empty(
-            config('filesystems.disks.r2.endpoint')
-        ),
-    ]);
-});
-
 /*
 |--------------------------------------------------------------------------
 | ADMIN
