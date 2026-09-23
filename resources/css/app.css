@@ -216,6 +216,36 @@ body {
     50% { transform: translateY(7px); opacity: 1; }
 }
 
+@media (max-width: 639px) {
+    .sozo-whatsapp {
+        right: 12px;
+        bottom: calc(12px + env(safe-area-inset-bottom));
+        width: 48px !important;
+        height: 48px !important;
+        box-shadow: 0 12px 28px rgba(4, 21, 44, .22);
+    }
+
+    .sozo-whatsapp svg {
+        width: 22px !important;
+        height: 22px !important;
+    }
+
+    .sozo-card:hover {
+        transform: none;
+    }
+}
+
+@media (hover: none) {
+    .sozo-card:hover {
+        transform: none;
+    }
+
+    .sozo-card:hover .sozo-media img {
+        transform: none;
+        filter: none;
+    }
+}
+
 @media (prefers-reduced-motion: reduce) {
     html {
         scroll-behavior: auto;
