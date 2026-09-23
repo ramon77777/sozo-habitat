@@ -173,7 +173,7 @@
 </section>
 
 {{-- Résultats --}}
-<section class="relative overflow-hidden bg-[#F7F8FA] px-6 pb-20 pt-16 lg:pb-28 lg:pt-20">
+<section class="relative overflow-hidden bg-[#F7F8FA] px-6 pb-14 pt-16 lg:pb-20 lg:pt-20">
     <div class="pointer-events-none absolute inset-0 sozo-grid opacity-35 [mask-image:linear-gradient(to_bottom,black,transparent_35%)]"></div>
 
     <div class="relative mx-auto max-w-[1400px]">
@@ -190,7 +190,7 @@
             </p>
         </div>
 
-        <div class="grid grid-cols-[repeat(auto-fit,minmax(290px,1fr))] gap-7 xl:grid-cols-3">
+        <div class="grid grid-cols-[repeat(auto-fit,minmax(290px,420px))] justify-center gap-7">
             @forelse($properties as $property)
                 <article
                     data-reveal
