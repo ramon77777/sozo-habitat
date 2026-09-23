@@ -32,7 +32,7 @@
 
         <details class="sozo-public-navbar-menu relative md:hidden">
             <summary class="sozo-public-navbar-menu-button flex h-10 w-10 cursor-pointer list-none items-center justify-center rounded-xl border border-white/20 bg-white/10 text-white transition hover:bg-white/20 sm:h-11 sm:w-11 [&::-webkit-details-marker]:hidden">
-                <svg viewBox="0 0 24 24" fill="none" class="h-6 w-6" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" class="sozo-public-nav-toggle-icon h-6 w-6" stroke="currentColor" stroke-width="2" aria-hidden="true">
                     <path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16"/>
                 </svg>
             </summary>
