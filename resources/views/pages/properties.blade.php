@@ -45,128 +45,205 @@
 </section>
 
 {{-- Filtres --}}
-<section class="relative z-20 -mt-10 px-4 sm:-mt-16 sm:px-6">
+@php
+    $catalogFilterKeys = ['transaction', 'type', 'city', 'min_price', 'max_price', 'sort'];
+    $activeFilterCount = collect($catalogFilterKeys)
+        ->filter(fn ($key) => filled(request($key)))
+        ->count();
+    $hasActiveFilters = $activeFilterCount > 0;
+@endphp
+
+<section class="sozo-catalog-filter-section relative z-20 -mt-10 px-4 sm:-mt-16 sm:px-6">
     <div class="mx-auto max-w-[1400px]" data-reveal>
         <form
             method="GET"
             action="{{ route('properties.index') }}"
-            class="rounded-[2rem] border border-white/70 bg-white p-5 shadow-[0_24px_70px_rgba(4,21,44,0.14)] sm:p-6"
+            x-data="catalogFilters({{ $hasActiveFilters ? 'true' : 'false' }})"
+            class="rounded-[2rem] border border-white/70 bg-white p-4 shadow-[0_24px_70px_rgba(4,21,44,0.14)] sm:p-6"
         >
-            <div class="flex flex-col gap-3 border-b border-slate-100 pb-5 md:flex-row md:items-center md:justify-between">
-                <div>
-                    <p class="text-xs font-black uppercase tracking-[0.2em] text-[#C89B3C]">Recherche avancée</p>
-                    <h2 class="mt-1 text-xl font-black text-[#0A2E5D]">Affinez votre sélection</h2>
-                </div>
+            {{-- Déclencheur mobile --}}
+            <div class="md:hidden">
+                <button
+                    type="button"
+                    @click="toggle()"
+                    :aria-expanded="open.toString()"
+                    aria-controls="catalog-filter-panel"
+                    class="flex w-full items-center justify-between gap-4 rounded-[1.35rem] bg-[#F7F8FA] px-4 py-4 text-left transition hover:bg-slate-100"
+                >
+                    <span class="min-w-0">
+                        <span class="block text-[10px] font-black uppercase tracking-[0.2em] text-[#C89B3C]">
+                            Recherche avancée
+                        </span>
 
-                @if(request()->hasAny(['transaction', 'type', 'city', 'min_price', 'max_price', 'sort']))
-                    <a
-                        href="{{ route('properties.index') }}"
-                        class="inline-flex items-center gap-2 text-sm font-black text-slate-500 transition hover:text-[#C89B3C]"
-                    >
-                        Réinitialiser les filtres
-                        <span aria-hidden="true">×</span>
-                    </a>
-                @endif
-            </div>
+                        <span class="mt-1 flex items-center gap-2 text-lg font-black text-[#0A2E5D]">
+                            Affiner la recherche
 
-            <div class="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-6">
-                <label>
-                    <span class="sr-only">Transaction</span>
-                    <select
-                        name="transaction"
-                        class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3.5 text-sm font-semibold text-slate-700 outline-none transition focus:border-[#C89B3C] focus:ring-2 focus:ring-[#C89B3C]/20"
-                    >
-                        <option value="">Achat ou location</option>
-                        <option value="vente" @selected(request('transaction') === 'vente')>Acheter</option>
-                        <option value="location" @selected(request('transaction') === 'location')>Louer</option>
-                    </select>
-                </label>
-
-                <label>
-                    <span class="sr-only">Type de bien</span>
-                    <select
-                        name="type"
-                        class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3.5 text-sm font-semibold text-slate-700 outline-none transition focus:border-[#C89B3C] focus:ring-2 focus:ring-[#C89B3C]/20"
-                    >
-                        <option value="">Type de bien</option>
-                        <option value="villa" @selected(request('type') === 'villa')>Villa</option>
-                        <option value="duplex" @selected(request('type') === 'duplex')>Duplex</option>
-                        <option value="appartement" @selected(request('type') === 'appartement')>Appartement</option>
-                        <option value="maison_basse" @selected(request('type') === 'maison_basse')>Maison basse</option>
-                        <option value="terrain" @selected(request('type') === 'terrain')>Terrain</option>
-                    </select>
-                </label>
-
-                <label class="relative">
-                    <span class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
-                        <svg viewBox="0 0 24 24" fill="none" class="h-4 w-4" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 21s6-5.1 6-11a6 6 0 1 0-12 0c0 5.9 6 11 6 11Z"/>
-                            <circle cx="12" cy="10" r="2.2"/>
-                        </svg>
+                            @if($hasActiveFilters)
+                                <span class="inline-flex h-6 min-w-6 items-center justify-center rounded-full bg-[#C89B3C] px-2 text-[11px] font-black text-white">
+                                    {{ $activeFilterCount }}
+                                </span>
+                            @endif
+                        </span>
                     </span>
 
-                    <span class="sr-only">Ville ou commune</span>
-                    <input
-                        type="text"
-                        name="city"
-                        value="{{ request('city') }}"
-                        placeholder="Ville ou commune"
-                        class="w-full rounded-2xl border border-slate-200 bg-white py-3.5 pl-10 pr-4 text-sm font-semibold text-slate-700 outline-none transition placeholder:font-medium placeholder:text-slate-400 focus:border-[#C89B3C] focus:ring-2 focus:ring-[#C89B3C]/20"
-                    >
-                </label>
-
-                <label>
-                    <span class="sr-only">Prix minimum</span>
-                    <input
-                        type="number"
-                        min="0"
-                        name="min_price"
-                        value="{{ request('min_price') }}"
-                        placeholder="Prix min"
-                        class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3.5 text-sm font-semibold text-slate-700 outline-none transition placeholder:font-medium placeholder:text-slate-400 focus:border-[#C89B3C] focus:ring-2 focus:ring-[#C89B3C]/20"
-                    >
-                </label>
-
-                <label>
-                    <span class="sr-only">Prix maximum</span>
-                    <input
-                        type="number"
-                        min="0"
-                        name="max_price"
-                        value="{{ request('max_price') }}"
-                        placeholder="Prix max"
-                        class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3.5 text-sm font-semibold text-slate-700 outline-none transition placeholder:font-medium placeholder:text-slate-400 focus:border-[#C89B3C] focus:ring-2 focus:ring-[#C89B3C]/20"
-                    >
-                </label>
-
-                <label>
-                    <span class="sr-only">Tri</span>
-                    <select
-                        name="sort"
-                        class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3.5 text-sm font-semibold text-slate-700 outline-none transition focus:border-[#C89B3C] focus:ring-2 focus:ring-[#C89B3C]/20"
-                    >
-                        <option value="">Plus récents</option>
-                        <option value="price_asc" @selected(request('sort') === 'price_asc')>Prix croissant</option>
-                        <option value="price_desc" @selected(request('sort') === 'price_desc')>Prix décroissant</option>
-                    </select>
-                </label>
+                    <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-[#0A2E5D] shadow-sm">
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            class="h-5 w-5 transition duration-200"
+                            :class="{ 'rotate-180': open }"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            aria-hidden="true"
+                        >
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6"/>
+                        </svg>
+                    </span>
+                </button>
             </div>
 
-            <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                <p class="text-sm text-slate-500">
-                    Recherchez par ville ou commune et combinez plusieurs critères.
-                </p>
+            <div
+                id="catalog-filter-panel"
+                x-show="open"
+                x-transition:enter="transition ease-out duration-200"
+                x-transition:enter-start="opacity-0 -translate-y-2"
+                x-transition:enter-end="opacity-100 translate-y-0"
+                x-transition:leave="transition ease-in duration-150"
+                x-transition:leave-start="opacity-100 translate-y-0"
+                x-transition:leave-end="opacity-0 -translate-y-2"
+                class="mt-3 md:mt-0"
+            >
+                {{-- En-tête desktop --}}
+                <div class="hidden border-b border-slate-100 pb-5 md:flex md:items-center md:justify-between md:gap-4">
+                    <div>
+                        <p class="text-xs font-black uppercase tracking-[0.2em] text-[#C89B3C]">Recherche avancée</p>
+                        <h2 class="mt-1 text-xl font-black text-[#0A2E5D]">Affinez votre sélection</h2>
+                    </div>
 
-                <button
-                    type="submit"
-                    class="sozo-shine inline-flex items-center justify-center gap-2 rounded-2xl bg-[#C89B3C] px-7 py-3.5 text-sm font-black text-white shadow-lg shadow-[#C89B3C]/20 transition hover:-translate-y-0.5 hover:bg-[#B7892E]"
-                >
-                    <svg viewBox="0 0 24 24" fill="none" class="h-5 w-5" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                        <circle cx="11" cy="11" r="6"/>
-                        <path stroke-linecap="round" d="m16 16 4 4"/>
-                    </svg>
-                    Rechercher
-                </button>
+                    @if($hasActiveFilters)
+                        <a
+                            href="{{ route('properties.index') }}"
+                            class="inline-flex items-center gap-2 text-sm font-black text-slate-500 transition hover:text-[#C89B3C]"
+                        >
+                            Réinitialiser les filtres
+                            <span aria-hidden="true">×</span>
+                        </a>
+                    @endif
+                </div>
+
+                @if($hasActiveFilters)
+                    <div class="mb-3 flex justify-end md:hidden">
+                        <a
+                            href="{{ route('properties.index') }}"
+                            class="inline-flex items-center gap-1.5 rounded-full bg-[#FFF8E8] px-3 py-2 text-xs font-black text-[#9A7222]"
+                        >
+                            Réinitialiser
+                            <span aria-hidden="true">×</span>
+                        </a>
+                    </div>
+                @endif
+
+                <div class="sozo-catalog-filter-grid grid gap-3 md:mt-5 sm:grid-cols-2 xl:grid-cols-6">
+                    <label>
+                        <span class="sr-only">Transaction</span>
+                        <select
+                            name="transaction"
+                            class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3.5 text-sm font-semibold text-slate-700 outline-none transition focus:border-[#C89B3C] focus:ring-2 focus:ring-[#C89B3C]/20"
+                        >
+                            <option value="">Achat ou location</option>
+                            <option value="vente" @selected(request('transaction') === 'vente')>Acheter</option>
+                            <option value="location" @selected(request('transaction') === 'location')>Louer</option>
+                        </select>
+                    </label>
+
+                    <label>
+                        <span class="sr-only">Type de bien</span>
+                        <select
+                            name="type"
+                            class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3.5 text-sm font-semibold text-slate-700 outline-none transition focus:border-[#C89B3C] focus:ring-2 focus:ring-[#C89B3C]/20"
+                        >
+                            <option value="">Type de bien</option>
+                            <option value="villa" @selected(request('type') === 'villa')>Villa</option>
+                            <option value="duplex" @selected(request('type') === 'duplex')>Duplex</option>
+                            <option value="appartement" @selected(request('type') === 'appartement')>Appartement</option>
+                            <option value="maison_basse" @selected(request('type') === 'maison_basse')>Maison basse</option>
+                            <option value="terrain" @selected(request('type') === 'terrain')>Terrain</option>
+                        </select>
+                    </label>
+
+                    <label class="sozo-filter-city relative">
+                        <span class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
+                            <svg viewBox="0 0 24 24" fill="none" class="h-4 w-4" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 21s6-5.1 6-11a6 6 0 1 0-12 0c0 5.9 6 11 6 11Z"/>
+                                <circle cx="12" cy="10" r="2.2"/>
+                            </svg>
+                        </span>
+
+                        <span class="sr-only">Ville ou commune</span>
+                        <input
+                            type="text"
+                            name="city"
+                            value="{{ request('city') }}"
+                            placeholder="Ville ou commune"
+                            class="w-full rounded-2xl border border-slate-200 bg-white py-3.5 pl-10 pr-4 text-sm font-semibold text-slate-700 outline-none transition placeholder:font-medium placeholder:text-slate-400 focus:border-[#C89B3C] focus:ring-2 focus:ring-[#C89B3C]/20"
+                        >
+                    </label>
+
+                    <div class="sozo-filter-price grid grid-cols-2 gap-3 sm:contents">
+                        <label>
+                            <span class="sr-only">Prix minimum</span>
+                            <input
+                                type="number"
+                                min="0"
+                                name="min_price"
+                                value="{{ request('min_price') }}"
+                                placeholder="Prix min"
+                                class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3.5 text-sm font-semibold text-slate-700 outline-none transition placeholder:font-medium placeholder:text-slate-400 focus:border-[#C89B3C] focus:ring-2 focus:ring-[#C89B3C]/20"
+                            >
+                        </label>
+
+                        <label>
+                            <span class="sr-only">Prix maximum</span>
+                            <input
+                                type="number"
+                                min="0"
+                                name="max_price"
+                                value="{{ request('max_price') }}"
+                                placeholder="Prix max"
+                                class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3.5 text-sm font-semibold text-slate-700 outline-none transition placeholder:font-medium placeholder:text-slate-400 focus:border-[#C89B3C] focus:ring-2 focus:ring-[#C89B3C]/20"
+                            >
+                        </label>
+                    </div>
+
+                    <label class="sozo-filter-sort">
+                        <span class="sr-only">Tri</span>
+                        <select
+                            name="sort"
+                            class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3.5 text-sm font-semibold text-slate-700 outline-none transition focus:border-[#C89B3C] focus:ring-2 focus:ring-[#C89B3C]/20"
+                        >
+                            <option value="">Plus récents</option>
+                            <option value="price_asc" @selected(request('sort') === 'price_asc')>Prix croissant</option>
+                            <option value="price_desc" @selected(request('sort') === 'price_desc')>Prix décroissant</option>
+                        </select>
+                    </label>
+                </div>
+
+                <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                    <p class="hidden text-sm text-slate-500 md:block">
+                        Recherchez par ville ou commune et combinez plusieurs critères.
+                    </p>
+
+                    <button
+                        type="submit"
+                        class="sozo-shine inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-[#C89B3C] px-7 py-3.5 text-sm font-black text-white shadow-lg shadow-[#C89B3C]/20 transition hover:-translate-y-0.5 hover:bg-[#B7892E] sm:w-auto"
+                    >
+                        <svg viewBox="0 0 24 24" fill="none" class="h-5 w-5" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <circle cx="11" cy="11" r="6"/>
+                            <path stroke-linecap="round" d="m16 16 4 4"/>
+                        </svg>
+                        Rechercher
+                    </button>
+                </div>
             </div>
         </form>
     </div>
