@@ -4,11 +4,11 @@
         class="mx-auto flex max-w-[1500px] items-center justify-between rounded-2xl border border-white/10 bg-[#061A35]/30 px-4 py-3 backdrop-blur-xl sm:px-6"
     >
         <a href="/" class="group flex items-center gap-3">
-            <span class="flex h-12 w-12 items-center justify-center overflow-hidden rounded-xl bg-white p-1 shadow-lg shadow-black/10 transition duration-300 group-hover:scale-105">
+            <span class="flex h-12 w-12 items-center justify-center transition duration-300 group-hover:scale-105">
                 <img
-                    src="{{ asset('images/branding/sozo-habitat-logo.webp') }}"
-                    alt="Logo Sozo Habitat"
-                    class="h-full w-full object-contain"
+                    src="{{ asset('images/branding/sozo-habitat-emblem.svg') }}"
+                    alt="Emblème Sozo Habitat"
+                    class="h-12 w-12 object-contain drop-shadow-[0_6px_16px_rgba(0,0,0,0.22)]"
                 >
             </span>
 
