@@ -191,6 +191,161 @@ body {
     70%, 100% { transform: scale(1.28); opacity: 0; }
 }
 
+/* Shared public navbar sizing guard */
+.sozo-public-navbar {
+    width: 100%;
+}
+
+.sozo-public-navbar-inner {
+    min-height: 60px;
+    overflow: visible;
+}
+
+.sozo-public-navbar-brand {
+    max-width: calc(100% - 56px);
+}
+
+.sozo-public-navbar-emblem-wrap,
+.sozo-public-navbar-emblem {
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
+}
+
+.sozo-public-navbar-copy {
+    max-width: 220px;
+    overflow: hidden;
+}
+
+.sozo-public-navbar-name {
+    display: block;
+    max-width: 100%;
+    font-size: 1rem !important;
+    line-height: 1.05 !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.sozo-public-navbar-tagline {
+    font-size: 10px !important;
+    line-height: 1.15 !important;
+}
+
+.sozo-public-navbar-menu,
+.sozo-public-navbar-menu-button {
+    flex: 0 0 auto;
+}
+
+.sozo-public-navbar-menu-button {
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    max-width: 40px !important;
+}
+
+.sozo-public-navbar-menu-button svg {
+    width: 24px !important;
+    height: 24px !important;
+}
+
+@media (min-width: 640px) {
+    .sozo-public-navbar-emblem-wrap,
+    .sozo-public-navbar-emblem {
+        width: 48px !important;
+        height: 48px !important;
+        min-width: 48px !important;
+        max-width: 48px !important;
+        max-height: 48px !important;
+    }
+
+    .sozo-public-navbar-name {
+        font-size: 1.25rem !important;
+    }
+
+    .sozo-public-navbar-menu-button {
+        width: 44px !important;
+        height: 44px !important;
+        min-width: 44px !important;
+        max-width: 44px !important;
+    }
+}
+
+@media (max-width: 639px) {
+    .sozo-public-navbar {
+        padding: 12px !important;
+    }
+
+    .sozo-public-navbar-inner {
+        min-height: 58px !important;
+        padding: 9px 12px !important;
+        border-radius: 16px !important;
+    }
+
+    .sozo-public-navbar-brand {
+        gap: 8px !important;
+        max-width: calc(100% - 52px) !important;
+    }
+
+    .sozo-public-navbar-copy {
+        max-width: 170px !important;
+    }
+
+    .sozo-public-navbar-name {
+        font-size: 15px !important;
+    }
+
+    .sozo-public-navbar-tagline {
+        display: none !important;
+    }
+
+    .sozo-public-navbar-dropdown {
+        max-width: calc(100vw - 24px) !important;
+    }
+}
+
+@media (max-width: 320px) {
+    .sozo-public-navbar {
+        padding: 10px !important;
+    }
+
+    .sozo-public-navbar-inner {
+        min-height: 56px !important;
+        padding: 8px 10px !important;
+    }
+
+    .sozo-public-navbar-emblem-wrap,
+    .sozo-public-navbar-emblem {
+        width: 36px !important;
+        height: 36px !important;
+        min-width: 36px !important;
+        max-width: 36px !important;
+        max-height: 36px !important;
+    }
+
+    .sozo-public-navbar-copy {
+        max-width: 145px !important;
+    }
+
+    .sozo-public-navbar-name {
+        font-size: 14px !important;
+    }
+
+    .sozo-public-navbar-menu-button {
+        width: 38px !important;
+        height: 38px !important;
+        min-width: 38px !important;
+        max-width: 38px !important;
+    }
+
+    .sozo-public-navbar-menu-button svg {
+        width: 22px !important;
+        height: 22px !important;
+    }
+}
+
 /* Sticky public nav state */
 [data-public-nav] {
     transition:
