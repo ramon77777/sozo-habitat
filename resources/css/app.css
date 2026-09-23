@@ -218,6 +218,41 @@ body {
 
 
 @media (max-width: 320px) {
+
+    .sozo-catalog-hero {
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+        padding-top: 116px !important;
+        padding-bottom: 66px !important;
+    }
+
+    .sozo-catalog-hero-title {
+        font-size: 2.12rem !important;
+        line-height: .99 !important;
+    }
+
+    .sozo-catalog-hero-copy {
+        margin-top: 14px !important;
+        font-size: 13px !important;
+        line-height: 1.55 !important;
+    }
+
+    .sozo-catalog-results {
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+        padding-top: 38px !important;
+        padding-bottom: 42px !important;
+    }
+
+    .sozo-catalog-results-title {
+        font-size: 1.55rem !important;
+        line-height: 1.08 !important;
+    }
+
+    .sozo-catalog-results-copy {
+        font-size: 13px !important;
+        line-height: 1.55 !important;
+    }
     .sozo-home-hero-inner {
         padding-left: 16px !important;
         padding-right: 16px !important;
@@ -252,50 +287,50 @@ body {
         margin-top: 20px !important;
     }
 
-    .sozo-home-footer {
+    .sozo-public-footer {
         padding-left: 16px !important;
         padding-right: 16px !important;
         padding-top: 32px !important;
     }
 
-    .sozo-home-footer-grid {
+    .sozo-public-footer-grid {
         grid-template-columns: minmax(0, 1fr) !important;
         row-gap: 24px !important;
         padding-bottom: 24px !important;
     }
 
-    .sozo-home-footer-brand {
+    .sozo-public-footer-brand {
         grid-column: auto !important;
     }
 
-    .sozo-home-footer-brand img {
+    .sozo-public-footer-brand img {
         height: 80px !important;
         width: auto !important;
     }
 
-    .sozo-home-footer-brand p {
+    .sozo-public-footer-brand p {
         margin-top: 12px !important;
         font-size: 13px !important;
         line-height: 1.6 !important;
     }
 
-    .sozo-home-footer-nav,
-    .sozo-home-footer-contact {
+    .sozo-public-footer-nav,
+    .sozo-public-footer-contact {
         min-width: 0;
     }
 
-    .sozo-home-footer-contact a,
-    .sozo-home-footer-contact p {
+    .sozo-public-footer-contact a,
+    .sozo-public-footer-contact p {
         overflow-wrap: anywhere;
         word-break: normal;
     }
 
-    .sozo-home-footer-bottom {
+    .sozo-public-footer-bottom {
         gap: 10px !important;
         padding-top: 16px !important;
     }
 
-    .sozo-home-footer-bottom > div {
+    .sozo-public-footer-bottom > div {
         gap: 8px 12px !important;
     }
 
