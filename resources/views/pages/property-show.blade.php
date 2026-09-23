@@ -139,12 +139,12 @@
 </section>
 
 {{-- Galerie + contact --}}
-<section class="relative z-20 -mt-14 bg-[#F7F8FA] px-6 pb-12 lg:pb-14">
+<section class="sozo-property-body relative z-20 -mt-14 bg-[#F7F8FA] px-4 pb-10 sm:px-6 sm:pb-12 lg:pb-14">
     <div class="mx-auto grid max-w-[1400px] gap-8 lg:grid-cols-[minmax(0,1fr)_380px]">
         <div class="min-w-0">
             <div
                 data-reveal
-                class="overflow-hidden rounded-[2.3rem] border border-white bg-white p-3 shadow-[0_28px_80px_rgba(4,21,44,0.16)]"
+                class="sozo-property-gallery-card overflow-hidden rounded-[2rem] border border-white bg-white p-2.5 shadow-[0_28px_80px_rgba(4,21,44,0.16)] sm:rounded-[2.3rem] sm:p-3"
             >
                 @if($photos->isNotEmpty())
                     <div class="group relative overflow-hidden rounded-[1.8rem] bg-slate-100">
@@ -152,7 +152,7 @@
                             id="mainImage"
                             src="{{ $photos->first() }}"
                             alt="{{ $property->title }} - {{ $property->city }} - Sozo Habitat Côte d'Ivoire"
-                            class="h-[360px] w-full cursor-zoom-in object-cover transition duration-700 group-hover:scale-[1.015] sm:h-[500px] lg:h-[560px]"
+                            class="sozo-property-main-image h-[310px] w-full cursor-zoom-in object-cover transition duration-700 group-hover:scale-[1.015] sm:h-[500px] lg:h-[560px]"
                             loading="eager"
                             onclick="openGallery(currentIndex)"
                         >
@@ -164,7 +164,7 @@
                                 type="button"
                                 onclick="previousImage()"
                                 aria-label="Photo précédente"
-                                class="absolute left-4 top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/50 bg-[#04152C]/65 text-2xl font-black text-white shadow-lg backdrop-blur transition hover:bg-[#C89B3C]"
+                                class="sozo-property-gallery-arrow absolute left-3 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/50 bg-[#04152C]/65 text-2xl font-black text-white shadow-lg backdrop-blur transition hover:bg-[#C89B3C] sm:left-4 sm:h-12 sm:w-12"
                             >
                                 ‹
                             </button>
@@ -173,12 +173,12 @@
                                 type="button"
                                 onclick="nextImage()"
                                 aria-label="Photo suivante"
-                                class="absolute right-4 top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/50 bg-[#04152C]/65 text-2xl font-black text-white shadow-lg backdrop-blur transition hover:bg-[#C89B3C]"
+                                class="sozo-property-gallery-arrow absolute right-3 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/50 bg-[#04152C]/65 text-2xl font-black text-white shadow-lg backdrop-blur transition hover:bg-[#C89B3C] sm:right-4 sm:h-12 sm:w-12"
                             >
                                 ›
                             </button>
 
-                            <div class="absolute bottom-4 right-4 rounded-full border border-white/20 bg-[#04152C]/70 px-4 py-2 text-xs font-black text-white backdrop-blur">
+                            <div class="absolute bottom-3 right-3 rounded-full border border-white/20 bg-[#04152C]/70 px-3 py-2 text-[11px] font-black text-white backdrop-blur sm:bottom-4 sm:right-4 sm:px-4 sm:text-xs">
                                 <span id="photoCounter">1</span> / {{ $photos->count() }}
                             </div>
                         @endif
@@ -186,7 +186,7 @@
                         <button
                             type="button"
                             onclick="openGallery(currentIndex)"
-                            class="absolute bottom-4 left-4 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/95 px-4 py-2 text-xs font-black text-[#0A2E5D] shadow-lg transition hover:bg-[#C89B3C] hover:text-white"
+                            class="absolute bottom-3 left-3 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/95 px-3 py-2 text-[11px] font-black text-[#0A2E5D] shadow-lg transition hover:bg-[#C89B3C] hover:text-white sm:bottom-4 sm:left-4 sm:px-4 sm:text-xs"
                         >
                             <svg viewBox="0 0 24 24" fill="none" class="h-4 w-4" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M4 8V4h4M16 4h4v4M20 16v4h-4M8 20H4v-4"/>
@@ -196,7 +196,7 @@
                     </div>
 
                     @if($photos->count() > 1)
-                        <div class="mt-3 flex gap-3 overflow-x-auto pb-1">
+                        <div class="sozo-property-thumbnails mt-2.5 flex gap-2.5 overflow-x-auto pb-1 sm:mt-3 sm:gap-3">
                             @foreach($photos as $index => $photo)
                                 <button
                                     type="button"
@@ -209,7 +209,7 @@
                                         data-index="{{ $index }}"
                                         alt="{{ $property->title }} - Photo {{ $index + 1 }}"
                                         loading="lazy"
-                                        class="thumbnail h-24 w-32 rounded-2xl border-2 border-transparent object-cover opacity-80 transition duration-300 hover:-translate-y-1 hover:border-[#C89B3C] hover:opacity-100"
+                                        class="thumbnail h-20 w-28 rounded-xl border-2 border-transparent object-cover opacity-80 transition duration-300 hover:-translate-y-1 hover:border-[#C89B3C] hover:opacity-100 sm:h-24 sm:w-32 sm:rounded-2xl"
                                     >
                                 </button>
                             @endforeach
@@ -231,7 +231,7 @@
             </div>
 
             {{-- Caractéristiques --}}
-            <section class="mt-6" data-reveal>
+            <section class="sozo-property-features mt-6" data-reveal>
                 <div class="mb-4 flex items-end justify-between gap-4">
                     <div>
                         <p class="text-xs font-black uppercase tracking-[0.22em] text-[#C89B3C]">Le bien en un coup d'œil</p>
@@ -239,8 +239,8 @@
                     </div>
                 </div>
 
-                <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-                    <div class="sozo-card flex items-center gap-4 rounded-[1.5rem] border border-white bg-white p-5 shadow-[0_12px_34px_rgba(15,23,42,0.06)]">
+                <div class="sozo-property-features-grid grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-3">
+                    <div class="sozo-card sozo-property-feature-card flex min-w-0 items-center gap-3 rounded-[1.35rem] border border-white bg-white p-4 shadow-[0_12px_34px_rgba(15,23,42,0.06)] sm:gap-4 sm:rounded-[1.5rem] sm:p-5">
                         <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#0A2E5D] text-[#DDB85F]">
                             <svg viewBox="0 0 24 24" fill="none" class="h-5 w-5" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 19V5h14v14H5Z M8 16l8-8"/>
@@ -253,7 +253,7 @@
                     </div>
 
                     @if($property->type === 'terrain')
-                        <div class="sozo-card flex items-center gap-4 rounded-[1.5rem] border border-white bg-white p-5 shadow-[0_12px_34px_rgba(15,23,42,0.06)]">
+                        <div class="sozo-card sozo-property-feature-card flex min-w-0 items-center gap-3 rounded-[1.35rem] border border-white bg-white p-4 shadow-[0_12px_34px_rgba(15,23,42,0.06)] sm:gap-4 sm:rounded-[1.5rem] sm:p-5">
                             <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#0A2E5D] text-[#DDB85F]">
                                 <svg viewBox="0 0 24 24" fill="none" class="h-5 w-5" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M5 12.5 9 16l10-10"/>
@@ -265,7 +265,7 @@
                             </div>
                         </div>
 
-                        <div class="sozo-card flex items-center gap-4 rounded-[1.5rem] border border-white bg-white p-5 shadow-[0_12px_34px_rgba(15,23,42,0.06)]">
+                        <div class="sozo-card sozo-property-feature-card flex min-w-0 items-center gap-3 rounded-[1.35rem] border border-white bg-white p-4 shadow-[0_12px_34px_rgba(15,23,42,0.06)] sm:gap-4 sm:rounded-[1.5rem] sm:p-5">
                             <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#0A2E5D] text-[#DDB85F]">
                                 <svg viewBox="0 0 24 24" fill="none" class="h-5 w-5" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 4h12v16H6z M9 8h6M9 12h6"/>
@@ -278,7 +278,7 @@
                         </div>
 
                         @if($property->document_type)
-                            <div class="sozo-card flex items-center gap-4 rounded-[1.5rem] border border-white bg-white p-5 shadow-[0_12px_34px_rgba(15,23,42,0.06)]">
+                            <div class="sozo-card sozo-property-feature-card flex min-w-0 items-center gap-3 rounded-[1.35rem] border border-white bg-white p-4 shadow-[0_12px_34px_rgba(15,23,42,0.06)] sm:gap-4 sm:rounded-[1.5rem] sm:p-5">
                                 <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#0A2E5D] text-[#DDB85F]">
                                     <svg viewBox="0 0 24 24" fill="none" class="h-5 w-5" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M7 3h7l3 3v15H7V3Z M14 3v4h4"/>
@@ -299,7 +299,7 @@
                             ['Garages', $property->garages, 'garage'],
                         ] as [$label, $value, $icon])
                             @if($value)
-                                <div class="sozo-card flex items-center gap-4 rounded-[1.5rem] border border-white bg-white p-5 shadow-[0_12px_34px_rgba(15,23,42,0.06)]">
+                                <div class="sozo-card sozo-property-feature-card flex min-w-0 items-center gap-3 rounded-[1.35rem] border border-white bg-white p-4 shadow-[0_12px_34px_rgba(15,23,42,0.06)] sm:gap-4 sm:rounded-[1.5rem] sm:p-5">
                                     <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#0A2E5D] text-[#DDB85F]">
                                         @if($icon === 'bed')
                                             <svg viewBox="0 0 24 24" fill="none" class="h-5 w-5" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
@@ -335,7 +335,7 @@
             </section>
 
             {{-- Description --}}
-            <article class="mt-6 rounded-[2rem] border border-white bg-white p-7 shadow-[0_14px_42px_rgba(15,23,42,0.06)] sm:p-8" data-reveal>
+            <article class="sozo-property-description mt-6 rounded-[1.75rem] border border-white bg-white p-5 shadow-[0_14px_42px_rgba(15,23,42,0.06)] sm:rounded-[2rem] sm:p-8" data-reveal>
                 <div class="inline-flex items-center gap-3 text-xs font-black uppercase tracking-[0.24em] text-[#C89B3C]">
                     <span class="h-px w-8 bg-[#C89B3C]"></span>
                     À propos du bien
@@ -363,8 +363,8 @@
 
             {{-- Vidéos --}}
             @if($property->videos->count())
-                <section class="mt-6 overflow-hidden rounded-[2rem] border border-white bg-white shadow-[0_14px_42px_rgba(15,23,42,0.06)]" data-reveal>
-                    <div class="flex flex-col gap-3 border-b border-slate-100 p-7 sm:flex-row sm:items-end sm:justify-between sm:p-8">
+                <section class="sozo-property-video mt-6 overflow-hidden rounded-[1.75rem] border border-white bg-white shadow-[0_14px_42px_rgba(15,23,42,0.06)] sm:rounded-[2rem]" data-reveal>
+                    <div class="sozo-property-video-head flex flex-col gap-3 border-b border-slate-100 p-5 sm:flex-row sm:items-end sm:justify-between sm:p-8">
                         <div>
                             <p class="text-xs font-black uppercase tracking-[0.22em] text-[#C89B3C]">Immersion</p>
                             <h2 class="mt-2 text-2xl font-black text-[#0A2E5D]">Visitez le bien en vidéo</h2>
@@ -372,7 +372,7 @@
                         <p class="max-w-md text-sm leading-6 text-slate-500">Un aperçu complémentaire pour mieux vous projeter avant votre visite.</p>
                     </div>
 
-                    <div class="{{ $property->videos->count() > 1 ? 'grid gap-4 p-4 sm:grid-cols-2' : 'p-4' }}">
+                    <div class="sozo-property-video-body {{ $property->videos->count() > 1 ? 'grid gap-3 p-3 sm:grid-cols-2 sm:gap-4 sm:p-4' : 'p-3 sm:p-4' }}">
                         @foreach($property->videos as $video)
                             <div class="overflow-hidden rounded-[1.5rem] bg-black shadow-lg">
                                 <video
@@ -392,8 +392,8 @@
 
             {{-- Localisation --}}
             @if($property->latitude && $property->longitude)
-                <section class="mt-6 overflow-hidden rounded-[2rem] border border-white bg-white shadow-[0_14px_42px_rgba(15,23,42,0.06)]" data-reveal>
-                    <div class="flex flex-col gap-5 p-7 sm:flex-row sm:items-center sm:justify-between sm:p-9">
+                <section class="sozo-property-location mt-6 overflow-hidden rounded-[1.75rem] border border-white bg-white shadow-[0_14px_42px_rgba(15,23,42,0.06)] sm:rounded-[2rem]" data-reveal>
+                    <div class="sozo-property-location-head flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-9">
                         <div>
                             <p class="text-xs font-black uppercase tracking-[0.22em] text-[#C89B3C]">Localisation</p>
                             <h2 class="mt-2 text-3xl font-black text-[#0A2E5D]">
@@ -420,7 +420,7 @@
 
                     <iframe
                         src="https://www.google.com/maps?q={{ $property->latitude }},{{ $property->longitude }}&hl=fr&z=15&output=embed"
-                        class="h-[360px] w-full border-0 sm:h-[400px]"
+                        class="sozo-property-map h-[285px] w-full border-0 sm:h-[400px]"
                         loading="lazy"
                         referrerpolicy="no-referrer-when-downgrade"
                         title="Localisation de {{ $property->title }}"
@@ -430,8 +430,8 @@
         </div>
 
         {{-- Contact sticky --}}
-        <aside class="lg:sticky lg:top-24 lg:self-start" data-reveal="right">
-            <div class="overflow-hidden rounded-[2rem] bg-[#061A35] p-6 text-white shadow-[0_24px_70px_rgba(4,21,44,0.20)] sm:p-7">
+        <aside class="sozo-property-contact lg:sticky lg:top-24 lg:self-start" data-reveal="right">
+            <div class="sozo-property-contact-card overflow-hidden rounded-[1.75rem] bg-[#061A35] p-5 text-white shadow-[0_24px_70px_rgba(4,21,44,0.20)] sm:rounded-[2rem] sm:p-7">
                 <div class="flex items-start justify-between gap-4">
                     <div>
                         <p class="text-[11px] font-black uppercase tracking-[0.22em] text-[#DDB85F]">Ce bien vous intéresse ?</p>
@@ -452,7 +452,7 @@
                     Contactez notre équipe ou planifiez directement une visite.
                 </p>
 
-                <div class="mt-5 grid gap-2.5">
+                <div class="sozo-property-contact-actions mt-4 grid gap-2.5">
                     <a
                         href="#visite"
                         class="sozo-shine inline-flex items-center justify-center gap-2 rounded-2xl bg-[#C89B3C] px-5 py-3.5 text-sm font-black text-white transition hover:-translate-y-0.5 hover:bg-[#B7892E]"
@@ -473,7 +473,7 @@
                 </div>
 
                 @if($phone1Intl || $phone2Intl)
-                    <div class="mt-5 grid gap-2 border-t border-white/10 pt-5 {{ $phone1Intl && $phone2Intl ? 'sm:grid-cols-2 lg:grid-cols-1' : '' }}">
+                    <div class="sozo-property-contact-phones mt-4 grid gap-2 border-t border-white/10 pt-4 {{ $phone1Intl && $phone2Intl ? 'sm:grid-cols-2 lg:grid-cols-1' : '' }}">
                         @if($phone1Intl)
                             <a
                                 href="tel:+{{ $phone1Intl }}"
@@ -506,7 +506,7 @@
                     </div>
                 @endif
 
-                <div class="mt-5 grid gap-3 border-t border-white/10 pt-5 text-sm">
+                <div class="sozo-property-contact-meta mt-4 grid gap-3 border-t border-white/10 pt-4 text-sm">
                     <div class="flex items-center gap-3">
                         <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-white/10 text-[#DDB85F]">
                             <svg viewBox="0 0 24 24" fill="none" class="h-4 w-4" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
@@ -537,25 +537,25 @@
 </section>
 
 {{-- Formulaire visite --}}
-<section id="visite" class="relative overflow-hidden bg-white px-6 py-16 lg:py-20">
+<section id="visite" class="sozo-property-visit relative overflow-hidden bg-white px-4 py-12 sm:px-6 sm:py-16 lg:py-20">
     <div class="absolute inset-0 sozo-grid opacity-30 [mask-image:linear-gradient(to_right,black,transparent_65%)]"></div>
 
-    <div class="relative mx-auto grid max-w-[1400px] gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
+    <div class="sozo-property-visit-grid relative mx-auto grid max-w-[1400px] gap-7 sm:gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
         <div data-reveal="left">
             <div class="inline-flex items-center gap-3 text-xs font-black uppercase tracking-[0.24em] text-[#C89B3C]">
                 <span class="h-px w-8 bg-[#C89B3C]"></span>
                 Organiser une visite
             </div>
 
-            <h2 class="mt-4 max-w-xl text-4xl font-black tracking-[-0.03em] text-[#0A2E5D] sm:text-5xl">
+            <h2 class="mt-3 max-w-xl text-3xl font-black tracking-[-0.03em] text-[#0A2E5D] sm:mt-4 sm:text-5xl">
                 Venez découvrir ce bien.
             </h2>
 
-            <p class="mt-5 max-w-xl text-base leading-8 text-slate-500">
+            <p class="mt-4 max-w-xl text-sm leading-7 text-slate-500 sm:mt-5 sm:text-base sm:leading-8">
                 Laissez-nous vos coordonnées. Notre équipe vous recontactera pour convenir d'un créneau et répondre à vos questions.
             </p>
 
-            <div class="mt-8 rounded-[1.8rem] bg-[#061A35] p-6 text-white">
+            <div class="mt-6 rounded-[1.5rem] bg-[#061A35] p-5 text-white sm:mt-8 sm:rounded-[1.8rem] sm:p-6">
                 <p class="text-sm font-black">{{ $property->title }}</p>
                 <p class="mt-2 text-sm text-slate-300">
                     {{ $property->city }}@if($property->district), {{ $property->district }}@endif
@@ -568,7 +568,7 @@
 
         <div
             data-reveal="right"
-            class="rounded-[2rem] border border-slate-100 bg-white p-7 shadow-[0_24px_70px_rgba(15,23,42,0.10)] sm:p-9"
+            class="sozo-property-visit-form rounded-[1.75rem] border border-slate-100 bg-white p-5 shadow-[0_24px_70px_rgba(15,23,42,0.10)] sm:rounded-[2rem] sm:p-9"
         >
             @if(session('success'))
                 <div class="mb-6 rounded-2xl border border-green-200 bg-green-50 p-5 font-semibold text-green-700">
@@ -590,7 +590,7 @@
             <form method="POST" action="{{ route('properties.inquiries.store', $property) }}">
                 @csrf
 
-                <div class="grid gap-5 md:grid-cols-2">
+                <div class="grid gap-4 md:grid-cols-2">
                     <label>
                         <span class="mb-2 block text-sm font-black text-[#0A2E5D]">Nom complet</span>
                         <input
@@ -599,7 +599,7 @@
                             value="{{ old('name') }}"
                             autocomplete="name"
                             required
-                            class="w-full rounded-2xl border border-slate-200 px-5 py-4 outline-none transition focus:border-[#C89B3C] focus:ring-2 focus:ring-[#C89B3C]/20"
+                            class="w-full rounded-2xl border border-slate-200 px-4 py-3.5 outline-none transition focus:border-[#C89B3C] focus:ring-2 focus:ring-[#C89B3C]/20 sm:px-5 sm:py-4"
                             placeholder="Votre nom"
                         >
                     </label>
@@ -612,7 +612,7 @@
                             value="{{ old('phone') }}"
                             autocomplete="tel"
                             required
-                            class="w-full rounded-2xl border border-slate-200 px-5 py-4 outline-none transition focus:border-[#C89B3C] focus:ring-2 focus:ring-[#C89B3C]/20"
+                            class="w-full rounded-2xl border border-slate-200 px-4 py-3.5 outline-none transition focus:border-[#C89B3C] focus:ring-2 focus:ring-[#C89B3C]/20 sm:px-5 sm:py-4"
                             placeholder="Votre numéro"
                         >
                     </label>
@@ -626,7 +626,7 @@
                             name="email"
                             value="{{ old('email') }}"
                             autocomplete="email"
-                            class="w-full rounded-2xl border border-slate-200 px-5 py-4 outline-none transition focus:border-[#C89B3C] focus:ring-2 focus:ring-[#C89B3C]/20"
+                            class="w-full rounded-2xl border border-slate-200 px-4 py-3.5 outline-none transition focus:border-[#C89B3C] focus:ring-2 focus:ring-[#C89B3C]/20 sm:px-5 sm:py-4"
                             placeholder="vous@exemple.com"
                         >
                     </label>
@@ -635,15 +635,15 @@
                         <span class="mb-2 block text-sm font-black text-[#0A2E5D]">Message</span>
                         <textarea
                             name="message"
-                            rows="5"
-                            class="w-full resize-y rounded-2xl border border-slate-200 px-5 py-4 outline-none transition focus:border-[#C89B3C] focus:ring-2 focus:ring-[#C89B3C]/20"
+                            rows="4"
+                            class="w-full resize-y rounded-2xl border border-slate-200 px-4 py-3.5 outline-none transition focus:border-[#C89B3C] focus:ring-2 focus:ring-[#C89B3C]/20 sm:px-5 sm:py-4"
                         >{{ old('message', 'Bonjour, je suis intéressé(e) par ce bien : '.$property->title) }}</textarea>
                     </label>
                 </div>
 
                 <button
                     type="submit"
-                    class="sozo-shine mt-6 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-[#C89B3C] px-8 py-4 text-sm font-black text-white shadow-lg shadow-[#C89B3C]/20 transition hover:-translate-y-0.5 hover:bg-[#B7892E] sm:w-auto"
+                    class="sozo-shine mt-5 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-[#C89B3C] px-8 py-3.5 text-sm font-black text-white shadow-lg shadow-[#C89B3C]/20 transition hover:-translate-y-0.5 hover:bg-[#B7892E] sm:mt-6 sm:w-auto sm:py-4"
                 >
                     Envoyer ma demande
                     <span aria-hidden="true">→</span>
@@ -654,10 +654,10 @@
 </section>
 
 {{-- CTA + footer --}}
-<section class="bg-[#F7F8FA] px-6 py-12 lg:py-14">
+<section class="sozo-property-final-cta bg-[#F7F8FA] px-4 py-10 sm:px-6 sm:py-12 lg:py-14">
     <div
         data-reveal
-        class="mx-auto grid max-w-[1400px] gap-8 overflow-hidden rounded-[2.4rem] bg-gradient-to-br from-[#0A2E5D] via-[#061A35] to-[#031329] px-7 py-10 text-white shadow-[0_28px_80px_rgba(4,21,44,0.18)] sm:px-10 lg:grid-cols-[1fr_auto] lg:items-center lg:px-14 lg:py-14"
+        class="mx-auto grid max-w-[1400px] gap-6 overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#0A2E5D] via-[#061A35] to-[#031329] px-5 py-8 text-white shadow-[0_28px_80px_rgba(4,21,44,0.18)] sm:gap-8 sm:rounded-[2.4rem] sm:px-10 sm:py-10 lg:grid-cols-[1fr_auto] lg:items-center lg:px-14 lg:py-14"
     >
         <div>
             <p class="text-xs font-black uppercase tracking-[0.25em] text-[#DDB85F]">Encore une question ?</p>
@@ -667,7 +667,7 @@
             </p>
         </div>
 
-        <div class="flex flex-wrap gap-3 lg:justify-end">
+        <div class="sozo-property-final-actions flex flex-wrap gap-3 lg:justify-end">
             @if($whatsappIntl)
                 <a
                     href="https://wa.me/{{ $whatsappIntl }}?text={{ $whatsappMessage }}"
