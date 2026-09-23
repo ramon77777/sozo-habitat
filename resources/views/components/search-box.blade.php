@@ -1,4 +1,4 @@
-<div class="w-full max-w-6xl rounded-[1.8rem] border border-white/15 bg-white/10 p-3 shadow-[0_24px_70px_rgba(0,0,0,0.22)] backdrop-blur-xl sm:p-4">
+<div class="w-full max-w-6xl rounded-[1.4rem] border border-white/15 bg-white/10 p-2.5 shadow-[0_24px_70px_rgba(0,0,0,0.22)] backdrop-blur-xl sm:rounded-[1.8rem] sm:p-4">
     <form method="GET" action="{{ route('properties.index') }}" class="grid grid-cols-1 gap-3 md:grid-cols-4">
         <label class="group relative">
             <span class="sr-only">Ville</span>
@@ -14,7 +14,7 @@
                 name="city"
                 placeholder="Ville ou commune"
                 value="{{ request('city') }}"
-                class="w-full rounded-2xl border-0 bg-white py-4 pl-12 pr-4 text-sm font-semibold text-slate-900 outline-none ring-1 ring-black/5 transition placeholder:font-medium placeholder:text-slate-400 focus:ring-2 focus:ring-[#C89B3C]"
+                class="w-full rounded-2xl border-0 bg-white py-3.5 pl-12 pr-4 text-sm font-semibold text-slate-900 outline-none ring-1 ring-black/5 transition placeholder:font-medium placeholder:text-slate-400 focus:ring-2 focus:ring-[#C89B3C] sm:py-4"
             >
         </label>
 
@@ -22,7 +22,7 @@
             <span class="sr-only">Transaction</span>
             <select
                 name="transaction"
-                class="w-full appearance-none rounded-2xl border-0 bg-white px-5 py-4 text-sm font-semibold text-slate-800 outline-none ring-1 ring-black/5 transition focus:ring-2 focus:ring-[#C89B3C]"
+                class="w-full appearance-none rounded-2xl border-0 bg-white px-5 py-3.5 text-sm font-semibold text-slate-800 outline-none ring-1 ring-black/5 transition focus:ring-2 focus:ring-[#C89B3C] sm:py-4"
             >
                 <option value="">Achat ou location</option>
                 <option value="vente" @selected(request('transaction') === 'vente')>Acheter</option>
@@ -34,7 +34,7 @@
             <span class="sr-only">Type de bien</span>
             <select
                 name="type"
-                class="w-full appearance-none rounded-2xl border-0 bg-white px-5 py-4 text-sm font-semibold text-slate-800 outline-none ring-1 ring-black/5 transition focus:ring-2 focus:ring-[#C89B3C]"
+                class="w-full appearance-none rounded-2xl border-0 bg-white px-5 py-3.5 text-sm font-semibold text-slate-800 outline-none ring-1 ring-black/5 transition focus:ring-2 focus:ring-[#C89B3C] sm:py-4"
             >
                 <option value="">Type de bien</option>
                 <option value="villa" @selected(request('type') === 'villa')>Villa</option>
@@ -47,7 +47,7 @@
 
         <button
             type="submit"
-            class="sozo-shine inline-flex items-center justify-center gap-2 rounded-2xl bg-[#C89B3C] px-6 py-4 text-sm font-black text-white shadow-lg shadow-black/10 transition hover:-translate-y-0.5 hover:bg-[#B7892E]"
+            class="sozo-shine inline-flex items-center justify-center gap-2 rounded-2xl bg-[#C89B3C] px-6 py-3.5 text-sm font-black text-white shadow-lg shadow-black/10 transition hover:-translate-y-0.5 hover:bg-[#B7892E] sm:py-4"
         >
             <svg viewBox="0 0 24 24" fill="none" class="h-5 w-5" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <circle cx="11" cy="11" r="6"/>
