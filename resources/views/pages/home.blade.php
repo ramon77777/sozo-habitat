@@ -96,7 +96,7 @@ Découvrez des biens immobiliers en Côte d’Ivoire avec SOZO Habitat : villas,
 </section>
 
 {{-- Biens en vedette --}}
-<section id="biens" class="relative mt-16 overflow-hidden bg-[#061A35] px-6 py-20 text-white lg:mt-20 lg:py-28">
+<section id="biens" class="relative mt-8 overflow-hidden bg-[#061A35] px-6 py-20 text-white lg:mt-12 lg:py-28">
     <div class="pointer-events-none absolute -left-24 top-20 h-72 w-72 rounded-full bg-[#C89B3C]/10 blur-3xl"></div>
     <div class="pointer-events-none absolute -right-20 bottom-0 h-96 w-96 rounded-full bg-white/5 blur-3xl"></div>
 
