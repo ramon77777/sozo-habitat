@@ -743,9 +743,23 @@
             </div>
         </div>
 
-        <div class="flex flex-col gap-3 pt-7 text-xs text-slate-400 sm:flex-row sm:items-center sm:justify-between">
+        <div class="flex flex-col gap-4 pt-7 text-xs text-slate-400 sm:flex-row sm:items-center sm:justify-between">
             <p>© {{ date('Y') }} {{ $siteSettings->site_name ?? 'Sozo Habitat' }}. Tous droits réservés.</p>
-            <p>Immobilier en Côte d'Ivoire.</p>
+
+            <div class="flex flex-wrap items-center gap-x-5 gap-y-2">
+                <p>Immobilier en Côte d'Ivoire.</p>
+
+                <a
+                    href="{{ route('workspace') }}"
+                    class="inline-flex items-center gap-1.5 text-slate-500 transition hover:text-[#DDB85F]"
+                    aria-label="Accéder à l'espace professionnel Sozo Habitat"
+                >
+                    <svg viewBox="0 0 24 24" fill="none" class="h-3.5 w-3.5" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8 10V7a4 4 0 1 1 8 0v3M6 10h12v10H6V10Z"/>
+                    </svg>
+                    Espace professionnel
+                </a>
+            </div>
         </div>
     </div>
 </footer>
