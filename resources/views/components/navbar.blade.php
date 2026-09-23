@@ -4,10 +4,12 @@
         class="mx-auto flex max-w-[1500px] items-center justify-between rounded-2xl border border-white/10 bg-[#061A35]/30 px-4 py-3 backdrop-blur-xl sm:px-6"
     >
         <a href="/" class="group flex items-center gap-3">
-            <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-[#C89B3C] text-white shadow-lg shadow-black/10 transition duration-300 group-hover:rotate-3 group-hover:scale-105">
-                <svg viewBox="0 0 24 24" fill="none" class="h-5 w-5" stroke="currentColor" stroke-width="1.9" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 11.5 12 4l9 7.5M5.5 10v9.5h13V10M9.5 19.5v-5h5v5"/>
-                </svg>
+            <span class="flex h-12 w-12 items-center justify-center overflow-hidden rounded-xl bg-white p-1 shadow-lg shadow-black/10 transition duration-300 group-hover:scale-105">
+                <img
+                    src="{{ asset('images/branding/sozo-habitat-logo.webp') }}"
+                    alt="Logo Sozo Habitat"
+                    class="h-full w-full object-contain"
+                >
             </span>
 
             <span class="leading-none">
