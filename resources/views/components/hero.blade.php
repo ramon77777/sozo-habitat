@@ -1,4 +1,4 @@
-<section class="relative isolate min-h-[820px] overflow-hidden bg-[#04152C] lg:min-h-screen">
+<section class="relative isolate overflow-hidden bg-[#04152C] lg:min-h-screen">
     <div
         data-hero-parallax
         class="absolute -inset-8 -z-30 bg-cover bg-center will-change-transform"
@@ -14,30 +14,30 @@
 
     <x-navbar />
 
-    <div class="mx-auto flex min-h-[820px] max-w-[1500px] items-center px-6 pb-24 pt-40 lg:min-h-screen lg:px-12">
+    <div class="mx-auto flex max-w-[1500px] items-center px-5 pb-16 pt-32 sm:px-6 sm:pb-20 sm:pt-36 lg:min-h-screen lg:px-12 lg:pb-24 lg:pt-40">
         <div class="w-full">
             <div class="grid items-end gap-10 xl:grid-cols-[1fr_340px]">
                 <div class="max-w-5xl">
-                    <div class="hero-enter inline-flex items-center gap-3 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-black uppercase tracking-[0.24em] text-[#E3BD61] backdrop-blur">
+                    <div class="hero-enter inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/10 px-3.5 py-2 text-[10px] font-black uppercase tracking-[0.2em] text-[#E3BD61] backdrop-blur sm:px-4 sm:text-xs sm:tracking-[0.24em]">
                         <span class="h-2 w-2 rounded-full bg-[#C89B3C] shadow-[0_0_0_5px_rgba(200,155,60,0.12)]"></span>
                         La référence en immobilier
                     </div>
 
-                    <h1 class="hero-enter hero-enter-delay-1 mt-7 max-w-5xl text-5xl font-black leading-[0.96] tracking-[-0.04em] text-white sm:text-6xl lg:text-7xl xl:text-[5.7rem]">
+                    <h1 class="hero-enter hero-enter-delay-1 mt-5 max-w-5xl text-[2.5rem] font-black leading-[0.98] tracking-[-0.04em] text-white sm:mt-7 sm:text-6xl lg:text-7xl xl:text-[5.7rem]">
                         Un bien.
                         <span class="block text-[#D8A93B]">Un projet.</span>
                         <span class="block">Une nouvelle histoire.</span>
                     </h1>
 
-                    <p class="hero-enter hero-enter-delay-2 mt-7 max-w-2xl text-base leading-8 text-slate-200 sm:text-lg">
+                    <p class="hero-enter hero-enter-delay-2 mt-5 max-w-2xl text-sm leading-6 text-slate-200 sm:mt-7 sm:text-lg sm:leading-8">
                         Trouvez la maison, l'appartement ou le terrain qui correspond vraiment à votre projet,
                         avec un accompagnement immobilier pensé pour la Côte d'Ivoire.
                     </p>
 
-                    <div class="hero-enter hero-enter-delay-3 mt-8 flex flex-wrap gap-3">
+                    <div class="hero-enter hero-enter-delay-3 mt-6 grid gap-3 sm:mt-8 sm:flex sm:flex-wrap">
                         <a
                             href="{{ route('properties.index', ['transaction' => 'vente']) }}"
-                            class="sozo-shine inline-flex items-center gap-2 rounded-full bg-[#C89B3C] px-6 py-3.5 text-sm font-black text-white shadow-xl shadow-black/15 transition hover:-translate-y-0.5 hover:bg-[#B7892E]"
+                            class="sozo-shine inline-flex items-center justify-center gap-2 rounded-full bg-[#C89B3C] px-5 py-3.5 text-sm font-black text-white shadow-xl shadow-black/15 transition hover:-translate-y-0.5 hover:bg-[#B7892E] sm:px-6"
                         >
                             Explorer les biens
                             <span aria-hidden="true">→</span>
@@ -45,7 +45,7 @@
 
                         <a
                             href="/#contact"
-                            class="inline-flex items-center rounded-full border border-white/30 bg-white/10 px-6 py-3.5 text-sm font-black text-white backdrop-blur transition hover:-translate-y-0.5 hover:bg-white hover:text-[#0A2E5D]"
+                            class="inline-flex items-center justify-center rounded-full border border-white/30 bg-white/10 px-5 py-3.5 text-sm font-black text-white backdrop-blur transition hover:-translate-y-0.5 hover:bg-white hover:text-[#0A2E5D] sm:px-6"
                         >
                             Parler à notre équipe
                         </a>
@@ -85,11 +85,11 @@
                 </aside>
             </div>
 
-            <div class="hero-enter hero-enter-delay-4 mt-10 lg:mt-12">
+            <div class="hero-enter hero-enter-delay-4 mt-7 sm:mt-10 lg:mt-12">
                 <x-search-box />
             </div>
 
-            <div class="hero-enter hero-enter-delay-4 mt-7 flex flex-wrap gap-x-8 gap-y-3 text-sm font-semibold text-white/75">
+            <div class="hero-enter hero-enter-delay-4 mt-7 hidden flex-wrap gap-x-8 gap-y-3 text-sm font-semibold text-white/75 sm:flex">
                 <span class="inline-flex items-center gap-2">
                     <span class="h-1.5 w-1.5 rounded-full bg-[#C89B3C]"></span>
                     Villas & maisons
