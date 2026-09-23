@@ -346,6 +346,143 @@ body {
     }
 }
 
+
+/* Hard constraints for the shared public navbar.
+   These protect the mobile layout even if utility generation changes. */
+.sozo-public-nav,
+.sozo-public-nav-shell,
+.sozo-public-nav-brand,
+.sozo-public-nav-logo-wrap,
+.sozo-public-nav-logo,
+.sozo-public-nav-copy,
+.sozo-public-nav-title,
+.sozo-public-nav-menu,
+.sozo-public-nav-toggle,
+.sozo-public-nav-toggle-icon {
+    box-sizing: border-box;
+}
+
+@media (max-width: 767px) {
+    .sozo-public-nav {
+        padding: 12px !important;
+    }
+
+    .sozo-public-nav-shell {
+        min-height: 64px !important;
+        max-height: 72px !important;
+        padding: 10px 12px !important;
+        gap: 10px !important;
+        border-radius: 16px !important;
+    }
+
+    .sozo-public-nav-brand {
+        display: flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+        min-width: 0 !important;
+        max-width: calc(100% - 52px) !important;
+        overflow: hidden !important;
+    }
+
+    .sozo-public-nav-logo-wrap,
+    .sozo-public-nav-logo {
+        width: 40px !important;
+        height: 40px !important;
+        min-width: 40px !important;
+        max-width: 40px !important;
+        min-height: 40px !important;
+        max-height: 40px !important;
+        flex: 0 0 40px !important;
+    }
+
+    .sozo-public-nav-logo {
+        display: block !important;
+        object-fit: contain !important;
+    }
+
+    .sozo-public-nav-copy {
+        min-width: 0 !important;
+        max-width: 180px !important;
+        overflow: hidden !important;
+    }
+
+    .sozo-public-nav-title {
+        display: block !important;
+        max-width: 100% !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        white-space: nowrap !important;
+        font-size: 16px !important;
+        line-height: 1.05 !important;
+    }
+
+    .sozo-public-nav-subtitle {
+        display: none !important;
+    }
+
+    .sozo-public-nav-menu {
+        flex: 0 0 auto !important;
+        margin-left: auto !important;
+    }
+
+    .sozo-public-nav-toggle {
+        width: 40px !important;
+        height: 40px !important;
+        min-width: 40px !important;
+        max-width: 40px !important;
+        min-height: 40px !important;
+        max-height: 40px !important;
+        padding: 0 !important;
+    }
+
+    .sozo-public-nav-toggle-icon {
+        width: 24px !important;
+        height: 24px !important;
+        max-width: 24px !important;
+        max-height: 24px !important;
+    }
+}
+
+@media (max-width: 320px) {
+    .sozo-public-nav {
+        padding: 10px !important;
+    }
+
+    .sozo-public-nav-shell {
+        min-height: 60px !important;
+        max-height: 66px !important;
+        padding: 8px 10px !important;
+    }
+
+    .sozo-public-nav-logo-wrap,
+    .sozo-public-nav-logo {
+        width: 36px !important;
+        height: 36px !important;
+        min-width: 36px !important;
+        max-width: 36px !important;
+        min-height: 36px !important;
+        max-height: 36px !important;
+        flex-basis: 36px !important;
+    }
+
+    .sozo-public-nav-copy {
+        max-width: 150px !important;
+    }
+
+    .sozo-public-nav-title {
+        font-size: 14px !important;
+    }
+
+    .sozo-public-nav-toggle {
+        width: 38px !important;
+        height: 38px !important;
+        min-width: 38px !important;
+        max-width: 38px !important;
+        min-height: 38px !important;
+        max-height: 38px !important;
+    }
+}
+
 /* Sticky public nav state */
 [data-public-nav] {
     transition:
