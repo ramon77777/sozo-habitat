@@ -11,8 +11,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="theme-color" content="#04152C">
 
-    <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
-    <link rel="apple-touch-icon" href="{{ asset('images/logo.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('images/branding/sozo-habitat-logo.webp') }}">
+    <link rel="apple-touch-icon" href="{{ asset('images/branding/sozo-habitat-logo.webp') }}">
 
     <title>
         @yield('title', 'SOZO Habitat | Immobilier en Côte d’Ivoire : Villas, Maisons et Terrains')
@@ -40,7 +40,7 @@
 
 
     <meta property="og:image"
-        content="{{ asset('images/logo.png') }}">
+        content="{{ asset('images/branding/sozo-habitat-logo.webp') }}">
 
 
     <meta name="twitter:card"
