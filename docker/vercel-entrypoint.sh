@@ -19,4 +19,7 @@ mkdir -p \
 chown -R www-data:www-data storage bootstrap/cache
 chmod -R ug+rwX storage bootstrap/cache
 
+# Ensure each deployment recompiles Blade views from the current release.
+php artisan view:clear >/dev/null 2>&1 || true
+
 exec "$@"
