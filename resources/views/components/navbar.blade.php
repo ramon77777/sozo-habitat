@@ -6,7 +6,7 @@
         <a href="/" class="group flex items-center gap-3">
             <span class="flex h-12 w-12 items-center justify-center transition duration-300 group-hover:scale-105">
                 <img
-                    src="{{ asset('images/branding/sozo-habitat-emblem.svg') }}"
+                    src="{{ asset('images/branding/sozo-habitat-emblem-dark.svg') }}"
                     alt="Emblème Sozo Habitat"
                     class="h-12 w-12 object-contain drop-shadow-[0_6px_16px_rgba(0,0,0,0.22)]"
                 >
