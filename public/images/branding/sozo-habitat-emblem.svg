@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title">
+  <title id="title">Sozo Habitat</title>
+  <defs>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#E5B83D"/>
+      <stop offset="1" stop-color="#C89224"/>
+    </linearGradient>
+    <linearGradient id="navy" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0A2E5D"/>
+      <stop offset="1" stop-color="#031A36"/>
+    </linearGradient>
+  </defs>
+
+  <path d="M130 133C77 185 58 257 79 323c22 69 75 113 151 128" fill="none" stroke="url(#gold)" stroke-width="28" stroke-linecap="round"/>
+  <path d="M386 151c48 52 65 119 47 181-20 67-72 108-148 120" fill="none" stroke="url(#navy)" stroke-width="28" stroke-linecap="round"/>
+
+  <path d="M145 244 256 130l111 114" fill="none" stroke="url(#navy)" stroke-width="34" stroke-linecap="square" stroke-linejoin="miter"/>
+  <path d="M329 145h38v83" fill="none" stroke="url(#navy)" stroke-width="34" stroke-linejoin="round"/>
+
+  <g fill="url(#navy)">
+    <rect x="223" y="218" width="30" height="30" rx="2"/>
+    <rect x="263" y="218" width="30" height="30" rx="2"/>
+    <rect x="223" y="258" width="30" height="30" rx="2"/>
+    <rect x="263" y="258" width="30" height="30" rx="2"/>
+  </g>
+
+  <path d="M256 283c-42 0-76 34-76 76 0 58 76 138 76 138s76-80 76-138c0-42-34-76-76-76Z" fill="url(#gold)"/>
+  <circle cx="256" cy="357" r="29" fill="white"/>
+</svg>
