@@ -216,6 +216,106 @@ body {
     50% { transform: translateY(7px); opacity: 1; }
 }
 
+
+@media (max-width: 320px) {
+    .sozo-home-hero-inner {
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+        padding-top: 116px !important;
+        padding-bottom: 52px !important;
+    }
+
+    .sozo-home-hero-title {
+        margin-top: 16px !important;
+        font-size: 2.18rem !important;
+        line-height: .98 !important;
+    }
+
+    .sozo-home-hero-copy {
+        margin-top: 16px !important;
+        font-size: 13px !important;
+        line-height: 1.55 !important;
+    }
+
+    .sozo-home-hero-actions {
+        margin-top: 18px !important;
+        gap: 10px !important;
+    }
+
+    .sozo-home-hero-actions a {
+        padding-top: 11px !important;
+        padding-bottom: 11px !important;
+        font-size: 12px !important;
+    }
+
+    .sozo-home-hero-search {
+        margin-top: 20px !important;
+    }
+
+    .sozo-home-footer {
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+        padding-top: 32px !important;
+    }
+
+    .sozo-home-footer-grid {
+        grid-template-columns: minmax(0, 1fr) !important;
+        row-gap: 24px !important;
+        padding-bottom: 24px !important;
+    }
+
+    .sozo-home-footer-brand {
+        grid-column: auto !important;
+    }
+
+    .sozo-home-footer-brand img {
+        height: 80px !important;
+        width: auto !important;
+    }
+
+    .sozo-home-footer-brand p {
+        margin-top: 12px !important;
+        font-size: 13px !important;
+        line-height: 1.6 !important;
+    }
+
+    .sozo-home-footer-nav,
+    .sozo-home-footer-contact {
+        min-width: 0;
+    }
+
+    .sozo-home-footer-contact a,
+    .sozo-home-footer-contact p {
+        overflow-wrap: anywhere;
+        word-break: normal;
+    }
+
+    .sozo-home-footer-bottom {
+        gap: 10px !important;
+        padding-top: 16px !important;
+    }
+
+    .sozo-home-footer-bottom > div {
+        gap: 8px 12px !important;
+    }
+
+    .sozo-whatsapp {
+        right: 8px !important;
+        bottom: calc(8px + env(safe-area-inset-bottom)) !important;
+        width: 40px !important;
+        height: 40px !important;
+    }
+
+    .sozo-whatsapp::before {
+        display: none;
+    }
+
+    .sozo-whatsapp svg {
+        width: 19px !important;
+        height: 19px !important;
+    }
+}
+
 @media (max-width: 639px) {
     .sozo-whatsapp {
         right: 12px;
