@@ -259,7 +259,7 @@ Découvrez des biens immobiliers en Côte d’Ivoire avec SOZO Habitat : villas,
                         data-reveal-delay="{{ ($loop->index % 2) * 100 }}"
                         class="sozo-card rounded-[2rem] border border-white bg-white p-7 shadow-[0_18px_55px_rgba(15,23,42,0.07)]"
                     >
-                        <div class="flex h-13 w-13 h-12 w-12 items-center justify-center rounded-2xl bg-[#0A2E5D] text-[#E2B64F] shadow-lg shadow-[#0A2E5D]/10">
+                        <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#0A2E5D] text-[#E2B64F] shadow-lg shadow-[#0A2E5D]/10">
                             @if($icon === 'home')
                                 <svg viewBox="0 0 24 24" fill="none" class="h-6 w-6" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M4 11.5 12 5l8 6.5V20H4v-8.5Z"/>
