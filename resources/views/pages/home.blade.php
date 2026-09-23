@@ -403,10 +403,10 @@ Découvrez des biens immobiliers en Côte d’Ivoire avec SOZO Habitat : villas,
 </section>
 
 {{-- Footer --}}
-<footer id="contact" class="bg-[#04152C] px-4 pb-6 pt-10 text-white sm:px-6 sm:pb-8 sm:pt-16">
+<footer id="contact" class="sozo-home-footer bg-[#04152C] px-4 pb-6 pt-10 text-white sm:px-6 sm:pb-8 sm:pt-16">
     <div class="mx-auto max-w-[1400px]">
-        <div class="grid grid-cols-2 gap-x-6 gap-y-8 border-b border-white/10 pb-8 sm:gap-10 sm:pb-12 md:grid-cols-2 lg:grid-cols-4">
-            <div class="col-span-2 lg:col-span-2">
+        <div class="sozo-home-footer-grid grid grid-cols-2 gap-x-6 gap-y-8 border-b border-white/10 pb-8 sm:gap-10 sm:pb-12 md:grid-cols-2 lg:grid-cols-4">
+            <div class="sozo-home-footer-brand col-span-2 lg:col-span-2">
                 <a
                     href="/"
                     class="group inline-flex transition duration-300 hover:-translate-y-0.5"
@@ -445,7 +445,7 @@ Découvrez des biens immobiliers en Côte d’Ivoire avec SOZO Habitat : villas,
                 </div>
             </div>
 
-            <div>
+            <div class="sozo-home-footer-nav">
                 <h3 class="text-sm font-black uppercase tracking-[0.18em] text-[#DDB85F]">Navigation</h3>
                 <div class="mt-4 space-y-2.5 text-sm font-semibold text-slate-300 sm:mt-5 sm:space-y-3">
                     <a href="/" class="block transition hover:translate-x-1 hover:text-white">Accueil</a>
@@ -455,7 +455,7 @@ Découvrez des biens immobiliers en Côte d’Ivoire avec SOZO Habitat : villas,
                 </div>
             </div>
 
-            <div>
+            <div class="sozo-home-footer-contact">
                 <h3 class="text-sm font-black uppercase tracking-[0.18em] text-[#DDB85F]">Nous contacter</h3>
 
                 <div class="mt-4 space-y-2.5 text-sm text-slate-300 sm:mt-5 sm:space-y-3">
@@ -484,7 +484,7 @@ Découvrez des biens immobiliers en Côte d’Ivoire avec SOZO Habitat : villas,
             </div>
         </div>
 
-        <div class="flex flex-col gap-3 pt-5 text-[11px] text-slate-400 sm:flex-row sm:items-center sm:justify-between sm:pt-7 sm:text-xs">
+        <div class="sozo-home-footer-bottom flex flex-col gap-3 pt-5 text-[11px] text-slate-400 sm:flex-row sm:items-center sm:justify-between sm:pt-7 sm:text-xs">
             <p>© {{ date('Y') }} {{ $siteSettings->site_name ?? 'Sozo Habitat' }}. Tous droits réservés.</p>
 
             <div class="flex flex-wrap items-center gap-x-4 gap-y-2 sm:gap-x-5">
