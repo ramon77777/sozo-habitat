@@ -363,13 +363,13 @@
             <div class="lg:col-span-2">
                 <a
                     href="/"
-                    class="group inline-flex overflow-hidden rounded-[1.7rem] bg-white p-2.5 shadow-lg shadow-black/10 transition duration-300 hover:-translate-y-0.5"
+                    class="group inline-flex transition duration-300 hover:-translate-y-0.5"
                     aria-label="Sozo Habitat - Accueil"
                 >
                     <img
-                        src="{{ asset('images/branding/sozo-habitat-logo.webp') }}"
+                        src="{{ asset('images/branding/sozo-habitat-logo-dark.svg') }}"
                         alt="Sozo Habitat - La référence en immobilier"
-                        class="h-28 w-28 object-contain sm:h-32 sm:w-32"
+                        class="h-36 w-auto object-contain sm:h-40"
                     >
                 </a>
 
