@@ -45,7 +45,7 @@ const initRevealAnimations = () => {
 const initHeroParallax = () => {
     const layer = document.querySelector('[data-hero-parallax]');
 
-    if (!layer || prefersReducedMotion) {
+    if (!layer || prefersReducedMotion || window.matchMedia('(max-width: 767px)').matches) {
         return;
     }
 
