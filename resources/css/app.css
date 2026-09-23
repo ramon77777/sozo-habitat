@@ -697,6 +697,287 @@ body {
     }
 }
 
+
+/* Property detail mobile pass */
+@media (max-width: 767px) {
+    .sozo-property-body {
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+        padding-bottom: 40px !important;
+    }
+
+    .sozo-property-gallery-card {
+        padding: 10px !important;
+        border-radius: 28px !important;
+    }
+
+    .sozo-property-main-image {
+        height: 310px !important;
+        border-radius: 22px !important;
+    }
+
+    .sozo-property-gallery-arrow {
+        width: 44px !important;
+        height: 44px !important;
+    }
+
+    .sozo-property-thumbnails {
+        gap: 10px !important;
+        scrollbar-width: thin;
+    }
+
+    .sozo-property-thumbnails .thumbnail {
+        width: 112px !important;
+        height: 80px !important;
+        border-radius: 14px !important;
+    }
+
+    .sozo-property-features {
+        margin-top: 22px !important;
+    }
+
+    .sozo-property-features-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 10px !important;
+    }
+
+    .sozo-property-feature-card {
+        gap: 9px !important;
+        min-height: 92px !important;
+        padding: 13px !important;
+        border-radius: 20px !important;
+    }
+
+    .sozo-property-feature-card > span {
+        width: 38px !important;
+        height: 38px !important;
+        min-width: 38px !important;
+        border-radius: 12px !important;
+    }
+
+    .sozo-property-feature-card > span svg {
+        width: 18px !important;
+        height: 18px !important;
+    }
+
+    .sozo-property-feature-card > div {
+        min-width: 0 !important;
+    }
+
+    .sozo-property-feature-card > div > p:first-child {
+        font-size: 9px !important;
+        line-height: 1.25 !important;
+        letter-spacing: .10em !important;
+        overflow-wrap: anywhere;
+    }
+
+    .sozo-property-feature-card > div > p:last-child {
+        margin-top: 4px !important;
+        font-size: 18px !important;
+        line-height: 1.1 !important;
+    }
+
+    .sozo-property-description,
+    .sozo-property-video,
+    .sozo-property-location {
+        margin-top: 22px !important;
+    }
+
+    .sozo-property-description {
+        padding: 20px !important;
+    }
+
+    .sozo-property-video-head,
+    .sozo-property-location-head {
+        padding: 20px !important;
+    }
+
+    .sozo-property-video-body {
+        padding: 12px !important;
+    }
+
+    .sozo-property-video video {
+        width: 100% !important;
+        max-height: none !important;
+        aspect-ratio: 16 / 9;
+        object-fit: contain !important;
+    }
+
+    .sozo-property-map {
+        height: 285px !important;
+    }
+
+    .sozo-property-contact {
+        margin-top: 2px !important;
+    }
+
+    .sozo-property-contact-card {
+        padding: 18px !important;
+        border-radius: 26px !important;
+    }
+
+    .sozo-property-contact-actions {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 8px !important;
+    }
+
+    .sozo-property-contact-actions a {
+        min-height: 46px !important;
+        padding: 11px 8px !important;
+        font-size: 12px !important;
+        line-height: 1.2 !important;
+        text-align: center;
+    }
+
+    .sozo-property-contact-phones {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 8px !important;
+        margin-top: 16px !important;
+        padding-top: 16px !important;
+    }
+
+    .sozo-property-contact-phones a {
+        min-width: 0 !important;
+        gap: 6px !important;
+        padding: 10px !important;
+        font-size: 12px !important;
+    }
+
+    .sozo-property-contact-phones a span {
+        min-width: 0 !important;
+    }
+
+    .sozo-property-contact-phones a span span:first-child {
+        font-size: 8px !important;
+        letter-spacing: .08em !important;
+    }
+
+    .sozo-property-contact-phones a span span:last-child {
+        overflow-wrap: anywhere;
+    }
+
+    .sozo-property-contact-meta {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 12px !important;
+        margin-top: 16px !important;
+        padding-top: 16px !important;
+    }
+
+    .sozo-property-contact-meta > div {
+        align-items: flex-start !important;
+        min-width: 0 !important;
+        gap: 8px !important;
+    }
+
+    .sozo-property-contact-meta > div > span {
+        width: 30px !important;
+        height: 30px !important;
+        min-width: 30px !important;
+    }
+
+    .sozo-property-contact-meta p {
+        overflow-wrap: anywhere;
+    }
+
+    .sozo-property-visit {
+        padding-top: 48px !important;
+        padding-bottom: 48px !important;
+    }
+
+    .sozo-property-visit-grid {
+        gap: 28px !important;
+    }
+
+    .sozo-property-visit-form {
+        padding: 20px !important;
+        border-radius: 26px !important;
+    }
+
+    .sozo-property-final-cta {
+        padding-top: 36px !important;
+        padding-bottom: 36px !important;
+    }
+
+    .sozo-property-final-actions {
+        display: grid !important;
+        grid-template-columns: minmax(0, 1fr) !important;
+        width: 100% !important;
+    }
+
+    .sozo-property-final-actions a {
+        width: 100% !important;
+        text-align: center !important;
+    }
+
+    .sozo-whatsapp-property {
+        right: 7px !important;
+        bottom: calc(7px + env(safe-area-inset-bottom)) !important;
+        width: 40px !important;
+        height: 40px !important;
+    }
+
+    .sozo-whatsapp-property::before {
+        inset: -3px !important;
+    }
+
+    .sozo-whatsapp-property svg {
+        width: 18px !important;
+        height: 18px !important;
+    }
+}
+
+@media (max-width: 320px) {
+    .sozo-property-main-image {
+        height: 255px !important;
+    }
+
+    .sozo-property-thumbnails .thumbnail {
+        width: 96px !important;
+        height: 70px !important;
+    }
+
+    .sozo-property-feature-card {
+        min-height: 88px !important;
+        padding: 11px !important;
+        gap: 7px !important;
+    }
+
+    .sozo-property-feature-card > span {
+        width: 34px !important;
+        height: 34px !important;
+        min-width: 34px !important;
+    }
+
+    .sozo-property-feature-card > div > p:first-child {
+        font-size: 8px !important;
+    }
+
+    .sozo-property-feature-card > div > p:last-child {
+        font-size: 16px !important;
+    }
+
+    .sozo-property-contact-actions,
+    .sozo-property-contact-phones,
+    .sozo-property-contact-meta {
+        grid-template-columns: minmax(0, 1fr) !important;
+    }
+
+    .sozo-property-map {
+        height: 250px !important;
+    }
+
+    .sozo-property-visit-form {
+        padding: 16px !important;
+    }
+
+    .sozo-whatsapp-property {
+        width: 36px !important;
+        height: 36px !important;
+        right: 6px !important;
+        bottom: calc(6px + env(safe-area-inset-bottom)) !important;
+    }
+}
+
 @media (hover: none) {
     .sozo-card:hover {
         transform: none;
