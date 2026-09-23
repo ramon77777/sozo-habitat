@@ -11,7 +11,7 @@
 @section('content')
 
 {{-- En-tête catalogue --}}
-<section class="relative isolate overflow-hidden bg-[#04152C] px-6 pb-28 pt-40 text-white lg:pb-36 lg:pt-44">
+<section class="sozo-catalog-hero relative isolate overflow-hidden bg-[#04152C] px-4 pb-20 pt-32 text-white sm:px-6 sm:pb-28 sm:pt-40 lg:pb-36 lg:pt-44">
     <div class="absolute inset-0 -z-30 bg-[radial-gradient(circle_at_78%_25%,rgba(200,155,60,0.18),transparent_26rem)]"></div>
     <div class="absolute inset-0 -z-30 sozo-grid opacity-[0.07]"></div>
     <div class="absolute -left-24 top-28 -z-20 h-72 w-72 rounded-full border border-white/10"></div>
@@ -19,24 +19,24 @@
 
     <x-navbar />
 
-    <div class="mx-auto max-w-[1400px]">
+    <div class="sozo-catalog-hero-inner mx-auto max-w-[1400px]">
         <div class="max-w-4xl" data-reveal>
             <a href="/" class="inline-flex items-center gap-2 text-sm font-bold text-white/65 transition hover:text-[#DDB85F]">
                 <span aria-hidden="true">←</span>
                 Retour à l'accueil
             </a>
 
-            <div class="mt-8 inline-flex items-center gap-3 text-xs font-black uppercase tracking-[0.28em] text-[#DDB85F]">
+            <div class="mt-6 inline-flex items-center gap-2.5 text-[10px] font-black uppercase tracking-[0.22em] text-[#DDB85F] sm:mt-8 sm:gap-3 sm:text-xs sm:tracking-[0.28em]">
                 <span class="h-px w-8 bg-[#DDB85F]"></span>
                 Notre catalogue
             </div>
 
-            <h1 class="mt-5 max-w-4xl text-5xl font-black leading-[0.98] tracking-[-0.04em] sm:text-6xl lg:text-7xl">
+            <h1 class="sozo-catalog-hero-title mt-4 max-w-4xl text-[2.55rem] font-black leading-[0.98] tracking-[-0.04em] sm:mt-5 sm:text-6xl lg:text-7xl">
                 Trouvez le bien qui correspond à
                 <span class="text-[#D8A93B]">votre projet.</span>
             </h1>
 
-            <p class="mt-6 max-w-2xl text-base leading-8 text-slate-300 sm:text-lg">
+            <p class="sozo-catalog-hero-copy mt-5 max-w-2xl text-sm leading-6 text-slate-300 sm:mt-6 sm:text-lg sm:leading-8">
                 Parcourez nos biens à vendre et à louer en Côte d'Ivoire, puis affinez votre recherche selon la ville,
                 le type de bien et votre budget.
             </p>
@@ -45,7 +45,7 @@
 </section>
 
 {{-- Filtres --}}
-<section class="relative z-20 -mt-16 px-6">
+<section class="relative z-20 -mt-10 px-4 sm:-mt-16 sm:px-6">
     <div class="mx-auto max-w-[1400px]" data-reveal>
         <form
             method="GET"
@@ -173,32 +173,32 @@
 </section>
 
 {{-- Résultats --}}
-<section class="relative overflow-hidden bg-[#F7F8FA] px-6 pb-14 pt-16 lg:pb-20 lg:pt-20">
+<section class="sozo-catalog-results relative overflow-hidden bg-[#F7F8FA] px-4 pb-12 pt-12 sm:px-6 sm:pb-14 sm:pt-16 lg:pb-20 lg:pt-20">
     <div class="pointer-events-none absolute inset-0 sozo-grid opacity-35 [mask-image:linear-gradient(to_bottom,black,transparent_35%)]"></div>
 
     <div class="relative mx-auto max-w-[1400px]">
-        <div class="mb-9 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between" data-reveal>
+        <div class="mb-7 flex flex-col gap-3 sm:mb-9 sm:gap-4 sm:flex-row sm:items-end sm:justify-between" data-reveal>
             <div>
                 <p class="text-xs font-black uppercase tracking-[0.22em] text-[#C89B3C]">Résultats</p>
-                <h2 class="mt-2 text-3xl font-black tracking-tight text-[#0A2E5D] sm:text-4xl">
+                <h2 class="sozo-catalog-results-title mt-2 text-[1.75rem] font-black leading-tight tracking-tight text-[#0A2E5D] sm:text-4xl">
                     {{ $properties->total() }} bien{{ $properties->total() > 1 ? 's' : '' }} disponible{{ $properties->total() > 1 ? 's' : '' }}
                 </h2>
             </div>
 
-            <p class="max-w-xl text-sm leading-6 text-slate-500">
+            <p class="sozo-catalog-results-copy max-w-xl text-sm leading-6 text-slate-500">
                 Cliquez sur un bien pour consulter toutes les photos, les caractéristiques, la localisation et demander une visite.
             </p>
         </div>
 
-        <div class="grid grid-cols-[repeat(auto-fit,minmax(290px,420px))] justify-center gap-7">
+        <div class="grid grid-cols-1 justify-items-center gap-5 sm:grid-cols-[repeat(auto-fit,minmax(290px,420px))] sm:gap-7">
             @forelse($properties as $property)
                 <article
                     data-reveal
                     data-reveal-delay="{{ ($loop->index % 3) * 90 }}"
-                    class="sozo-card group overflow-hidden rounded-[2rem] border border-white bg-white shadow-[0_18px_55px_rgba(15,23,42,0.08)]"
+                    class="sozo-card group w-full max-w-[420px] overflow-hidden rounded-[1.7rem] border border-white bg-white shadow-[0_18px_55px_rgba(15,23,42,0.08)] sm:rounded-[2rem]"
                 >
                     <a href="{{ route('properties.show', $property) }}" class="block h-full">
-                        <div class="sozo-media relative h-[300px] bg-slate-100">
+                        <div class="sozo-media relative h-[235px] bg-slate-100 sm:h-[300px]">
                             @if($property->main_image_url)
                                 <img
                                     src="{{ $property->main_image_url }}"
@@ -214,7 +214,7 @@
 
                             <div class="absolute inset-0 bg-gradient-to-t from-[#04152C]/90 via-[#04152C]/10 to-transparent"></div>
 
-                            <div class="absolute left-5 right-5 top-5 flex items-center justify-between gap-3">
+                            <div class="absolute left-4 right-4 top-4 flex items-center justify-between gap-2 sm:left-5 sm:right-5 sm:top-5 sm:gap-3">
                                 <span class="rounded-full bg-[#C89B3C] px-4 py-2 text-[11px] font-black uppercase tracking-wider text-white shadow-lg">
                                     {{ $property->transaction === 'vente' ? 'À vendre' : 'À louer' }}
                                 </span>
@@ -224,16 +224,16 @@
                                 </span>
                             </div>
 
-                            <div class="absolute bottom-5 left-5 right-5">
-                                <p class="text-3xl font-black tracking-tight text-white">
+                            <div class="absolute bottom-4 left-4 right-4 sm:bottom-5 sm:left-5 sm:right-5">
+                                <p class="text-2xl font-black tracking-tight text-white sm:text-3xl">
                                     {{ number_format($property->price, 0, ',', ' ') }}
                                     <span class="text-sm font-bold text-white/70">FCFA</span>
                                 </p>
                             </div>
                         </div>
 
-                        <div class="p-7">
-                            <h3 class="text-2xl font-black leading-tight text-[#0A2E5D]">
+                        <div class="p-5 sm:p-7">
+                            <h3 class="text-xl font-black leading-tight text-[#0A2E5D] sm:text-2xl">
                                 {{ $property->title }}
                             </h3>
 
@@ -245,7 +245,7 @@
                                 {{ $property->city }}@if($property->district), {{ $property->district }}@endif
                             </p>
 
-                            <div class="mt-6 grid grid-cols-3 divide-x divide-slate-100 rounded-2xl bg-[#F7F8FA] px-2 py-4 text-center">
+                            <div class="mt-5 grid grid-cols-3 divide-x divide-slate-100 rounded-2xl bg-[#F7F8FA] px-1.5 py-3.5 text-center sm:mt-6 sm:px-2 sm:py-4">
                                 <div class="px-2">
                                     <p class="text-base font-black text-[#0A2E5D]">{{ $property->surface ?? '-' }}</p>
                                     <p class="mt-1 text-[11px] font-semibold text-slate-400">m²</p>
@@ -274,7 +274,7 @@
                                 </div>
                             </div>
 
-                            <div class="mt-6 flex items-center justify-between">
+                            <div class="mt-5 flex items-center justify-between sm:mt-6">
                                 <span class="text-sm font-black text-[#0A2E5D] transition group-hover:text-[#C89B3C]">
                                     Voir le bien
                                 </span>
@@ -357,120 +357,7 @@
 </section>
 
 {{-- Footer --}}
-<footer id="contact" class="bg-[#04152C] px-6 pb-8 pt-16 text-white">
-    <div class="mx-auto max-w-[1400px]">
-        <div class="grid gap-10 border-b border-white/10 pb-12 md:grid-cols-2 lg:grid-cols-4">
-            <div class="lg:col-span-2">
-                <a
-                    href="/"
-                    class="group inline-flex transition duration-300 hover:-translate-y-0.5"
-                    aria-label="Sozo Habitat - Accueil"
-                >
-                    <img
-                        src="{{ asset('images/branding/sozo-habitat-logo-dark.svg') }}"
-                        alt="Sozo Habitat - La référence en immobilier"
-                        class="h-36 w-auto object-contain sm:h-40"
-                    >
-                </a>
+<x-public-footer :site-settings="$siteSettings" />
 
-                <p class="mt-6 max-w-lg leading-7 text-slate-300">
-                    Sozo Habitat vous accompagne dans l'achat, la vente et la location de biens immobiliers en Côte d'Ivoire.
-                </p>
-
-                <div class="mt-6 flex flex-wrap gap-3">
-                    @foreach([
-                        ['Facebook', $siteSettings->facebook],
-                        ['Instagram', $siteSettings->instagram],
-                        ['LinkedIn', $siteSettings->linkedin],
-                        ['TikTok', $siteSettings->tiktok],
-                        ['YouTube', $siteSettings->youtube],
-                    ] as [$label, $url])
-                        @if($url)
-                            <a
-                                href="{{ $url }}"
-                                target="_blank"
-                                rel="noopener"
-                                class="rounded-full border border-white/15 px-4 py-2 text-xs font-bold text-slate-300 transition hover:border-[#C89B3C] hover:text-[#DDB85F]"
-                            >
-                                {{ $label }}
-                            </a>
-                        @endif
-                    @endforeach
-                </div>
-            </div>
-
-            <div>
-                <h3 class="text-sm font-black uppercase tracking-[0.18em] text-[#DDB85F]">Navigation</h3>
-                <div class="mt-5 space-y-3 text-sm font-semibold text-slate-300">
-                    <a href="/" class="block transition hover:translate-x-1 hover:text-white">Accueil</a>
-                    <a href="{{ route('properties.index') }}" class="block transition hover:translate-x-1 hover:text-white">Tous les biens</a>
-                    <a href="{{ route('properties.index', ['transaction' => 'vente']) }}" class="block transition hover:translate-x-1 hover:text-white">Acheter</a>
-                    <a href="{{ route('properties.index', ['transaction' => 'location']) }}" class="block transition hover:translate-x-1 hover:text-white">Louer</a>
-                </div>
-            </div>
-
-            <div>
-                <h3 class="text-sm font-black uppercase tracking-[0.18em] text-[#DDB85F]">Nous contacter</h3>
-
-                <div class="mt-5 space-y-3 text-sm text-slate-300">
-                    @if($siteSettings->phone_1)
-                        <a href="tel:+225{{ $siteSettings->phone_1 }}" class="block transition hover:text-white">
-                            {{ $siteSettings->phone_1 }}
-                        </a>
-                    @endif
-
-                    @if($siteSettings->phone_2)
-                        <a href="tel:+225{{ $siteSettings->phone_2 }}" class="block transition hover:text-white">
-                            {{ $siteSettings->phone_2 }}
-                        </a>
-                    @endif
-
-                    @if($siteSettings->email)
-                        <a href="mailto:{{ $siteSettings->email }}" class="block break-all transition hover:text-white">
-                            {{ $siteSettings->email }}
-                        </a>
-                    @endif
-
-                    @if($siteSettings->address)
-                        <p>{{ $siteSettings->address }}</p>
-                    @endif
-                </div>
-            </div>
-        </div>
-
-        <div class="flex flex-col gap-4 pt-7 text-xs text-slate-400 sm:flex-row sm:items-center sm:justify-between">
-            <p>© {{ date('Y') }} {{ $siteSettings->site_name ?? 'Sozo Habitat' }}. Tous droits réservés.</p>
-
-            <div class="flex flex-wrap items-center gap-x-5 gap-y-2">
-                <p>Immobilier en Côte d'Ivoire.</p>
-
-                <a
-                    href="{{ route('workspace') }}"
-                    class="inline-flex items-center gap-1.5 text-slate-500 transition hover:text-[#DDB85F]"
-                    aria-label="Accéder à l'espace professionnel Sozo Habitat"
-                >
-                    <svg viewBox="0 0 24 24" fill="none" class="h-3.5 w-3.5" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M8 10V7a4 4 0 1 1 8 0v3M6 10h12v10H6V10Z"/>
-                    </svg>
-                    Espace professionnel
-                </a>
-            </div>
-        </div>
-    </div>
-</footer>
-
-@if($siteSettings->whatsapp)
-    <a
-        href="https://wa.me/{{ $siteSettings->whatsapp }}"
-        target="_blank"
-        rel="noopener"
-        class="sozo-whatsapp flex h-14 w-14 items-center justify-center rounded-full bg-green-500 text-white transition hover:-translate-y-1 hover:bg-green-600"
-        aria-label="Contacter Sozo Habitat sur WhatsApp"
-    >
-        <svg viewBox="0 0 24 24" fill="currentColor" class="h-7 w-7" aria-hidden="true">
-            <path d="M12.05 2a9.88 9.88 0 0 0-8.46 15.02L2.2 22l5.1-1.34A9.98 9.98 0 1 0 12.05 2Zm0 17.98a8.1 8.1 0 0 1-4.13-1.13l-.3-.18-3.02.8.81-2.95-.2-.3A8.05 8.05 0 1 1 12.05 20Zm4.42-6.04c-.24-.12-1.43-.7-1.65-.78-.22-.08-.38-.12-.54.12-.16.24-.62.78-.76.94-.14.16-.28.18-.52.06-.24-.12-1.01-.37-1.93-1.19-.71-.63-1.19-1.42-1.33-1.66-.14-.24-.02-.37.1-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.19-.47-.39-.41-.54-.42h-.46c-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2s.86 2.32.98 2.48c.12.16 1.69 2.58 4.1 3.62.57.25 1.02.4 1.37.51.58.18 1.1.16 1.51.1.46-.07 1.43-.58 1.63-1.15.2-.56.2-1.05.14-1.15-.06-.1-.22-.16-.46-.28Z"/>
-        </svg>
-    </a>
-@endif
 
 @endsection
