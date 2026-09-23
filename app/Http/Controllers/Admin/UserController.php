@@ -27,7 +27,7 @@ class UserController extends Controller
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', 'unique:users,email'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'min:12', 'confirmed'],
             'role' => ['required', Rule::in(['admin', 'agent'])],
         ]);
 
@@ -53,9 +53,25 @@ class UserController extends Controller
                 'max:255',
                 Rule::unique('users', 'email')->ignore($user->id),
             ],
-            'password' => ['nullable', 'string', 'min:8', 'confirmed'],
+            'password' => ['nullable', 'string', 'min:12', 'confirmed'],
             'role' => ['required', Rule::in(['admin', 'agent'])],
         ]);
+
+        if (
+            $user->role === 'admin'
+            && $validated['role'] !== 'admin'
+            && User::where('role', 'admin')->count() <= 1
+        ) {
+            return back()
+                ->withInput()
+                ->with('error', 'Le dernier administrateur ne peut pas être transformé en agent.');
+        }
+
+        if (auth()->id() === $user->id && $validated['role'] !== $user->role) {
+            return back()
+                ->withInput()
+                ->with('error', 'Vous ne pouvez pas modifier votre propre rôle.');
+        }
 
         if (empty($validated['password'])) {
             unset($validated['password']);
@@ -71,18 +87,22 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         if (auth()->id() === $user->id) {
-        return back()->with(
-            'error',
-            'Vous ne pouvez pas supprimer votre propre compte.'
-        );
-    }
+            return back()->with(
+                'error',
+                'Vous ne pouvez pas supprimer votre propre compte.'
+            );
+        }
 
-    if ($user->email === 'admin@sozohabitat.ci') {
-        return back()->with(
-            'error',
-            'Le compte administrateur principal ne peut pas être supprimé.'
-        );
-    }
+        if (
+            $user->role === 'admin'
+            && User::where('role', 'admin')->count() <= 1
+        ) {
+            return back()->with(
+                'error',
+                'Le dernier compte administrateur ne peut pas être supprimé.'
+            );
+        }
+
         $user->delete();
 
         return redirect()
