@@ -483,7 +483,9 @@
                                     <span class="block text-[10px] font-black uppercase tracking-[0.14em] text-[#DDB85F]">Téléphone</span>
                                     <span class="mt-1 block">{{ $siteSettings->phone_1 }}</span>
                                 </span>
-                                <span>↗</span>
+                                <svg viewBox="0 0 24 24" fill="none" class="h-4 w-4" stroke="currentColor" stroke-width="1.9" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 16 16 8M10 8h6v6"/>
+                                </svg>
                             </a>
                         @endif
 
@@ -496,7 +498,9 @@
                                     <span class="block text-[10px] font-black uppercase tracking-[0.14em] text-[#DDB85F]">Deuxième contact</span>
                                     <span class="mt-1 block">{{ $siteSettings->phone_2 }}</span>
                                 </span>
-                                <span>↗</span>
+                                <svg viewBox="0 0 24 24" fill="none" class="h-4 w-4" stroke="currentColor" stroke-width="1.9" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 16 16 8M10 8h6v6"/>
+                                </svg>
                             </a>
                         @endif
                     </div>
@@ -689,18 +693,17 @@
     <div class="mx-auto max-w-[1400px]">
         <div class="grid gap-10 border-b border-white/10 pb-12 md:grid-cols-2 lg:grid-cols-4">
             <div class="lg:col-span-2">
-                <div class="flex items-center gap-3">
-                    <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-[#C89B3C]">
-                        <svg viewBox="0 0 24 24" fill="none" class="h-6 w-6" stroke="currentColor" stroke-width="1.9" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 11.5 12 4l9 7.5M5.5 10v9.5h13V10M9.5 19.5v-5h5v5"/>
-                        </svg>
-                    </span>
-
-                    <div>
-                        <h2 class="text-2xl font-black">{{ $siteSettings->site_name ?? 'Sozo Habitat' }}</h2>
-                        <p class="mt-1 text-[10px] font-bold uppercase tracking-[0.24em] text-[#DDB85F]">La référence en immobilier</p>
-                    </div>
-                </div>
+                <a
+                    href="/"
+                    class="group inline-flex overflow-hidden rounded-[1.7rem] bg-white p-2.5 shadow-lg shadow-black/10 transition duration-300 hover:-translate-y-0.5"
+                    aria-label="Sozo Habitat - Accueil"
+                >
+                    <img
+                        src="{{ asset('images/branding/sozo-habitat-logo.webp') }}"
+                        alt="Sozo Habitat - La référence en immobilier"
+                        class="h-28 w-28 object-contain sm:h-32 sm:w-32"
+                    >
+                </a>
 
                 <p class="mt-6 max-w-lg leading-7 text-slate-300">
                     Sozo Habitat vous accompagne dans l'achat, la vente et la location de biens immobiliers en Côte d'Ivoire.
