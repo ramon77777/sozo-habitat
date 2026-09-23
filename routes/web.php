@@ -35,14 +35,36 @@ Route::get('/', function () {
 });
 
 Route::get('/biens', function (Request $request) {
-    $properties = Property::query()
+    $propertiesQuery = Property::query()
         ->when($request->type, fn ($query) => $query->where('type', $request->type))
         ->when($request->transaction, fn ($query) => $query->where('transaction', $request->transaction))
-        ->when($request->city, fn ($query) => $query->where('city', 'like', '%' . $request->city . '%'))
+        ->when($request->city, function ($query) use ($request) {
+            $query->where(function ($locationQuery) use ($request) {
+                $locationQuery
+                    ->where('city', 'like', '%' . $request->city . '%')
+                    ->orWhere('district', 'like', '%' . $request->city . '%');
+            });
+        })
         ->when($request->min_price, fn ($query) => $query->where('price', '>=', $request->min_price))
-        ->when($request->max_price, fn ($query) => $query->where('price', '<=', $request->max_price))
-        ->latest()
-        ->get();
+        ->when($request->max_price, fn ($query) => $query->where('price', '<=', $request->max_price));
+
+    switch ($request->sort) {
+        case 'price_asc':
+            $propertiesQuery->orderBy('price');
+            break;
+
+        case 'price_desc':
+            $propertiesQuery->orderByDesc('price');
+            break;
+
+        default:
+            $propertiesQuery->latest();
+            break;
+    }
+
+    $properties = $propertiesQuery
+        ->paginate(12)
+        ->withQueryString();
 
     return view('pages.properties', compact('properties'));
 })->name('properties.index');
