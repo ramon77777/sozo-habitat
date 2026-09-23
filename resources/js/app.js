@@ -4,6 +4,26 @@ import Alpine from 'alpinejs';
 
 window.Alpine = Alpine;
 
+Alpine.data('catalogFilters', (hasActiveFilters = false) => ({
+    open: hasActiveFilters || window.innerWidth >= 768,
+
+    init() {
+        this.handleResize = () => {
+            if (window.innerWidth >= 768) {
+                this.open = true;
+            }
+        };
+
+        window.addEventListener('resize', this.handleResize, { passive: true });
+    },
+
+    toggle() {
+        if (window.innerWidth < 768) {
+            this.open = !this.open;
+        }
+    },
+}));
+
 Alpine.start();
 
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
