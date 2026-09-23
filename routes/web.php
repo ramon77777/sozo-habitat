@@ -100,6 +100,18 @@ Route::post('/biens/{property}/demande-visite', function (Request $request, Prop
     return back()->with('success', 'Votre demande a bien été envoyée. Nous vous contacterons rapidement.');
 })->name('properties.inquiries.store');
 
+Route::get('/espace', function () {
+    if (!auth()->check()) {
+        return redirect()->route('login');
+    }
+
+    return match (auth()->user()->role) {
+        'admin' => redirect()->route('admin.dashboard'),
+        'agent' => redirect()->route('agent.dashboard'),
+        default => redirect('/'),
+    };
+})->name('workspace');
+
 Route::get('/sitemap.xml', [SitemapController::class, 'index'])
     ->name('sitemap');
 
