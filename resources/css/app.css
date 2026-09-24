@@ -889,8 +889,13 @@ body {
     }
 
     .sozo-property-visit-form {
-        padding: 20px !important;
+        padding: 20px 20px 26px !important;
         border-radius: 26px !important;
+    }
+
+    .sozo-property-visit-form button[type="submit"] {
+        min-height: 48px !important;
+        margin-bottom: 2px !important;
     }
 
     .sozo-property-final-cta {
@@ -910,19 +915,19 @@ body {
     }
 
     .sozo-whatsapp-property {
-        right: 7px !important;
-        bottom: calc(7px + env(safe-area-inset-bottom)) !important;
-        width: 40px !important;
-        height: 40px !important;
+        right: 2px !important;
+        bottom: calc(2px + env(safe-area-inset-bottom)) !important;
+        width: 36px !important;
+        height: 36px !important;
     }
 
     .sozo-whatsapp-property::before {
-        inset: -3px !important;
+        inset: -2px !important;
     }
 
     .sozo-whatsapp-property svg {
-        width: 18px !important;
-        height: 18px !important;
+        width: 17px !important;
+        height: 17px !important;
     }
 }
 
@@ -967,14 +972,19 @@ body {
     }
 
     .sozo-property-visit-form {
-        padding: 16px !important;
+        padding: 16px 16px 22px !important;
     }
 
     .sozo-whatsapp-property {
-        width: 36px !important;
-        height: 36px !important;
-        right: 6px !important;
-        bottom: calc(6px + env(safe-area-inset-bottom)) !important;
+        width: 34px !important;
+        height: 34px !important;
+        right: 1px !important;
+        bottom: calc(1px + env(safe-area-inset-bottom)) !important;
+    }
+
+    .sozo-whatsapp-property svg {
+        width: 16px !important;
+        height: 16px !important;
     }
 }
 
