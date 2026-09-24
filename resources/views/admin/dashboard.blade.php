@@ -135,7 +135,9 @@
                     Demandes de visite par mois
                 </h2>
 
-                <canvas id="inquiriesChart" height="140"></canvas>
+                <div class="relative h-[220px] w-full sm:h-[280px]">
+                    <canvas id="inquiriesChart"></canvas>
+                </div>
             </div>
 
             <div class="min-w-0 rounded-3xl bg-white p-4 shadow sm:p-6">
@@ -143,7 +145,9 @@
                     Biens ajoutés par mois
                 </h2>
 
-                <canvas id="propertiesChart" height="140"></canvas>
+                <div class="relative h-[220px] w-full sm:h-[280px]">
+                    <canvas id="propertiesChart"></canvas>
+                </div>
             </div>
 
             <div class="min-w-0 rounded-3xl bg-white p-4 shadow sm:p-6">
@@ -151,7 +155,9 @@
                     Répartition ventes / locations
                 </h2>
 
-                <canvas id="transactionsChart" height="140"></canvas>
+                <div class="relative h-[220px] w-full sm:h-[280px]">
+                    <canvas id="transactionsChart"></canvas>
+                </div>
             </div>
 
             <div class="min-w-0 rounded-3xl bg-white p-4 shadow sm:p-6">
@@ -159,7 +165,9 @@
                     Répartition par type de bien
                 </h2>
 
-                <canvas id="typesChart" height="140"></canvas>
+                <div class="relative h-[220px] w-full sm:h-[280px]">
+                    <canvas id="typesChart"></canvas>
+                </div>
             </div>
 
         </div>
@@ -373,6 +381,44 @@ const monthlyProperties = @json($monthlyProperties);
 const transactionStats = @json($transactionStats);
 const typeStats = @json($typeStats);
 
+const chartBaseOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+        legend: {
+            labels: {
+                boxWidth: 12,
+                boxHeight: 12,
+                usePointStyle: true,
+                font: {
+                    size: window.innerWidth < 640 ? 10 : 12
+                }
+            }
+        }
+    },
+    scales: {
+        x: {
+            ticks: {
+                autoSkip: true,
+                maxRotation: 0,
+                minRotation: 0,
+                font: {
+                    size: window.innerWidth < 640 ? 9 : 11
+                }
+            }
+        },
+        y: {
+            beginAtZero: true,
+            ticks: {
+                precision: 0,
+                font: {
+                    size: window.innerWidth < 640 ? 9 : 11
+                }
+            }
+        }
+    }
+};
+
 new Chart(document.getElementById('inquiriesChart'), {
     type: 'line',
     data: {
@@ -382,7 +428,8 @@ new Chart(document.getElementById('inquiriesChart'), {
             data: monthlyInquiries,
             tension: 0.35
         }]
-    }
+    },
+    options: chartBaseOptions
 });
 
 new Chart(document.getElementById('propertiesChart'), {
@@ -393,7 +440,8 @@ new Chart(document.getElementById('propertiesChart'), {
             label: 'Biens ajoutés',
             data: monthlyProperties
         }]
-    }
+    },
+    options: chartBaseOptions
 });
 
 new Chart(document.getElementById('transactionsChart'), {
@@ -403,6 +451,25 @@ new Chart(document.getElementById('transactionsChart'), {
         datasets: [{
             data: Object.values(transactionStats)
         }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        cutout: '62%',
+        plugins: {
+            legend: {
+                position: 'bottom',
+                labels: {
+                    boxWidth: 12,
+                    boxHeight: 12,
+                    usePointStyle: true,
+                    padding: 14,
+                    font: {
+                        size: window.innerWidth < 640 ? 10 : 12
+                    }
+                }
+            }
+        }
     }
 });
 
@@ -414,6 +481,10 @@ new Chart(document.getElementById('typesChart'), {
             label: 'Nombre de biens',
             data: Object.values(typeStats)
         }]
+    },
+    options: {
+        ...chartBaseOptions,
+        indexAxis: window.innerWidth < 640 ? 'y' : 'x'
     }
 });
 </script>
