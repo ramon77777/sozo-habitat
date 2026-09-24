@@ -55,91 +55,160 @@
         </div>
     </div>
 
-    <div class="mt-8 min-w-0 rounded-3xl bg-white p-4 shadow sm:p-6 lg:mt-12">
-        <h2 class="mb-5 text-xl font-black text-[#0A2E5D] sm:mb-6 sm:text-2xl">
-            Mes derniers biens
-        </h2>
+    <section class="mt-8 min-w-0 rounded-3xl bg-white p-4 shadow sm:p-6 lg:mt-12">
+        <div class="mb-5 flex items-center justify-between gap-3 sm:mb-6">
+            <h2 class="text-xl font-black text-[#0A2E5D] sm:text-2xl">
+                Mes derniers biens
+            </h2>
 
-        <div class="overflow-x-auto">
-            <table class="min-w-[620px] w-full">
-                <thead>
-                    <tr class="border-b text-left">
-                        <th class="p-3">Titre</th>
-                        <th class="p-3">Ville</th>
-                        <th class="p-3">Prix</th>
-                    </tr>
-                </thead>
+            @if($properties->isNotEmpty())
+                <a href="{{ route('agent.properties.index') }}"
+                    class="shrink-0 text-sm font-bold text-[#0A2E5D] hover:text-[#C89B3C]">
+                    Voir tout →
+                </a>
+            @endif
+        </div>
 
-                <tbody>
-                    @forelse($properties as $property)
-                        <tr class="border-b">
-                            <td class="p-3 font-bold">
-                                {{ $property->title }}
-                            </td>
+        @if($properties->isEmpty())
+            <div class="flex min-h-32 flex-col items-center justify-center rounded-2xl bg-slate-50 px-4 py-8 text-center">
+                <div class="mb-3 flex h-11 w-11 items-center justify-center rounded-full bg-[#0A2E5D]/10 text-xl">
+                    🏠
+                </div>
+                <p class="font-bold text-[#0A2E5D]">Aucun bien attribué</p>
+                <p class="mt-1 text-sm text-slate-500">Les biens qui vous seront affectés apparaîtront ici.</p>
+            </div>
+        @else
+            <div class="space-y-3 md:hidden">
+                @foreach($properties as $property)
+                    <a href="{{ route('properties.show', $property) }}"
+                        class="block rounded-2xl border border-slate-100 bg-slate-50 p-4 transition hover:border-[#C89B3C]/50 hover:bg-white">
+                        <div class="flex items-start justify-between gap-3">
+                            <div class="min-w-0">
+                                <h3 class="truncate font-black text-[#0A2E5D]">
+                                    {{ $property->title }}
+                                </h3>
+                                <p class="mt-1 text-sm text-slate-500">
+                                    {{ $property->city }}
+                                </p>
+                            </div>
 
-                            <td class="p-3">
-                                {{ $property->city }}
-                            </td>
-
-                            <td class="p-3">
+                            <span class="shrink-0 rounded-full bg-[#C89B3C]/10 px-3 py-1 text-xs font-bold text-[#9C731F]">
                                 {{ number_format($property->price,0,' ',' ') }} FCFA
-                            </td>
+                            </span>
+                        </div>
+                    </a>
+                @endforeach
+            </div>
+
+            <div class="hidden overflow-x-auto md:block">
+                <table class="min-w-[620px] w-full">
+                    <thead>
+                        <tr class="border-b text-left">
+                            <th class="p-3">Titre</th>
+                            <th class="p-3">Ville</th>
+                            <th class="p-3">Prix</th>
                         </tr>
-                    @empty
-                        <tr>
-                            <td colspan="3" class="p-5 text-center text-slate-400">
-                                Aucun bien attribué
-                            </td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
+                    </thead>
+
+                    <tbody>
+                        @foreach($properties as $property)
+                            <tr class="border-b">
+                                <td class="p-3 font-bold">
+                                    {{ $property->title }}
+                                </td>
+
+                                <td class="p-3">
+                                    {{ $property->city }}
+                                </td>
+
+                                <td class="p-3">
+                                    {{ number_format($property->price,0,' ',' ') }} FCFA
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        @endif
+    </section>
+
+    <section class="mt-8 min-w-0 rounded-3xl bg-white p-4 shadow sm:p-6 lg:mt-10">
+        <div class="mb-5 flex items-center justify-between gap-3 sm:mb-6">
+            <h2 class="text-xl font-black text-[#0A2E5D] sm:text-2xl">
+                Mes clients
+            </h2>
+
+            @if($prospects->isNotEmpty())
+                <a href="{{ route('agent.prospects.index') }}"
+                    class="shrink-0 text-sm font-bold text-[#0A2E5D] hover:text-[#C89B3C]">
+                    Voir tout →
+                </a>
+            @endif
         </div>
-    </div>
 
-    <div class="mt-8 min-w-0 rounded-3xl bg-white p-4 shadow sm:p-6 lg:mt-10">
-        <h2 class="mb-5 text-xl font-black text-[#0A2E5D] sm:mb-6 sm:text-2xl">
-            Mes clients
-        </h2>
+        @if($prospects->isEmpty())
+            <div class="flex min-h-32 flex-col items-center justify-center rounded-2xl bg-slate-50 px-4 py-8 text-center">
+                <div class="mb-3 flex h-11 w-11 items-center justify-center rounded-full bg-[#0A2E5D]/10 text-xl">
+                    👤
+                </div>
+                <p class="font-bold text-[#0A2E5D]">Aucun client</p>
+                <p class="mt-1 text-sm text-slate-500">Vos prospects et clients suivis apparaîtront ici.</p>
+            </div>
+        @else
+            <div class="space-y-3 md:hidden">
+                @foreach($prospects as $prospect)
+                    <div class="rounded-2xl border border-slate-100 bg-slate-50 p-4">
+                        <div class="flex items-start justify-between gap-3">
+                            <div class="min-w-0">
+                                <h3 class="truncate font-black text-[#0A2E5D]">
+                                    {{ $prospect->name }}
+                                </h3>
+                                <p class="mt-1 text-sm text-slate-500">
+                                    {{ $prospect->phone }}
+                                </p>
+                            </div>
 
-        <div class="overflow-x-auto">
-            <table class="min-w-[560px] w-full">
-                <thead>
-                    <tr class="border-b text-left">
-                        <th class="p-3">Nom</th>
-                        <th class="p-3">Téléphone</th>
-                        <th class="p-3">Statut</th>
-                    </tr>
-                </thead>
+                            <span class="shrink-0 rounded-full bg-white px-3 py-1 text-xs font-bold text-slate-600 shadow-sm">
+                                {{ $prospect->status }}
+                            </span>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
 
-                <tbody>
-                    @forelse($prospects as $prospect)
-                        <tr class="border-b">
-                            <td class="p-3">
-                                {{ $prospect->name }}
-                            </td>
-
-                            <td class="p-3">
-                                {{ $prospect->phone }}
-                            </td>
-
-                            <td class="p-3">
-                                <span class="inline-flex rounded-full bg-slate-100 px-3 py-1">
-                                    {{ $prospect->status }}
-                                </span>
-                            </td>
+            <div class="hidden overflow-x-auto md:block">
+                <table class="min-w-[560px] w-full">
+                    <thead>
+                        <tr class="border-b text-left">
+                            <th class="p-3">Nom</th>
+                            <th class="p-3">Téléphone</th>
+                            <th class="p-3">Statut</th>
                         </tr>
-                    @empty
-                        <tr>
-                            <td colspan="3" class="p-5 text-center text-slate-400">
-                                Aucun client
-                            </td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
-    </div>
+                    </thead>
+
+                    <tbody>
+                        @foreach($prospects as $prospect)
+                            <tr class="border-b">
+                                <td class="p-3">
+                                    {{ $prospect->name }}
+                                </td>
+
+                                <td class="p-3">
+                                    {{ $prospect->phone }}
+                                </td>
+
+                                <td class="p-3">
+                                    <span class="inline-flex rounded-full bg-slate-100 px-3 py-1">
+                                        {{ $prospect->status }}
+                                    </span>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        @endif
+    </section>
 </div>
 
 @endsection
