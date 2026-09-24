@@ -2,25 +2,25 @@
 
 @section('content')
 
-<section class="min-h-screen bg-[#F8F9FB] px-6 py-10">
+<section class="min-h-screen bg-[#F8F9FB] px-4 py-6 sm:px-6 sm:py-8 lg:py-10">
 
     <div class="max-w-7xl mx-auto">
 
-        <div class="flex items-center justify-between mb-10">
+        <div class="mb-8 flex flex-col gap-5 sm:mb-10 sm:flex-row sm:items-center sm:justify-between">
             <div>
                 <p class="text-[#C89B3C] font-bold uppercase tracking-[0.3em]">
                     Administration
                 </p>
 
-                <h1 class="text-4xl font-black text-[#0A2E5D] mt-3">
+                <h1 class="mt-3 text-3xl font-black leading-tight text-[#0A2E5D] sm:text-4xl">
                     Tableau de bord
                 </h1>
             </div>
 
-            <div class="flex items-center gap-3">
+            <div class="flex flex-wrap items-center gap-3">
 
                 <a href="/"
-                class="rounded-full border border-[#0A2E5D] px-6 py-3 font-bold text-[#0A2E5D] hover:bg-[#0A2E5D] hover:text-white transition">
+                class="inline-flex w-full items-center justify-center rounded-full border border-[#0A2E5D] px-5 py-3 text-sm font-bold text-[#0A2E5D] transition hover:bg-[#0A2E5D] hover:text-white sm:w-auto sm:px-6 sm:text-base">
                     Voir le site
                 </a>
 
@@ -67,60 +67,60 @@
         @endif
 
         {{-- Statistiques --}}
-        <div class="grid md:grid-cols-4 lg:grid-cols-8 gap-6">
+        <div class="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-5 xl:grid-cols-8">
 
-            <div class="bg-white rounded-3xl p-6 shadow">
+            <div class="min-w-0 rounded-2xl bg-white p-4 shadow sm:rounded-3xl sm:p-6">
                 <p class="text-slate-500">Total biens</p>
-                <h2 class="text-4xl font-black text-[#0A2E5D] mt-3">
+                <h2 class="text-3xl font-black sm:text-4xl text-[#0A2E5D] mt-3">
                     {{ $totalProperties }}
                 </h2>
             </div>
 
-            <div class="bg-white rounded-3xl p-6 shadow">
+            <div class="min-w-0 rounded-2xl bg-white p-4 shadow sm:rounded-3xl sm:p-6">
                 <p class="text-slate-500">Vedettes</p>
-                <h2 class="text-4xl font-black text-[#C89B3C] mt-3">
+                <h2 class="text-3xl font-black sm:text-4xl text-[#C89B3C] mt-3">
                     {{ $featuredPropertiesCount }}
                 </h2>
             </div>
 
-            <div class="bg-white rounded-3xl p-6 shadow">
+            <div class="min-w-0 rounded-2xl bg-white p-4 shadow sm:rounded-3xl sm:p-6">
                 <p class="text-slate-500">Ventes</p>
-                <h2 class="text-4xl font-black text-[#0A2E5D] mt-3">
+                <h2 class="text-3xl font-black sm:text-4xl text-[#0A2E5D] mt-3">
                     {{ $saleProperties }}
                 </h2>
             </div>
 
-            <div class="bg-white rounded-3xl p-6 shadow">
+            <div class="min-w-0 rounded-2xl bg-white p-4 shadow sm:rounded-3xl sm:p-6">
                 <p class="text-slate-500">Locations</p>
-                <h2 class="text-4xl font-black text-[#0A2E5D] mt-3">
+                <h2 class="text-3xl font-black sm:text-4xl text-[#0A2E5D] mt-3">
                     {{ $rentProperties }}
                 </h2>
             </div>
 
-            <div class="bg-white rounded-3xl p-6 shadow">
+            <div class="min-w-0 rounded-2xl bg-white p-4 shadow sm:rounded-3xl sm:p-6">
                 <p class="text-slate-500">Terrains</p>
-                <h2 class="text-4xl font-black text-[#0A2E5D] mt-3">
+                <h2 class="text-3xl font-black sm:text-4xl text-[#0A2E5D] mt-3">
                     {{ $landProperties }}
                 </h2>
             </div>
 
-            <div class="bg-white rounded-3xl p-6 shadow">
+            <div class="min-w-0 rounded-2xl bg-white p-4 shadow sm:rounded-3xl sm:p-6">
                 <p class="text-slate-500">Demandes</p>
-                <h2 class="text-4xl font-black text-[#0A2E5D] mt-3">
+                <h2 class="text-3xl font-black sm:text-4xl text-[#0A2E5D] mt-3">
                     {{ $totalInquiries }}
                 </h2>
             </div>
 
-            <div class="bg-white rounded-3xl p-6 shadow">
+            <div class="min-w-0 rounded-2xl bg-white p-4 shadow sm:rounded-3xl sm:p-6">
                 <p class="text-slate-500">Nouvelles</p>
-                <h2 class="text-4xl font-black text-green-600 mt-3">
+                <h2 class="text-3xl font-black sm:text-4xl text-green-600 mt-3">
                     {{ $newInquiries }}
                 </h2>
             </div>
 
-            <div class="bg-white rounded-3xl p-6 shadow">
+            <div class="min-w-0 rounded-2xl bg-white p-4 shadow sm:rounded-3xl sm:p-6">
                 <p class="text-slate-500">Utilisateurs</p>
-                <h2 class="text-4xl font-black text-[#0A2E5D] mt-3">
+                <h2 class="text-3xl font-black sm:text-4xl text-[#0A2E5D] mt-3">
                     {{ $totalUsers }}
                 </h2>
             </div>
@@ -128,34 +128,34 @@
         </div>
 
         {{-- Graphiques --}}
-        <div class="grid lg:grid-cols-2 gap-8 mt-10">
+        <div class="mt-8 grid min-w-0 gap-5 lg:mt-10 lg:grid-cols-2 lg:gap-8">
 
-            <div class="bg-white rounded-3xl shadow p-6">
-                <h2 class="text-2xl font-black text-[#0A2E5D] mb-6">
+            <div class="min-w-0 rounded-3xl bg-white p-4 shadow sm:p-6">
+                <h2 class="mb-5 text-xl font-black leading-tight text-[#0A2E5D] sm:mb-6 sm:text-2xl">
                     Demandes de visite par mois
                 </h2>
 
                 <canvas id="inquiriesChart" height="140"></canvas>
             </div>
 
-            <div class="bg-white rounded-3xl shadow p-6">
-                <h2 class="text-2xl font-black text-[#0A2E5D] mb-6">
+            <div class="min-w-0 rounded-3xl bg-white p-4 shadow sm:p-6">
+                <h2 class="mb-5 text-xl font-black leading-tight text-[#0A2E5D] sm:mb-6 sm:text-2xl">
                     Biens ajoutés par mois
                 </h2>
 
                 <canvas id="propertiesChart" height="140"></canvas>
             </div>
 
-            <div class="bg-white rounded-3xl shadow p-6">
-                <h2 class="text-2xl font-black text-[#0A2E5D] mb-6">
+            <div class="min-w-0 rounded-3xl bg-white p-4 shadow sm:p-6">
+                <h2 class="mb-5 text-xl font-black leading-tight text-[#0A2E5D] sm:mb-6 sm:text-2xl">
                     Répartition ventes / locations
                 </h2>
 
                 <canvas id="transactionsChart" height="140"></canvas>
             </div>
 
-            <div class="bg-white rounded-3xl shadow p-6">
-                <h2 class="text-2xl font-black text-[#0A2E5D] mb-6">
+            <div class="min-w-0 rounded-3xl bg-white p-4 shadow sm:p-6">
+                <h2 class="mb-5 text-xl font-black leading-tight text-[#0A2E5D] sm:mb-6 sm:text-2xl">
                     Répartition par type de bien
                 </h2>
 
@@ -165,16 +165,16 @@
         </div>
 
         {{-- Gestion des biens --}}
-        <div class="mt-10 bg-white rounded-3xl shadow overflow-hidden">
+        <div class="mt-8 min-w-0 overflow-hidden rounded-3xl bg-white shadow lg:mt-10">
 
-            <div class="p-6 border-b border-slate-100 flex flex-col gap-6">
+            <div class="flex flex-col gap-5 border-b border-slate-100 p-4 sm:gap-6 sm:p-6">
 
                 <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
                     <h2 class="text-2xl font-black text-[#0A2E5D]">
                         Gestion des biens
                     </h2>
 
-                    <div class="flex flex-wrap gap-3">
+                    <div class="flex flex-wrap gap-2 sm:gap-3">
 
                         <a href="{{ route('admin.property-inquiries.index') }}"
                         class="rounded-full bg-[#0A2E5D] px-5 py-3 font-bold text-white hover:bg-[#071F3F] transition">
@@ -231,7 +231,7 @@
                     </a>
                 </div>
 
-                <form method="GET" action="{{ route('admin.dashboard') }}" class="flex flex-col md:flex-row gap-3">
+                <form method="GET" action="{{ route('admin.dashboard') }}" class="flex flex-col gap-3 md:flex-row">
                     @if(request('filter'))
                         <input type="hidden" name="filter" value="{{ request('filter') }}">
                     @endif
@@ -255,7 +255,7 @@
             </div>
 
             <div class="overflow-x-auto">
-                <table class="w-full text-left">
+                <table class="min-w-[760px] w-full text-left">
                     <thead class="bg-slate-50 text-[#0A2E5D]">
                         <tr>
                             <th class="p-5">Titre</th>
