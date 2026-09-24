@@ -61,7 +61,7 @@
                 Mes derniers biens
             </h2>
 
-            @if($properties->isNotEmpty())
+            @if($properties->count() > 0)
                 <a href="{{ route('agent.properties.index') }}"
                     class="shrink-0 text-sm font-bold text-[#0A2E5D] hover:text-[#C89B3C]">
                     Voir tout →
@@ -69,7 +69,7 @@
             @endif
         </div>
 
-        @if($properties->isEmpty())
+        @if($properties->count() === 0)
             <div class="flex min-h-32 flex-col items-center justify-center rounded-2xl bg-slate-50 px-4 py-8 text-center">
                 <div class="mb-3 flex h-11 w-11 items-center justify-center rounded-full bg-[#0A2E5D]/10 text-xl">
                     🏠
@@ -138,7 +138,7 @@
                 Mes clients
             </h2>
 
-            @if($prospects->isNotEmpty())
+            @if($prospects->count() > 0)
                 <a href="{{ route('agent.prospects.index') }}"
                     class="shrink-0 text-sm font-bold text-[#0A2E5D] hover:text-[#C89B3C]">
                     Voir tout →
@@ -146,7 +146,7 @@
             @endif
         </div>
 
-        @if($prospects->isEmpty())
+        @if($prospects->count() === 0)
             <div class="flex min-h-32 flex-col items-center justify-center rounded-2xl bg-slate-50 px-4 py-8 text-center">
                 <div class="mb-3 flex h-11 w-11 items-center justify-center rounded-full bg-[#0A2E5D]/10 text-xl">
                     👤
